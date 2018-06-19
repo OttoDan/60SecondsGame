@@ -70,6 +70,7 @@ public class PlayerCube : MonoBehaviour {
         }
 
 
+        Debug.DrawLine(Vector3.zero, transform.position, Color.red);
     }
 
     public void Dash()
@@ -105,5 +106,7 @@ public class PlayerCube : MonoBehaviour {
         isPaused = true;
         canvas.enabled = true;
         DashCoroutine = null;
+
+
     }
 }

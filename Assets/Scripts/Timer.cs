@@ -12,6 +12,8 @@ public class Timer : MonoBehaviour {
     void Start()
     {
         OnGame = true;
+
+        
     }
 
     void Update()

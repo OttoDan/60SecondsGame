@@ -54,8 +54,8 @@ public class CameraController : MonoBehaviour {
         //transform.LookAt(cube.position);
         //Debug.Log(Input.touchCount);
 
-        cube.transform.RotateAround(Vector3.zero, Vector3.up, inputX * rotationSpeed * Time.deltaTime);
-        cube.transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
+        transform.RotateAround(Vector3.zero, Vector3.up, inputX * rotationSpeed * Time.deltaTime);
+        transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
     }
 
     #endregion

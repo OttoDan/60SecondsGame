@@ -11,9 +11,15 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
 
     public void EndGame()
     {
         Application.Quit();
+        Debug.Log("Ente");
     }
 }

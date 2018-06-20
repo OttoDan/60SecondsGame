@@ -72,7 +72,7 @@ public class CubeGenerator : EditorWindow {
         if (height == 0)
             height = this.height;
 
-        Debug.LogFormat("Width: {0}\nHeight: {1}", width, height);
+        //Debug.LogFormat("Width: {0}\nHeight: {1}", width, height);
 
         Vector3 right = Vector3.right;
         Vector3 forward = Vector3.forward;

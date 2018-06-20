@@ -9,9 +9,11 @@ public class Timer : MonoBehaviour {
     public Text TimeText;
     public float time = 60;
     public bool OnGame = true;
+    public Text HighScore;
+    public int highscore;
 
     public GameObject ScoreMenuPrefab;
-    public GameObject Game;
+    
 
     void Start()
     {
@@ -24,10 +26,19 @@ public class Timer : MonoBehaviour {
     {
 
         time -= Time.deltaTime;
+
         
+        
+        if (Input.GetButton("Submit"))
+        {
+            highscore += 1;
+        }
+        
+
         if (OnGame = true)
         {
             TimeText.text = ("" + time);
+            HighScore.text = ("HighScore " + highscore);
         }
 
         if (time < 0)
@@ -46,9 +57,4 @@ public class Timer : MonoBehaviour {
         }
 
     }
-
-
-
-
-
 }

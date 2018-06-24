@@ -26,36 +26,52 @@ public class CameraController : MonoBehaviour {
 
     private void Update()
     {
-        float inputX = 0, inputY = 0;
+        
+        if (PlayerController.Instance.isPaused)
+        {
+            float inputX = 0, inputY = 0;
 
-        //if(Application.isMobilePlatform)
-        //{
-            if(Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
+            //if(Application.isMobilePlatform)
+            //{
+            if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
                 Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
                 inputX = touchDeltaPosition.x;
                 inputY = touchDeltaPosition.y;
             }
 
-        //transform.RotateAround(cube)
-        //}
-        //else
-        //    inputX = Input.GetAxis("Mouse X");
+            if (Input.GetMouseButton(1))
+            {
+                inputX = Input.GetAxis("Mouse X") * 16;
+                inputY = Input.GetAxis("Mouse Y") * 16;
+            }
 
-        //Quaternion angleX = Quaternion.AngleAxis(inputX * rotationSpeed, Vector3.up);
-        //Quaternion angleY = Quaternion.AngleAxis(-inputY * rotationSpeed, Vector3.forward);
-        //Quaternion angle = Quaternion.Euler(angleX.eulerAngles.normalized + angleY.eulerAngles.normalized);
-        //offset = angle * offset;
+            //transform.RotateAround(cube)
+            //}
+            //else
+            //    inputX = Input.GetAxis("Mouse X");
 
-        //Vector3 newPos = cube.position + offset;
+            //Quaternion angleX = Quaternion.AngleAxis(inputX * rotationSpeed, Vector3.up);
+            //Quaternion angleY = Quaternion.AngleAxis(-inputY * rotationSpeed, Vector3.forward);
+            //Quaternion angle = Quaternion.Euler(angleX.eulerAngles.normalized + angleY.eulerAngles.normalized);
+            //offset = angle * offset;
 
-        //transform.position = Vector3.Slerp(transform.position, newPos, smoothFactor);
+            //Vector3 newPos = cube.position + offset;
 
-        //transform.LookAt(cube.position);
-        //Debug.Log(Input.touchCount);
+            //transform.position = Vector3.Slerp(transform.position, newPos, smoothFactor);
 
-        transform.RotateAround(Vector3.zero, Vector3.up, inputX * rotationSpeed * Time.deltaTime);
-        transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
+            //transform.LookAt(cube.position);
+            //Debug.Log(Input.touchCount);
+            transform.RotateAround(Vector3.zero, Vector3.up, inputX * rotationSpeed * Time.deltaTime);
+            transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+
+            transform.RotateAround(Vector3.zero, transform.parent.up, 1);
+            //transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
+        }
+        
     }
 
     #endregion

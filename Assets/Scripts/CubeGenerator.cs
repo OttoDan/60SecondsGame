@@ -93,7 +93,7 @@ public class CubeGenerator : EditorWindow {
                 {
                     GameObject copy = Instantiate(cubePrefab, (-right * width * 0.5f) + x * right + (-forward * height * 0.5f) + y * forward, Quaternion.identity, currentSide);
                     copy.GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
-                    //copy.transform.localScale = new Vector3(cubeWidth, cubeHeight, 1);
+                    copy.transform.localScale = new Vector3(cubeWidth, cubeWidth, cubeWidth);
                 }
             }
 

@@ -6,14 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour {
 
+
+    public static Timer instance;
     public Text TimeText;
     public float time = 60;
     public bool OnGame = true;
-    public Text HighScore;
-    public int highscore;
+    public Text Score;
+    public float score;
 
     public GameObject ScoreMenuPrefab;
-    
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     void Start()
     {
@@ -31,30 +40,26 @@ public class Timer : MonoBehaviour {
         
         if (Input.GetButton("Submit"))
         {
-            highscore += 1;
+            score += 1;
         }
-        
 
-        if (OnGame = true)
+
+        if (OnGame == true)
         {
             TimeText.text = ("" + time);
-            HighScore.text = ("HighScore " + highscore);
+            Score.text = ("HighScore " + score);
+            ScoreMenuPrefab.SetActive(false);
         }
+        else
+        {
+            ScoreMenuPrefab.SetActive(true);
+        }
+        
 
         if (time < 0)
         {
             OnGame = false;
             
         }
-
-        if (!OnGame)
-        {
-            ScoreMenuPrefab.SetActive(true);
-        }
-        else
-        {
-            ScoreMenuPrefab.SetActive(false);
-        }
-
     }
 }

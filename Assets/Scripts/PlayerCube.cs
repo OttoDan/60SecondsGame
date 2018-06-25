@@ -25,6 +25,7 @@ public class PlayerCube : MonoBehaviour {
 
     void Update()
     {
+
         if (isPaused)
         {
             Debug.Log(dashPositions.Count);

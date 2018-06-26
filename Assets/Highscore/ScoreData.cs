@@ -7,11 +7,11 @@ public class ScoreData
 {
 
     public string name = "";
-    public float score;
+    public float highscore;
 
-    public ScoreData(string name, float score)
+    public ScoreData(string name, float highscore)
     {
         this.name = name;
-        this.score = score;
+        this.highscore = highscore;
     }
 }

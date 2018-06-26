@@ -1,31 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class HighScoreToJSON : MonoBehaviour
 {
     #region Public Fields
     string filename = "data.json";
     string path;
-
-    
+    string JsonString;
+    public float newhighscore;
+    public float lastHighscore;
 
     
 
     public bool gameFinished = true;
-    //public string nickName = "Hansi";
-    //public float highscore = Random.Range(1f, 100000000000f);
+   
     #endregion
 
     #region UnityFunctions
     private void Start()
     {
-        //
+        
         path = Application.persistentDataPath + "/" + filename;
         Debug.Log(path);
-
-        //highscore = GetComponent<>();
-        //nickName = GetComponent<>();
+        JsonString = File.ReadAllText(path);
+        ScoreData data = JsonUtility.FromJson<ScoreData>(JsonString);
+        lastHighscore = data.highscore;
+        
     }
 
 
@@ -37,22 +39,23 @@ public class HighScoreToJSON : MonoBehaviour
 
             SaveData();
         }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ReadData();
-        }
+        
+        Debug.Log("old" + lastHighscore);
+        newhighscore = Timer.instance.score;
     }
     #endregion
 
     void SaveData()
     {
-        string contents = JsonUtility.ToJson(new ScoreData(SetName.instance.getname.text, Timer.instance.score), true);
-        System.IO.File.WriteAllText(path, contents);
+        if (newhighscore > lastHighscore)
+        
+        {
+            string contents = JsonUtility.ToJson(new ScoreData(SetName.instance.getname.text, newhighscore), true);
+            System.IO.File.WriteAllText(path, contents);
+        }
+        
     }
 
-    void ReadData()
-    {
-
-    }
+   
 }
 

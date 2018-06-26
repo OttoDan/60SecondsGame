@@ -11,7 +11,7 @@ public class PlayerControllerEditor : Editor {
         PlayerController script = (PlayerController)target;
         base.OnInspectorGUI();
 
-        foreach (Vector3 point in script.dashPoints)
+        foreach (Vector3 point in script.dashPointsPosition)
         {
 
             EditorGUILayout.TextArea(point.ToString());

@@ -7,7 +7,10 @@ public class PlayerController : MonoBehaviour {
 
     #region Private Fields
 
-    public List<Vector3> dashPoints = new List<Vector3>();
+    public List<DashPoint> dashPoints = new List<DashPoint>();
+
+    public List<Vector3> dashPointsPosition = new List<Vector3>();
+    public List<Vector3> dashPointsUp = new List<Vector3>();
 
     LineRenderer lineRenderer;
 
@@ -19,11 +22,17 @@ public class PlayerController : MonoBehaviour {
 
     public static PlayerController Instance;
 
+    public static float snapX = 0.5f;
+    public static float snapY = 0.5f;
+    public static float snapZ = 0.5f;
+
     public bool isPaused;
 
     public Transform lastDashPoint;
 
     public Canvas canvas;
+
+    public float camTransitionDuration = 0.75f;
 
     #endregion
 
@@ -71,23 +80,24 @@ public class PlayerController : MonoBehaviour {
                     //    lineRenderer.SetPosition(0,transform.position);
                     //}
 
-                    List<Vector3> points = CalculateDashPath(hit.point);
+                    List<DashPoint> points = CalculateDashPath(hit.point);
                     if (points != null)
                     {
                         //int i = lineRenderer.positionCount;
                         //lineRenderer.positionCount = lineRenderer.positionCount + points.Count;
 
-                        foreach (Vector3 point in points)
+                        foreach (DashPoint point in points)
                         {
-                            dashPoints.Add(point);
+                            dashPointsPosition.Add(point.position);
+                            dashPointsUp.Add(point.up);
                             //i++;
                         }
 
-                        lineRenderer.positionCount = dashPoints.Count + 1;
+                        lineRenderer.positionCount = dashPointsPosition.Count + 1;
                         lineRenderer.SetPosition(0, transform.position);
                         for (int i = 1; i < lineRenderer.positionCount; i++)
                         {
-                            lineRenderer.SetPosition(i, dashPoints[i - 1]);
+                            lineRenderer.SetPosition(i, dashPointsPosition[i - 1]);
 
                         }
                     }
@@ -105,9 +115,12 @@ public class PlayerController : MonoBehaviour {
 
     #region Methods
     
-    List<Vector3> CalculateDashPath(Vector3 toPosition)
+    List<DashPoint> CalculateDashPath(Vector3 toPosition)
     {
-        List<Vector3> points;
+        List<DashPoint> dashPoints;
+        List<Vector3> pointsPosition;
+        List<Vector3> pointsForward;
+        List<Vector3> pointsUp;
         
         lastClick = toPosition;
         Vector3 direction;
@@ -121,7 +134,10 @@ public class PlayerController : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(lastDashPoint.position+lastDashPoint.up, direction, out hit))
         {
-            points = new List<Vector3>();
+            pointsPosition = new List<Vector3>();
+            pointsForward = new List<Vector3>();
+            pointsUp = new List<Vector3>();
+
             normal = hit.normal;
             Debug.Log("Normal: " + normal + " Normalized normal: " + normal.normalized);
 
@@ -143,8 +159,10 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Direction Magnitude: " + directionMagnitude);
             lastDirMag = directionMagnitude;
 
-            points.Add(lastDashPoint.position + forward * directionMagnitude + forward * 0.5f);
-            points.Add(toPosition + forward * 0.5f);
+            pointsPosition.Add(lastDashPoint.position + forward * directionMagnitude + forward * 0.5f);
+            pointsUp.Add(lastDashPoint.up);
+            pointsPosition.Add(toPosition + forward * 0.5f);
+            pointsUp.Add(forward);
 
             //get Normal Vector from to Position
             lastDashPoint.position = toPosition;
@@ -162,53 +180,169 @@ public class PlayerController : MonoBehaviour {
             //    Debug.LogError("Could not hit surface of target cube side!");
 
             //TODO: Consider the cube side underneath the player. 
+            
+            
+            //Snap points to grid:
+            for(int i=0; i<pointsPosition.Count; i++)
+            {
+                pointsPosition[i] = new Vector3(
+                    Mathf.Round(pointsPosition[i].x / snapX * snapX),
+                    Mathf.Round(pointsPosition[i].y / snapY * snapY),
+                    Mathf.Round(pointsPosition[i].z / snapZ * snapZ)
+                );
+            }
 
-            return points;
+            if (pointsPosition.Count != pointsUp.Count)
+                Debug.LogError("(pointsPosition.Count != pointsUp.Count)");
+            else
+            {
+                dashPoints = new List<DashPoint>();
+                for(int i=0; i<pointsPosition.Count; i++)
+                {
+                    dashPoints.Add(new DashPoint(pointsPosition[i], pointsUp[i]));
+                }
+                return dashPoints;
+            }
+
         }
         else
         {
-            points = new List<Vector3>();
-            points.Add(toPosition);
+            dashPoints = new List<DashPoint>();
+
+            dashPoints.Add(new DashPoint(toPosition, lastDashPoint.up));
 
 
             //get Normal Vector from to Position
             lastDashPoint.position = toPosition;
             Debug.Log("keine kante");
+            return dashPoints;
         }
+        return null;
 
-        return points;
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="toPosition"></param>
+    /// <returns></returns>
+    List<DashPoint> CalculateDashPath2(Vector3 fromPosition, Vector3 toPosition)
+    {
+        return null;
+    }
+
+    //{
+    //    Vector3 direction;
+    //    float directionMagnitude;
+    //    Vector3 normal;
+    //    Vector3 forward;
+
+    //    direction = (toPosition - lastDashPoint.position).normalized;
+
+        
+    //    Debug.Log("Direction: " + (toPosition - lastDashPoint.position) + " Normalized: " + direction + " Rounded: " + new Vector3(Mathf.Round(direction.x), Mathf.Round(direction.y), Mathf.Round(direction.z)));
+
+    //    //get the normal of the cube and figure out something is in the way
+
+    //    RaycastHit hit;
+
+    //    if(Physics.Raycast(lastDashPoint.position, direction, out hit, Vector3.Distance(lastDashPoint.position,toPosition)))
+    //    {
+    //        Debug.Log("Hit.point: " + hit.point);
+    //        Debug.Log("Hit.normal: " + hit.normal);
+    //    }
+
+
+       
+
+    //    return null;
+
+    //}
 
     public void Dash()
     {
-        if (DashCoroutine == null && dashPoints.Count > 0)
+        if (DashCoroutine == null && dashPointsPosition.Count > 0)
         {
             canvas.enabled = false;
             isPaused = false;
-            Camera.main.transform.parent = transform;
             DashCoroutine = DashRoutine();
             StartCoroutine(DashCoroutine);
         }
     }
     IEnumerator DashRoutine()
     {
+        Camera.main.transform.parent = transform;
+
+        //Transform cube = Camera.main.GetComponent<CameraController>().cube;
+
+        //rotate camera in order to get the player cube on centered and on top of the screen
+
+        Vector3 camFromPosition = Camera.main.transform.position;
+        Vector3 camToPostiton = (transform.position-Camera.main.transform.position).normalized * Vector3.Distance(Camera.main.transform.position, Vector3.zero);// camFromPosition + (cube.position - camFromPosition).normalized* 20f;//(transform.position - camFromPosition).magnitude;
+        //transform.position.normalized + 
+
+        Vector3 camFromRotation = Camera.main.transform.rotation.eulerAngles;
+
+        // move camera to destination and look at player to get rotation angle
+        Camera.main.transform.position = camToPostiton;
+        Camera.main.transform.LookAt(transform.position);
+        //Camera.main.transform.Rotate(transform.forward, 90);
+        Vector3 camToRotation = Camera.main.transform.rotation.eulerAngles;
+
+        //return to fromPosition
+        Camera.main.transform.position = camFromPosition;
+        Camera.main.transform.rotation = Quaternion.Euler(camFromRotation);
+
+        for (float t =0; t < camTransitionDuration; t += Time.deltaTime)
+        {
+            Camera.main.transform.position = Vector3.Lerp(camFromPosition, camToPostiton, t / camTransitionDuration);
+            Camera.main.transform.rotation = Quaternion.Lerp(
+                                                Quaternion.Euler(camFromRotation), 
+                                                Quaternion.Euler(camToRotation),
+                                                t / camTransitionDuration
+                                                );
+
+            yield return null;
+        }
+
+
         lineRenderer.positionCount = 0;
-        for (int i = 0; i < dashPoints.Count; i++)
+        for (int i = 0; i < dashPointsPosition.Count; i++)
         {
             float duration;
             if (i == 0)
-                duration = Vector3.Distance(dashPoints[0], transform.position) * 0.125f;
+                duration = Vector3.Distance(dashPointsPosition[0], transform.position) * 0.125f;
             else
-                duration = Vector3.Distance(dashPoints[i], dashPoints[i - 1]) * 0.125f;
+                duration = Vector3.Distance(dashPointsPosition[i], dashPointsPosition[i - 1]) * 0.125f;
 
             Vector3 fromPos = transform.position;
+            Vector3 fromUp = transform.up;
             for (float t = 0; t < duration; t += Time.deltaTime)
             {
-                transform.position = Vector3.Lerp(fromPos, dashPoints[i], t / duration);
+                transform.position = Vector3.Lerp(fromPos, dashPointsPosition[i], t / duration);
+                transform.up = Vector3.Lerp(fromUp, dashPointsUp[i], t / duration);
                 yield return null;
             }
         }
-        dashPoints.Clear();
+        dashPointsPosition.Clear();
+
+
+        //lerp back to old position 
+        //TODO: Change!!
+        camToPostiton = Camera.main.transform.position;
+        camToRotation = Camera.main.transform.rotation.eulerAngles;
+        for (float t = 0; t < camTransitionDuration; t += Time.deltaTime)
+        {
+            Camera.main.transform.position = Vector3.Lerp(camToPostiton, camFromPosition,t / camTransitionDuration);
+            Camera.main.transform.rotation = Quaternion.Lerp(
+                                                Quaternion.Euler(camToRotation),
+                                                Quaternion.Euler(camFromRotation),
+                                                t / camTransitionDuration
+                                                );
+
+            yield return null;
+        }
+        Camera.main.transform.parent = null ;
+
         isPaused = true;
         canvas.enabled = true;
         DashCoroutine = null;
@@ -217,4 +351,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     #endregion
+}
+
+public class DashPoint
+{
+    public Vector3 position;
+    public Vector3 up;
+
+    public DashPoint(Vector3 position, Vector3 up)
+    {
+        this.position = position;
+        this.up = up;
+    }
 }

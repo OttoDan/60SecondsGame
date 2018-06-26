@@ -11,7 +11,6 @@ public class CameraController : MonoBehaviour {
     Vector3 offset;
     float rotationSpeed = 5f;//0.25f;
 
-    public Transform cube;
 
     float inputX, inputY;
 
@@ -21,14 +20,14 @@ public class CameraController : MonoBehaviour {
 
     private void Start()
     {
-        offset = transform.position - cube.position;
+        offset = transform.position;// - cube.position;
     }
 
     private void Update()
     {
-        
-        if (PlayerController.Instance.isPaused)
-        {
+
+        //if (PlayerController2.Instance.phase == PlayerController2.Phase.WaitingForInput || PlayerController2.Instance.phase == PlayerController2.Phase.Planning)
+        //{
             float inputX = 0, inputY = 0;
 
             //if(Application.isMobilePlatform)
@@ -36,8 +35,8 @@ public class CameraController : MonoBehaviour {
             if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
                 Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-                inputX = touchDeltaPosition.x;
-                inputY = touchDeltaPosition.y;
+                inputX = touchDeltaPosition.x * 16;
+                inputY = touchDeltaPosition.y * 16;
             }
 
             if (Input.GetMouseButton(1))
@@ -64,13 +63,13 @@ public class CameraController : MonoBehaviour {
             //Debug.Log(Input.touchCount);
             transform.RotateAround(Vector3.zero, Vector3.up, inputX * rotationSpeed * Time.deltaTime);
             transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
-        }
-        else
-        {
+        //}
+        //else
+        //{
 
-            transform.RotateAround(Vector3.zero, transform.parent.up, 1);
-            //transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
-        }
+        //    //transform.RotateAround(Vector3.zero, transform.parent.up, 1);
+        //    //transform.RotateAround(Vector3.zero, Vector3.forward, inputY * rotationSpeed * Time.deltaTime);
+        //}
         
     }
 

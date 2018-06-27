@@ -14,7 +14,7 @@ public class PlayerContEditor : Editor
 
         foreach (DashPoint point in script.dashPoints)
         {
-            EditorGUILayout.TextArea(point.position.ToString());
+            EditorGUILayout.TextArea("Point: " + point.position.ToString() + " Up: " + point.normal.ToString());
         }
 
     }

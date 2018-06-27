@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour {
                         foreach (DashPoint point in points)
                         {
                             dashPointsPosition.Add(point.position);
-                            dashPointsUp.Add(point.up);
+                            dashPointsUp.Add(point.normal);
                             //i++;
                         }
 
@@ -356,11 +356,11 @@ public class PlayerController : MonoBehaviour {
 public class DashPoint
 {
     public Vector3 position;
-    public Vector3 up;
+    public Vector3 normal;
 
-    public DashPoint(Vector3 position, Vector3 up)
+    public DashPoint(Vector3 position, Vector3 normal)
     {
         this.position = position;
-        this.up = up;
+        this.normal = normal;
     }
 }

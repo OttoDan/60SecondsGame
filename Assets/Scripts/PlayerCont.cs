@@ -28,23 +28,24 @@ public class PlayerCont : MonoBehaviour {
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit))
             {
-                CalculateDashPath(hit.point, hit.normal);
+                CalculateDash(hit.point, hit.normal);//CalculateDashPath(SnapToGrid(hit.point), hit.normal);
             }
         }
 
         if (dashPoints.Count > 0)
         {
             Debug.DrawLine(dashPoints[0].position, transform.position, Color.green);
-            Debug.DrawRay(dashPoints[0].position, dashPoints[0].up, Color.cyan);
+            Debug.DrawRay(dashPoints[0].position, dashPoints[0].normal, Color.cyan);
+
         }
         for(int i = 0; i < dashPoints.Count-1; i++)
         {
             
             Debug.DrawLine(dashPoints[i].position, dashPoints[i+1].position, Color.green);
-            Debug.DrawRay(dashPoints[i+1].position, dashPoints[i+1].up, Color.cyan);
+            Debug.DrawRay(dashPoints[i+1].position, dashPoints[i+1].normal, Color.cyan);
         }
+
     }
-    
     public Vector3 SnapToGrid(Vector3 position)
     {
         return new Vector3(Mathf.Round(position.x),Mathf.Round(position.y),Mathf.Round(position.z));
@@ -54,31 +55,280 @@ public class PlayerCont : MonoBehaviour {
     void CalculateDash(Vector3 point, Vector3 normal)
     {
         Vector3 fromPosition;
-        Vector3 fromUp;
+        Vector3 fromNormal;
         Vector3 direction;
+        Vector3 orthogonalDirection;
 
-        float heightDiff;
-        float dist;
+        float directionMagnitude;
 
         if (dashPoints.Count > 0)
         {
             fromPosition = dashPoints[dashPoints.Count - 1].position;
-            fromUp = dashPoints[dashPoints.Count - 1].up;
+            fromNormal = dashPoints[dashPoints.Count - 1].normal;
         }
         else
         {
             fromPosition = transform.position;
-            fromUp = transform.up;
+            fromNormal = transform.up;
         }
 
         direction = (point - fromPosition).normalized;
+        directionMagnitude = (point - fromPosition).magnitude;
+
+        orthogonalDirection = Quaternion.AngleAxis(90, fromNormal) * Vector3.Cross(direction, fromNormal);
+
+
+
+        //We need to consider validation of dash points
+
+        //Rules:
+        // We can only overpass obstacles which lay within the direct path. 
+        // We can only dash to points which are reachable by moving just forward (and overpassing obstacles in between) 
+
+        //VALIDATE DASHPOINT
+
+        /* check if the path is reachable directly / if the entire path is grounded
+         * 
+         */
+
+        //First Check for the amount of obstacles in the way
+
+        RaycastHit orthoHit;
+
+        if (Physics.Raycast(fromPosition, orthogonalDirection, out orthoHit, directionMagnitude))
+        {
+            
+        }
+        //no obstacle in the orthogonal
+        else
+        {
+
+            //fromPos and point share orientation
+            if(normal == fromNormal)
+            {
+                float dist = Vector3.Distance(fromPosition, fromPosition + orthogonalDirection * directionMagnitude);
+                bool grounded;
+                int groundedSteps=0;
+                int nonGroundedSteps=0;
+                for(float s = 0; s < dist; s+= snap)
+                {
+                    RaycastHit groundHit;
+                    if(Physics.Raycast(fromPosition + orthogonalDirection * s, -fromNormal, out groundHit, snap * 2))
+                    {
+                        grounded = true;
+                        groundedSteps++;
+                    }
+                    else
+                    {
+                        grounded = false;
+                        //here we continue looping to validate our target pos
+                        if (Physics.Raycast(fromPosition + orthogonalDirection * s, -fromNormal, out groundHit, snap * 2))
+                            nonGroundedSteps++;
+                    }
+                }
+
+
+            }
+            //different orientation
+            else
+            {
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
+        Debug.Log("calculate Dash");
+        Vector3 fromPosition;
+        Vector3 fromNormal;
+        Vector3 direction;
+        Vector3 orthogonalDirection;
+
+        float heightDiff;
+        float directionMagnitude;
+
+        if (dashPoints.Count > 0)
+        {
+            fromPosition = dashPoints[dashPoints.Count - 1].position;
+            fromNormal = dashPoints[dashPoints.Count - 1].normal;
+        }
+        else
+        {
+            fromPosition = transform.position;
+            fromNormal = transform.up;
+        }
+
+        direction = (point - fromPosition).normalized;
+        directionMagnitude = (point - fromPosition).magnitude;
+
+        orthogonalDirection = Quaternion.AngleAxis(90, fromNormal) * Vector3.Cross(direction, fromNormal);
+
+        RaycastHit hit;
+        if (Physics.Raycast(fromPosition, orthogonalDirection, out hit, directionMagnitude))
+        {
+            float dist = Vector3.Distance(fromPosition, hit.point);
+            RaycastHit groundHit;
+
+            bool grounded = true;
+            Vector3 lastGroundedPos = fromPosition;
+            Vector3 nonGroundedNormal = fromNormal;
+
+            for(float s=0; s<dist; s+= snap)
+            {
+                if (Physics.Raycast(fromPosition + orthogonalDirection * s, -fromNormal, out groundHit, snap * 2))
+                {
+                    lastGroundedPos = groundHit.point + groundHit.normal * snap;
+                    grounded = true;
+                }
+                else
+                {
+                    RaycastHit nonGroundedHit;
+                    if (Physics.Raycast(fromPosition + orthogonalDirection * s - fromNormal * snap * 2, -orthogonalDirection, out nonGroundedHit, snap * 2))
+                    {
+                        nonGroundedNormal = nonGroundedHit.normal;
+                    }
+                    grounded = false;
+                    break;
+                }
+            }
+
+            //All the way towards the obstacle is walkable
+            if (grounded)
+            {
+                dashPoints.Add(new DashPoint(hit.point - orthogonalDirection * snap, hit.normal));
+                CalculateDash(point, normal);
+                return;
+            }
+            //there is a gap in between fromPos and the obstacle
+            else
+            {
+                dashPoints.Add(new DashPoint(lastGroundedPos + orthogonalDirection * snap, nonGroundedNormal));
+                CalculateDash(point, normal);
+                return;
+            }
+        }
+        //No obstacle in the way
+        else
+        {
+            //This could be either obstacle free way to the point or different orientations!
+            if (normal == fromNormal)
+            {
+                float dist = Vector3.Distance(fromPosition, point);
+                RaycastHit groundHit;
+
+                bool grounded = true;
+                Vector3 lastGroundedPos = fromPosition;
+                Vector3 nonGroundedNormal = fromNormal;
+
+                for (float s = 0; s < dist; s += snap)
+                {
+                    if (Physics.Raycast(fromPosition + orthogonalDirection * s, -fromNormal, out groundHit, snap * 2))
+                    {
+                        lastGroundedPos = groundHit.point + fromNormal * snap;
+                        grounded = true;
+                    }
+                    //reached non walkable space
+                    //!(attention: this could be an indice for an invalid dash point!)
+                    else
+                    {
+                        RaycastHit nonGroundedHit;
+                        if (Physics.Raycast(fromPosition + orthogonalDirection * s - fromNormal * snap * 2, -orthogonalDirection, out nonGroundedHit, snap * 2))
+                        {
+                            nonGroundedNormal = nonGroundedHit.normal;
+                        }
+                        grounded = false;
+                        break;
+                    }
+                }
+                //All the way towards the orthogonal border point is walkable
+                if (grounded)
+                {
+                    dashPoints.Add(new DashPoint(point + fromNormal * snap, fromNormal));
+                    //if(Vector3.Distance(point + fromUp * snap, point)<snap) 
+                    return;
+                }
+                //there is a gap in between fromPos and the point
+                //!(attention: this could be an indice for an invalid dash point!)
+                else
+                {
+                    dashPoints.Add(new DashPoint(lastGroundedPos + orthogonalDirection * snap, nonGroundedNormal));
+                    CalculateDash(point, normal);
+                    return;
+                }
+            }
+            //Different Orientations!
+            else
+            {
+                float dist = Vector3.Distance(fromPosition, fromPosition+orthogonalDirection*directionMagnitude);
+                RaycastHit groundHit;
+
+                bool grounded = true;
+                Vector3 lastGroundedPos = fromPosition;
+                Vector3 nonGroundedNormal = fromNormal;
+
+                for (float s = 0; s < dist; s += snap)
+                {
+                    if (Physics.Raycast(fromPosition + orthogonalDirection * s, -fromNormal, out groundHit, snap * 2))
+                    {
+                        lastGroundedPos = groundHit.point + fromNormal * snap;
+                        grounded = true;
+                    }
+                    //reached non walkable space
+                    //!(attention: this could be an indice for an invalid dash point!)
+                    else
+                    {
+                        RaycastHit nonGroundedHit;
+                        if (Physics.Raycast(fromPosition + orthogonalDirection * s - fromNormal * snap * 2, -orthogonalDirection, out nonGroundedHit, snap * 2))
+                        {
+                            nonGroundedNormal = nonGroundedHit.normal;
+                        }
+                        grounded = false;
+                        break;
+                    }
+                }
+                //All the way towards the orthogonal point is walkable
+                if (grounded)
+                {
+                    dashPoints.Add(new DashPoint(point + fromNormal * snap, fromNormal));
+                    //if(Vector3.Distance(point + fromUp * snap, point)<snap)
+                    if (fromNormal != normal)
+                        CalculateDash(point, normal);
+                    return;
+                }
+                //there is a gap in between fromPos and the point
+                //!(attention: this could be an indice for an invalid dash point!)
+                else
+                {
+                    dashPoints.Add(new DashPoint(lastGroundedPos + orthogonalDirection * snap, nonGroundedNormal));
+                    CalculateDash(point, normal);
+                    return;
+                }
+            }
+        }
+
+        */
+
+        ///OLD
+        /*
         dist = Vector3.Distance(fromPosition, point);
 
         RaycastHit forwardHit;
 
         //check if there is something in the way (using the crossproduct rotated by 90 degrees not direction)
-        Vector3 orthogonalDirection = Vector3.Cross(direction, normal);
-        orthogonalDirection = Quaternion.AngleAxis(90, normal) * orthogonalDirection;
 
         if (!Physics.Raycast(fromPosition, orthogonalDirection, out forwardHit, dist))
         {
@@ -107,6 +357,7 @@ public class PlayerCont : MonoBehaviour {
                 Debug.LogError("Cant reach point as tile in front of it is not grounded");
         }
         //there is something in the way, climb it!
+        */
 
     }
     void CalculateDashPath(Vector3 point, Vector3 normal)
@@ -121,7 +372,7 @@ public class PlayerCont : MonoBehaviour {
         if (dashPoints.Count > 0)
         {
             fromPosition = dashPoints[dashPoints.Count - 1].position;
-            fromUp = dashPoints[dashPoints.Count - 1].up;
+            fromUp = dashPoints[dashPoints.Count - 1].normal;
         }
         else
         {
@@ -170,7 +421,7 @@ public class PlayerCont : MonoBehaviour {
                         //we can directly walk to our point without falling - yeh!
                         if (grounded)
                         {
-                            dashPoints.Add(new DashPoint(point+normal*snap, normal));
+                            dashPoints.Add(new DashPoint(point +normal*snap, normal));
                             Debug.Log("dashPoints.Count: " + dashPoints.Count);
                             return;
                         }
@@ -560,14 +811,14 @@ public class PlayerCont : MonoBehaviour {
             for (float t = 0; t < duration; t += Time.deltaTime)
             {
                 transform.position = Vector3.Lerp(fromPos, dashPoints[i].position, t / duration);
-                transform.up = Vector3.Lerp(fromUp, dashPoints[i].up, t / duration);
+                transform.up = Vector3.Lerp(fromUp, dashPoints[i].normal, t / duration);
                 yield return null;
             }
         }
 
         //set to absolut position
         transform.position = dashPoints[dashPoints.Count - 1].position;
-        transform.up = dashPoints[dashPoints.Count - 1].up;
+        transform.up = dashPoints[dashPoints.Count - 1].normal;
 
         dashPoints.Clear();
 

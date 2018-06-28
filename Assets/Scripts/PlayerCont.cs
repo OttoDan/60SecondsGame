@@ -54,6 +54,7 @@ public class PlayerCont : MonoBehaviour {
 
     void CalculateDash(Vector3 point, Vector3 normal)
     {
+        /* Current
         Vector3 fromPosition;
         Vector3 fromNormal;
         Vector3 direction;
@@ -89,7 +90,7 @@ public class PlayerCont : MonoBehaviour {
 
         /* check if the path is reachable directly / if the entire path is grounded
          * 
-         */
+         *
 
         //First Check for the amount of obstacles in the way
 
@@ -137,6 +138,7 @@ public class PlayerCont : MonoBehaviour {
         }
 
 
+        */
 
 
 
@@ -150,8 +152,6 @@ public class PlayerCont : MonoBehaviour {
 
 
 
-
-        /*
         Debug.Log("calculate Dash");
         Vector3 fromPosition;
         Vector3 fromNormal;
@@ -320,7 +320,6 @@ public class PlayerCont : MonoBehaviour {
             }
         }
 
-        */
 
         ///OLD
         /*

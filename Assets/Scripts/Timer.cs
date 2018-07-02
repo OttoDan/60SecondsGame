@@ -7,19 +7,18 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour {
 
 
-    public static Timer instance;
+    public static Timer instanceTimer;
     public Text TimeText;
+    public Text ScoreText;
     public float time = 60;
     public bool OnGame = true;
-    public Text Score;
     public float score;
-
     public GameObject ScoreMenuPrefab;
-
+    
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (instanceTimer == null)
+            instanceTimer = this;
         else
             Destroy(gameObject);
     }
@@ -33,9 +32,10 @@ public class Timer : MonoBehaviour {
 
     void Update()
     {
-
-        time -= Time.deltaTime;
-
+        if (time > -1)
+        {
+            time -= Time.deltaTime;
+        }
         
         
         if (Input.GetButton("Submit"))
@@ -47,10 +47,11 @@ public class Timer : MonoBehaviour {
         if (OnGame == true)
         {
             TimeText.text = ("" + time);
-            Score.text = ("HighScore " + score);
+            ScoreText.text = ("HighScore " + score);
             ScoreMenuPrefab.SetActive(false);
         }
-        else
+        
+        if (OnGame == false)
         {
             ScoreMenuPrefab.SetActive(true);
         }
@@ -59,7 +60,8 @@ public class Timer : MonoBehaviour {
         if (time < 0)
         {
             OnGame = false;
-            
+            time = -1;
+
         }
     }
 }

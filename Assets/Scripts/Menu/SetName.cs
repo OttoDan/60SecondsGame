@@ -7,7 +7,7 @@ public class SetName : MonoBehaviour {
 
     public static SetName instance;
     public string playername;
-    public Text getname;
+    public Text nameField;
 
     private void Awake()
     {
@@ -24,9 +24,9 @@ public class SetName : MonoBehaviour {
 
     public void setName()
     {
-        getname.text = playername;
+        nameField.text = playername;
 
-        Debug.Log("Name = " + getname.text);
+        Debug.Log("Name = " + nameField.text);
     }
 
     // Update is called once per frame

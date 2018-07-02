@@ -11,22 +11,36 @@ public class HighScoreToJSON : MonoBehaviour
     string JsonString;
     public float newhighscore;
     public float lastHighscore;
-
+    public static HighScoreToJSON instanceJson;
+    public string highscorename;
     
 
+
     public bool gameFinished = true;
-   
+
     #endregion
 
     #region UnityFunctions
-    private void Start()
+
+    private void Awake()
     {
-        
+        if (instanceJson == null)
+            instanceJson = this;
+        else
+            Destroy(gameObject);
+
         path = Application.persistentDataPath + "/" + filename;
         Debug.Log(path);
         JsonString = File.ReadAllText(path);
         ScoreData data = JsonUtility.FromJson<ScoreData>(JsonString);
         lastHighscore = data.highscore;
+        highscorename = data.name;
+    }
+
+    private void Start()
+    {
+        
+        
         
     }
 
@@ -34,14 +48,19 @@ public class HighScoreToJSON : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (MainMenu.instanceMenu.OnMenu == false)
         {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
 
-            SaveData();
+                SaveData();
+            }
+
+            Debug.Log("old" + lastHighscore);
+            newhighscore = Timer.instanceTimer.score;
         }
+
         
-        Debug.Log("old" + lastHighscore);
-        newhighscore = Timer.instance.score;
     }
     #endregion
 
@@ -50,7 +69,7 @@ public class HighScoreToJSON : MonoBehaviour
         if (newhighscore > lastHighscore)
         
         {
-            string contents = JsonUtility.ToJson(new ScoreData(SetName.instance.getname.text, newhighscore), true);
+            string contents = JsonUtility.ToJson(new ScoreData(SetName.instance.nameField.text, newhighscore), true);
             System.IO.File.WriteAllText(path, contents);
         }
         

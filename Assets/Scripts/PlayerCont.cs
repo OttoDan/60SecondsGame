@@ -28,7 +28,7 @@ public class PlayerCont : MonoBehaviour {
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit))
             {
-                CalculateDash(hit.point, hit.normal);//CalculateDashPath(SnapToGrid(hit.point), hit.normal);
+                CalculateDashPath(hit.point, hit.normal);//CalculateDashPath(SnapToGrid(hit.point), hit.normal);
             }
         }
 

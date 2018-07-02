@@ -270,39 +270,39 @@ public class PlayerController : MonoBehaviour {
     }
     IEnumerator DashRoutine()
     {
-        Camera.main.transform.parent = transform;
+        //Camera.main.transform.parent = transform;
 
-        //Transform cube = Camera.main.GetComponent<CameraController>().cube;
+        ////Transform cube = Camera.main.GetComponent<CameraController>().cube;
 
-        //rotate camera in order to get the player cube on centered and on top of the screen
+        ////rotate camera in order to get the player cube on centered and on top of the screen
 
-        Vector3 camFromPosition = Camera.main.transform.position;
-        Vector3 camToPostiton = (transform.position-Camera.main.transform.position).normalized * Vector3.Distance(Camera.main.transform.position, Vector3.zero);// camFromPosition + (cube.position - camFromPosition).normalized* 20f;//(transform.position - camFromPosition).magnitude;
-        //transform.position.normalized + 
+        //Vector3 camFromPosition = Camera.main.transform.position;
+        //Vector3 camToPostiton = (transform.position-Camera.main.transform.position).normalized * Vector3.Distance(Camera.main.transform.position, Vector3.zero);// camFromPosition + (cube.position - camFromPosition).normalized* 20f;//(transform.position - camFromPosition).magnitude;
+        ////transform.position.normalized + 
 
-        Vector3 camFromRotation = Camera.main.transform.rotation.eulerAngles;
+        //Vector3 camFromRotation = Camera.main.transform.rotation.eulerAngles;
 
-        // move camera to destination and look at player to get rotation angle
-        Camera.main.transform.position = camToPostiton;
-        Camera.main.transform.LookAt(transform.position);
-        //Camera.main.transform.Rotate(transform.forward, 90);
-        Vector3 camToRotation = Camera.main.transform.rotation.eulerAngles;
+        //// move camera to destination and look at player to get rotation angle
+        //Camera.main.transform.position = camToPostiton;
+        //Camera.main.transform.LookAt(transform.position);
+        ////Camera.main.transform.Rotate(transform.forward, 90);
+        //Vector3 camToRotation = Camera.main.transform.rotation.eulerAngles;
 
-        //return to fromPosition
-        Camera.main.transform.position = camFromPosition;
-        Camera.main.transform.rotation = Quaternion.Euler(camFromRotation);
+        ////return to fromPosition
+        //Camera.main.transform.position = camFromPosition;
+        //Camera.main.transform.rotation = Quaternion.Euler(camFromRotation);
 
-        for (float t =0; t < camTransitionDuration; t += Time.deltaTime)
-        {
-            Camera.main.transform.position = Vector3.Lerp(camFromPosition, camToPostiton, t / camTransitionDuration);
-            Camera.main.transform.rotation = Quaternion.Lerp(
-                                                Quaternion.Euler(camFromRotation), 
-                                                Quaternion.Euler(camToRotation),
-                                                t / camTransitionDuration
-                                                );
+        //for (float t =0; t < camTransitionDuration; t += Time.deltaTime)
+        //{
+        //    Camera.main.transform.position = Vector3.Lerp(camFromPosition, camToPostiton, t / camTransitionDuration);
+        //    Camera.main.transform.rotation = Quaternion.Lerp(
+        //                                        Quaternion.Euler(camFromRotation), 
+        //                                        Quaternion.Euler(camToRotation),
+        //                                        t / camTransitionDuration
+        //                                        );
 
-            yield return null;
-        }
+        //    yield return null;
+        //}
 
 
         lineRenderer.positionCount = 0;
@@ -310,9 +310,9 @@ public class PlayerController : MonoBehaviour {
         {
             float duration;
             if (i == 0)
-                duration = Vector3.Distance(dashPointsPosition[0], transform.position) * 0.125f;
+                duration = Vector3.Distance(dashPointsPosition[0], transform.position) * 0.025f;
             else
-                duration = Vector3.Distance(dashPointsPosition[i], dashPointsPosition[i - 1]) * 0.125f;
+                duration = Vector3.Distance(dashPointsPosition[i], dashPointsPosition[i - 1]) * 0.025f;
 
             Vector3 fromPos = transform.position;
             Vector3 fromUp = transform.up;
@@ -326,22 +326,22 @@ public class PlayerController : MonoBehaviour {
         dashPointsPosition.Clear();
 
 
-        //lerp back to old position 
-        //TODO: Change!!
-        camToPostiton = Camera.main.transform.position;
-        camToRotation = Camera.main.transform.rotation.eulerAngles;
-        for (float t = 0; t < camTransitionDuration; t += Time.deltaTime)
-        {
-            Camera.main.transform.position = Vector3.Lerp(camToPostiton, camFromPosition,t / camTransitionDuration);
-            Camera.main.transform.rotation = Quaternion.Lerp(
-                                                Quaternion.Euler(camToRotation),
-                                                Quaternion.Euler(camFromRotation),
-                                                t / camTransitionDuration
-                                                );
+        ////lerp back to old position 
+        ////TODO: Change!!
+        //camToPostiton = Camera.main.transform.position;
+        //camToRotation = Camera.main.transform.rotation.eulerAngles;
+        //for (float t = 0; t < camTransitionDuration; t += Time.deltaTime)
+        //{
+        //    Camera.main.transform.position = Vector3.Lerp(camToPostiton, camFromPosition,t / camTransitionDuration);
+        //    Camera.main.transform.rotation = Quaternion.Lerp(
+        //                                        Quaternion.Euler(camToRotation),
+        //                                        Quaternion.Euler(camFromRotation),
+        //                                        t / camTransitionDuration
+        //                                        );
 
-            yield return null;
-        }
-        Camera.main.transform.parent = null ;
+        //    yield return null;
+        //}
+        //Camera.main.transform.parent = null ;
 
         isPaused = true;
         canvas.enabled = true;

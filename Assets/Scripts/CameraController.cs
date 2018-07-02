@@ -35,15 +35,15 @@ public class CameraController : MonoBehaviour {
             if (Input.touchCount == 2 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
                 Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
-                inputX = touchDeltaPosition.x * 16;
-                inputY = touchDeltaPosition.y * 16;
+                inputX = touchDeltaPosition.x;
+                inputY = touchDeltaPosition.y;
             }
 
-            if (Input.GetMouseButton(1))
-            {
-                inputX = Input.GetAxis("Mouse X") * 16;
-                inputY = Input.GetAxis("Mouse Y") * 16;
-            }
+            //if (Input.GetMouseButton(1))
+            //{
+            //    inputX = Input.GetAxis("Mouse X") * 16;
+            //    inputY = Input.GetAxis("Mouse Y") * 16;
+            //}
 
             //transform.RotateAround(cube)
             //}

@@ -64,6 +64,9 @@ public class PlayerController : MovingObject {
 
     public void PlaceDashpoint(Vector2 screenPos)
     {
+        if (DashCoroutine != null)
+            return;
+
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         RaycastHit hit;
 
@@ -111,7 +114,8 @@ public class PlayerController : MovingObject {
                     RaycastHit cornerHit;
                     if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal * 2, -orthogonalDirection, out cornerHit, 2, LayerMask.GetMask("Walkable")))
                     {
-                        AddDashPoint(cornerHit.point, cornerHit.normal);
+                        Debug.Log("Corner");
+                        AddDashPoint(cornerHit.point, orthogonalDirection);
                         return;
                     }
                     else
@@ -197,6 +201,11 @@ public class PlayerController : MovingObject {
 
         dashPoints.Clear();
 
+
+        //wait for Respawn Routine / respawn enemies
+        int enemyCount = Random.Range(1, 10);// * anzahlDerBeimLetztenDashZerstörtenEnemies
+        for(int i = 0; i < enemyCount; i++)
+            EnemyManager.Instance.SpawnEnemy();
 
 
         TimeManager.Instance.ToogleStopmotion();

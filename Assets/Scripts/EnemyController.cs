@@ -13,11 +13,21 @@ public class EnemyController : MovingObject {
     private void Start()
     {
     }
+    RaycastHit centerHit;
+
+    Vector3 velocity;
+    //float speed = 0;
 
     private void Update()
     {
-        transform.Translate(transform.forward * 2 * Time.deltaTime);
+        transform.Translate(velocity * 2 * Time.deltaTime);
+        if(Physics.Raycast(transform.position, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude), LayerMask.GetMask("Walkable")))
+        {
+            velocity += (centerHit.point - transform.position).normalized * Time.deltaTime; //centerHit.normal * Time.deltaTime; // 
+
+        }
     }
+
 
     #endregion
 
@@ -53,7 +63,7 @@ public class EnemyController : MovingObject {
                 }
             }
         }
-
+        
         EnemyManager.Instance.SpawnEnemy();
         Destroy(gameObject);
     }

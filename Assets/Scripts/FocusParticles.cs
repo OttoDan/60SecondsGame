@@ -20,6 +20,7 @@ public class FocusParticles : MonoBehaviour {
             Debug.LogError("Two FocusParticles in this scene!");
             Destroy(gameObject);
         }
+        //GetComponent<ParticleSystem>().Simulate(Time.unscaledDeltaTime, true, false);
     }
     #endregion
 

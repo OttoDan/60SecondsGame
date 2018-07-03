@@ -9,6 +9,8 @@ public class EnemyManager : MonoBehaviour {
     public List<GameObject> enemies = new List<GameObject>();
     public int startEnemyAmount = 10;
 
+    public IEnumerator spawnPhaseCoroutine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -39,7 +41,7 @@ public class EnemyManager : MonoBehaviour {
 
     IEnumerator FallOnCube(Transform enemy)
     {
-        float duration = Mathf.Abs(enemy.position.magnitude) * 0.125f;
+        float duration = Mathf.Abs(enemy.position.magnitude) * 0.05f;
 
         
         RaycastHit cubeHit;
@@ -49,16 +51,26 @@ public class EnemyManager : MonoBehaviour {
             Vector3 toPos = cubeHit.point;
             Vector3 fromNormal = enemy.up;
             Vector3 toNormal = cubeHit.normal;
-            Debug.Log("oh");
-            for (float t = 0; t < duration; t += Time.deltaTime)
+            //Debug.Log("oh");
+            for (float t = 0; t < duration; t += Time.unscaledDeltaTime)//deltaTime)
             {
-                enemy.position = Vector3.Lerp(fromPos, toPos, t / duration);
-                enemy.up = Vector3.Lerp(fromNormal, toNormal, t / duration);
+                if (enemy != null)
+                {
+                    enemy.position = Vector3.Lerp(fromPos, toPos, t / duration);
+                    enemy.up = Vector3.Lerp(fromNormal, toNormal, t / duration);
+                }
+                else
+                    break;
 
                 yield return null;
             }
 
         }
         
+    }
+
+    IEnumerator SpawnPhase()
+    {
+        yield return null;
     }
 }

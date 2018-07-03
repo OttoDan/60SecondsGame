@@ -6,10 +6,16 @@ public class PlayerController : MovingObject {
 
     public static PlayerController Instance;
 
+
+    public Canvas dashButtonCanvas;
+
     #region Private Fields
 
     List<DashPoint> dashPoints = new List<DashPoint>();
 
+    LineRenderer lineRenderer;
+
+    IEnumerator DashCoroutine;
 
     #endregion
 
@@ -24,8 +30,13 @@ public class PlayerController : MovingObject {
             Debug.LogError("Two PlayerControllers in the scene!");
             Destroy(gameObject);
         }
-    }
 
+        lineRenderer = GetComponent<LineRenderer>();
+    }
+    private void Start()
+    {
+        TimeManager.Instance.ToogleStopmotion();
+    }
     private void Update()
     {
         DebugDrawDashPoints();
@@ -64,30 +75,26 @@ public class PlayerController : MovingObject {
             if (dashPoints.Count > 0)
             {
                 fromNormal = dashPoints[dashPoints.Count - 1].normal;
-                fromPosition = dashPoints[dashPoints.Count - 1].position + fromNormal * 0.5f;
+                fromPosition = dashPoints[dashPoints.Count - 1].position + dashPoints[dashPoints.Count - 1].normal * 0.5f;
             }
             else
             {
                 fromNormal = transform.up;
-                fromPosition = Grid.Snap(transform.position + fromNormal * 0.5f);
+                fromPosition = Grid.Snap(transform.position) + fromNormal * 0.5f;
             }
-            float dist = Vector3.Distance(fromPosition, Grid.Snap(hit.point));
+            float distance = Vector3.Distance(fromPosition,hit.point);
 
-            //if(dist >= 1)
-            //{
-
-            //}
-            //else
-            if (dist > 2)
+            
+            if (distance <= 2)//1.45 eigentlich
             {
-                Vector3 direction = Quaternion.AngleAxis(90, fromNormal) * Vector3.Cross((Grid.Snap(hit.point) - fromPosition).normalized,fromNormal);
+                Vector3 direction = hit.point - fromPosition;
+                Vector3 orthogonalDirection = Quaternion.AngleAxis(90, fromNormal) * Vector3.Cross(direction.normalized,fromNormal);
 
-                Debug.Log(direction);
                 RaycastHit dirHit;
 
-                if (Physics.Raycast(fromPosition, direction, out dirHit, 24, LayerMask.GetMask("Walkable")))
+                if (Physics.Raycast(fromPosition, orthogonalDirection, out dirHit, direction.magnitude, LayerMask.GetMask("Walkable")))
                 {
-                    dashPoints.Add(new DashPoint(dirHit.point, dirHit.normal));
+                    AddDashPoint(Grid.Snap(dirHit.point), dirHit.normal);
                     return;
                 }
                 else
@@ -96,18 +103,91 @@ public class PlayerController : MovingObject {
 
                     if (Physics.Raycast(fromPosition + direction, -fromNormal, out groundHit, 24, LayerMask.GetMask("Walkable")))
                     {
-                        dashPoints.Add(new DashPoint(groundHit.point, groundHit.normal));
+                        AddDashPoint(Grid.Snap(groundHit.point), groundHit.normal);
                         return;
                     }
                     else
                     {
-                        //dashPoints.Add(new DashPoint(Grid.Snap(hit.point), hit.normal));
+                        AddDashPoint(Grid.Snap(hit.point), hit.normal);
                         return;
                     }
                 }
 
             }
         }
+    }
+
+
+    void AddDashPoint(Vector3 position, Vector3 normal)
+    {
+        foreach(DashPoint point in dashPoints)
+        {
+            if (Vector3.Distance(point.position, Grid.Snap(position)) < 1f)
+                return;
+        }
+        DashPoint dashPoint = new DashPoint(position, normal);
+        FocusParticles.Instance.MoveToPoint(dashPoint);
+        dashPoints.Add(dashPoint);
+        lineRenderer.positionCount = dashPoints.Count + 1;
+        lineRenderer.SetPosition(0, transform.position);
+        for (int i = 1; i < lineRenderer.positionCount; i++)
+        {
+            lineRenderer.SetPosition(i, dashPoints[i - 1].position + dashPoints[i - 1].normal * 0.125f);
+        }
+        
+    }
+
+    public void Dash()
+    {
+        if (DashCoroutine == null && dashPoints.Count > 0)
+        {
+            dashButtonCanvas.enabled = false;
+            DashCoroutine = DashRoutine();
+            StartCoroutine(DashCoroutine);
+        }
+    }
+
+    IEnumerator DashRoutine()
+    {
+        TimeManager.Instance.ToogleStopmotion();
+
+        lineRenderer.positionCount = 0;
+
+        for (int i = 0; i < dashPoints.Count; i++)
+        {
+            float duration;
+            if (i == 0)
+                duration = Vector3.Distance(dashPoints[0].position, transform.position) * 0.05f;
+            else
+                duration = Vector3.Distance(dashPoints[i].position, dashPoints[i - 1].position) * 0.05f;
+
+           
+            Vector3 fromPos = transform.position;
+            Vector3 fromUp = transform.up;
+            
+
+            for (float t = 0; t < duration; t += Time.deltaTime)
+            {
+                transform.position = Vector3.Lerp(fromPos, dashPoints[i].position, t / duration);
+                transform.LookAt(dashPoints[i].position);
+
+                yield return null;
+            }
+        }
+
+        //set to absolute position
+        transform.position = dashPoints[dashPoints.Count - 1].position;
+        transform.up = dashPoints[dashPoints.Count - 1].normal;
+
+        dashPoints.Clear();
+
+
+
+        TimeManager.Instance.ToogleStopmotion();
+        dashButtonCanvas.enabled = true;
+        DashCoroutine = null;
+
+
     }
 
     #endregion

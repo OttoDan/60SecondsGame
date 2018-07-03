@@ -12,7 +12,8 @@ public class InputManager : MonoBehaviour {
     /// the finger id of the Touch inside the cube
     /// </summary>
     public int cubeFingerID { get; private set; }
-
+    int paintUpdateFrames = 0;
+    int paintUpdateFrameFrequence = 2;
     /// <summary>
     /// the finger id of the Touch outside the cube
     /// </summary>
@@ -92,13 +93,13 @@ public class InputManager : MonoBehaviour {
                 case TouchPhase.Moved:
                     if (cubeFingerID == currentTouch.fingerId)
                     {
-                        //paintUpdateFrames++;
+                        paintUpdateFrames++;
 
-                        //if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
-                        //{
-                        PlayerController.Instance.PlaceDashpoint(currentTouch.position);
-                        //    paintUpdateFrames = 0;
-                        //}
+                        if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
+                        {
+                            PlayerController.Instance.PlaceDashpoint(currentTouch.position);
+                            paintUpdateFrames = 0;
+                        }
 
                     }
                     else if (cameraFingerID == currentTouch.fingerId)

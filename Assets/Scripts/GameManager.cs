@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour {
 
     public int currentScore { get; private set; }
 
+    public float seconds = 0;
+
+    public Canvas scoreCanvas;
+
     public const float addScoreDurationMultiplier = 0.25f;
 
     #endregion
@@ -45,6 +49,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void Update()
+    {
+        seconds += Time.deltaTime;//Time.unscaledDeltaTime;//Time.unscaledTime;
+        UIManager.Instance.UpdateTime();
+    }
+
     #endregion
 
     #region Methods
@@ -54,6 +64,8 @@ public class GameManager : MonoBehaviour {
         //IEnumerator coroutine = AddScoreRoutine(score);
         //StartCoroutine(coroutine);
         currentScore += score;
+        UIManager.Instance.UpdateScore();
+
         Debug.Log("scored: " + score + "\ncurrentScore:" + currentScore);
     }
 

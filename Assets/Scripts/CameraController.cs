@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour {
     public void InputRotation(float inputX, float inputY)
     {
         transform.RotateAround(Vector3.zero, Vector3.up, inputX * 5 * Time.unscaledDeltaTime);
-        transform.RotateAround(Vector3.zero, Vector3.Cross(transform.position.normalized, transform.up), inputY * 5 * Time.unscaledDeltaTime);
+        transform.RotateAround(Vector3.zero, Vector3.Cross(transform.position.normalized, transform.up), -inputY * 5 * Time.unscaledDeltaTime);
     }
 
 

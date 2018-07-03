@@ -67,7 +67,7 @@ public class PlayerController : MovingObject {
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Camera.main.transform.position.magnitude, LayerMask.GetMask("Walkable")))
+        if (Physics.Raycast(ray, out hit, Camera.main.transform.position.magnitude*2, LayerMask.GetMask("Walkable")))
         {
             Vector3 fromPosition;
             Vector3 fromNormal;
@@ -120,11 +120,12 @@ public class PlayerController : MovingObject {
 
     void AddDashPoint(Vector3 position, Vector3 normal)
     {
-        foreach(DashPoint point in dashPoints)
-        {
-            if (Vector3.Distance(point.position, Grid.Snap(position)) < 1f)
-                return;
-        }
+        //Prevent double points
+        //foreach(DashPoint point in dashPoints)
+        //{
+        //    if (Vector3.Distance(point.position, Grid.Snap(position)) < 1f)
+        //        return;
+        //}
         DashPoint dashPoint = new DashPoint(position, normal);
         FocusParticles.Instance.MoveToPoint(dashPoint);
         dashPoints.Add(dashPoint);
@@ -134,7 +135,8 @@ public class PlayerController : MovingObject {
         {
             lineRenderer.SetPosition(i, dashPoints[i - 1].position + dashPoints[i - 1].normal * 0.125f);
         }
-        
+        lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.1f, .5f), new Keyframe(.9f, .5f), new Keyframe(1, 0));
+
     }
 
     public void Dash()

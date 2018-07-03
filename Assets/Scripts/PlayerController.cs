@@ -85,35 +85,49 @@ public class PlayerController : MovingObject {
             float distance = Vector3.Distance(fromPosition,hit.point);
 
             
-            if (distance <= 2)//1.45 eigentlich
-            {
+            //if (distance <= 2)//1.45 eigentlich
+            //{
                 Vector3 direction = hit.point - fromPosition;
                 Vector3 orthogonalDirection = Quaternion.AngleAxis(90, fromNormal) * Vector3.Cross(direction.normalized,fromNormal);
 
                 RaycastHit dirHit;
 
-                if (Physics.Raycast(fromPosition, orthogonalDirection, out dirHit, direction.magnitude, LayerMask.GetMask("Walkable")))
+            if (Physics.Raycast(fromPosition, orthogonalDirection, out dirHit, 2 /*direction.magnitude*/, LayerMask.GetMask("Walkable")))
+            {
+                AddDashPoint(dirHit.point, dirHit.normal);
+                return;
+            }
+            else
+            {
+                RaycastHit groundHit;
+
+                if (Physics.Raycast(fromPosition + orthogonalDirection, -fromNormal, out groundHit, 2, LayerMask.GetMask("Walkable")))
                 {
-                    AddDashPoint(Grid.Snap(dirHit.point), dirHit.normal);
+                    AddDashPoint(groundHit.point, groundHit.normal);
                     return;
                 }
                 else
                 {
-                    RaycastHit groundHit;
-
-                    if (Physics.Raycast(fromPosition + direction, -fromNormal, out groundHit, 24, LayerMask.GetMask("Walkable")))
+                    RaycastHit cornerHit;
+                    if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal * 2, -orthogonalDirection, out cornerHit, 2, LayerMask.GetMask("Walkable")))
                     {
-                        AddDashPoint(Grid.Snap(groundHit.point), groundHit.normal);
+                        AddDashPoint(cornerHit.point, cornerHit.normal);
                         return;
                     }
                     else
                     {
-                        AddDashPoint(Grid.Snap(hit.point), hit.normal);
+                        Debug.Log("No ray");
+                        AddDashPoint(hit.point, hit.normal);
                         return;
                     }
                 }
-
             }
+
+            //}
+            //else
+            //{
+
+            //}
         }
     }
 

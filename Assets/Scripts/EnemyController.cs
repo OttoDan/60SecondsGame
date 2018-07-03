@@ -53,6 +53,8 @@ public class EnemyController : MovingObject {
                 }
             }
         }
+
+        EnemyManager.Instance.SpawnEnemy();
         Destroy(gameObject);
     }
 

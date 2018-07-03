@@ -93,13 +93,13 @@ public class InputManager : MonoBehaviour {
                 case TouchPhase.Moved:
                     if (cubeFingerID == currentTouch.fingerId)
                     {
-                        //paintUpdateFrames++;
+                        paintUpdateFrames++;
 
-                        //if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
-                        //{
+                        if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
+                        {
                             PlayerController.Instance.PlaceDashpoint(currentTouch.position);
-                        //    paintUpdateFrames = 0;
-                        //}
+                            paintUpdateFrames = 0;
+                        }
 
                     }
                     else if (cameraFingerID == currentTouch.fingerId)
@@ -112,10 +112,7 @@ public class InputManager : MonoBehaviour {
                 case TouchPhase.Ended:
                     Debug.Log("Ended: " + i);
                     if (cubeFingerID == i)
-                    {
                         cubeFingerID = -1;
-                        PlayerController.Instance.Dash();
-                    }
                     if (cameraFingerID == i)
                         cameraFingerID = -1;
                     break;

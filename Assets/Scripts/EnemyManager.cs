@@ -33,6 +33,8 @@ public class EnemyManager : MonoBehaviour {
         if(enemies.Count > 0)
         {
             GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Count)], transform);
+            enemy.transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
+            enemy.transform.localScale *= Random.Range(0.75f, 1.75f);
             enemy.transform.position = Random.insideUnitSphere * 32;
             enemy.transform.LookAt(Vector3.zero);
             StartCoroutine(FallOnCube(enemy.transform));

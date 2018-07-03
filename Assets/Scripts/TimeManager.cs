@@ -39,7 +39,7 @@ public class TimeManager : MonoBehaviour
 
     }
 
-    public void ToogleStopmotion()
+    public void ToggleStopMotion()
     {
         if (slow == false)
         {
@@ -52,6 +52,26 @@ public class TimeManager : MonoBehaviour
             Time.timeScale = 1;
             slow = false;
         }
+    }
+
+    public void ActivateStopMotion()
+    {
+        if (slow == false)
+        {
+            Time.timeScale = slowdownFactor;
+            Time.fixedDeltaTime = Time.timeScale * .02f;
+            slow = true;
+        }
+    }
+
+    public void DeactivateStopMotion()
+    {
+        if (slow == true)
+        {
+            Time.timeScale = 1;
+            slow = false;
+        }
+
     }
 
 }

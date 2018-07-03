@@ -21,10 +21,10 @@ public class EnemyController : MovingObject {
     private void Update()
     {
         transform.Translate(velocity * 2 * Time.deltaTime);
+        
         if(Physics.Raycast(transform.position, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude), LayerMask.GetMask("Walkable")))
         {
-            velocity += (centerHit.point - transform.position).normalized * Time.deltaTime; //centerHit.normal * Time.deltaTime; // 
-
+            velocity = (transform.forward * 24 + (centerHit.point - transform.position).normalized * 3) * Time.deltaTime;
         }
     }
 
@@ -47,6 +47,8 @@ public class EnemyController : MovingObject {
         float yStep = (bounds.max.y - bounds.min.y) / cubesPerRow;
         float zStep = (bounds.max.z - bounds.min.z) / cubesPerRow;
         Vector3 direction = (transform.position - PlayerController.Instance.transform.position).normalized;
+        
+
         for (float x = bounds.min.x; x < bounds.max.x; x+= xStep)
         {
 
@@ -66,6 +68,13 @@ public class EnemyController : MovingObject {
         
         EnemyManager.Instance.SpawnEnemy();
         Destroy(gameObject);
+    }
+
+
+    void QuickAndDirtyStopMotionEnde()
+    {
+
+        TimeManager.Instance.DeactivateStopMotion();
     }
 
     #endregion

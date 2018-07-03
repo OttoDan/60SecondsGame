@@ -35,7 +35,7 @@ public class PlayerController : MovingObject {
     }
     private void Start()
     {
-        TimeManager.Instance.ToogleStopmotion();
+        TimeManager.Instance.ActivateStopMotion();
     }
     private void Update()
     {
@@ -48,10 +48,13 @@ public class PlayerController : MovingObject {
         if(collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             EnemyController enemyController = collider.gameObject.GetComponent<EnemyController>();
+
             if (enemyController != null)
             {
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
+               // TimeManager.Instance.ActivateStopMotion();
+               // Invoke("QuickAndDirtyStopMotionEnde", 0.025f);
             }
             else
                 Debug.LogError("Missing EnemyController on object on Enemy layer!");
@@ -169,17 +172,17 @@ public class PlayerController : MovingObject {
 
     IEnumerator DashRoutine()
     {
-        TimeManager.Instance.ToogleStopmotion();
+        TimeManager.Instance.DeactivateStopMotion();
 
         lineRenderer.positionCount = 0;
 
         for (int i = 0; i < dashPoints.Count; i++)
         {
-            float duration;
-            if (i == 0)
-                duration = Vector3.Distance(dashPoints[0].position, transform.position) * 0.05f;
-            else
-                duration = Vector3.Distance(dashPoints[i].position, dashPoints[i - 1].position) * 0.05f;
+            float duration=0.025f;
+            //if (i == 0)
+            //    duration = Vector3.Distance(dashPoints[0].position, transform.position) * 0.05f;
+            //else
+            //    duration = Vector3.Distance(dashPoints[i].position, dashPoints[i - 1].position) * 0.05f;
 
            
             Vector3 fromPos = transform.position;
@@ -208,7 +211,7 @@ public class PlayerController : MovingObject {
             EnemyManager.Instance.SpawnEnemy();
 
 
-        TimeManager.Instance.ToogleStopmotion();
+        TimeManager.Instance.ActivateStopMotion();
         dashButtonCanvas.enabled = true;
         DashCoroutine = null;
 

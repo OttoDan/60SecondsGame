@@ -53,11 +53,12 @@ public class PlayerController : MovingObject {
             {
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
-                if (dashStopMotionCoroutine == null)
-                {
-                    dashStopMotionCoroutine = DashStopMotionRoutine();
-                    StartCoroutine(dashStopMotionCoroutine);
-                }
+                TimeManager.Instance.EnemyHitStopMoution();
+                //if (dashStopMotionCoroutine == null)
+                //{
+                //    dashStopMotionCoroutine = DashStopMotionRoutine();
+                //    StartCoroutine(dashStopMotionCoroutine);
+                //}
 
             }
             else

@@ -17,6 +17,8 @@ public class TimeManager : MonoBehaviour
 
     CursorLockMode wantedMode;
 
+    IEnumerator enemyHitCoroutine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -72,6 +74,39 @@ public class TimeManager : MonoBehaviour
             slow = false;
         }
 
+    }
+
+    public void EnemyHitStopMoution()
+    {
+        if(enemyHitCoroutine == null)
+        {
+            enemyHitCoroutine = EnemyHitRoutine();
+            StartCoroutine(enemyHitCoroutine);
+        }
+    }
+
+    IEnumerator EnemyHitRoutine()
+    {
+        float duration = 0.75f;
+        float timeFrom = Time.timeScale;
+        float timeTo = slowdownFactor;
+        //for (float t = 0; t < duration*0.125f; t+= Time.unscaledDeltaTime)
+        //{
+        //    Time.timeScale = Mathf.Lerp(timeFrom, timeTo, t / duration);
+        //    yield return new WaitForEndOfFrame();
+        //}
+        Time.timeScale = timeTo;
+        for (float t = 0; t < duration * 0.75f; t += Time.unscaledDeltaTime)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        for (float t = 0; t < duration * 0.25f; t += Time.unscaledDeltaTime)
+        {
+            Time.timeScale = Mathf.Lerp(timeTo, timeFrom, t / duration);
+            yield return new WaitForEndOfFrame();
+        }
+        Time.timeScale = timeFrom;
+        enemyHitCoroutine = null;
     }
 
 }

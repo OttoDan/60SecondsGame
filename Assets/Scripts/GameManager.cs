@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour {
 
     public void SwitchToLevelState()
     {
-        seconds = 10;
+        seconds = 60;
         this.state = State.Level;
     }
 

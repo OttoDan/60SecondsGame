@@ -4,11 +4,58 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CTR_MainBody-base.L
+    100004: CTR_MainBody-tip.L
+    100006: CTR_MainBody-tip.L_end
+    100008: CTR_Particle1
+    100010: CTR_Particle1_end
+    100012: CTR_Particle2
+    100014: CTR_Particle2_end
+    100016: CTR_Particle3
+    100018: CTR_Particle3_end
+    100020: CTR_Particle4
+    100022: CTR_Particle4_end
+    100024: CTR_Root
+    100026: CTR_SmallSphere
+    100028: CTR_SmallSphere_end
+    100030: DEF_MainBody.L
+    100032: DEF_MainBody.L_end
+    100034: Enemy-Smart
+    100036: Smart-Armature
     400000: //RootNode
+    400002: CTR_MainBody-base.L
+    400004: CTR_MainBody-tip.L
+    400006: CTR_MainBody-tip.L_end
+    400008: CTR_Particle1
+    400010: CTR_Particle1_end
+    400012: CTR_Particle2
+    400014: CTR_Particle2_end
+    400016: CTR_Particle3
+    400018: CTR_Particle3_end
+    400020: CTR_Particle4
+    400022: CTR_Particle4_end
+    400024: CTR_Root
+    400026: CTR_SmallSphere
+    400028: CTR_SmallSphere_end
+    400030: DEF_MainBody.L
+    400032: DEF_MainBody.L_end
+    400034: Enemy-Smart
+    400036: Smart-Armature
     2100000: Smart-Enemy
     2300000: //RootNode
+    2300002: Enemy-Smart
     3300000: //RootNode
+    3300002: Enemy-Smart
     4300000: Enemy-Smart
+    7400000: "Smart-Armature|m\xFCll"
+    7400002: "Smart-Armature|m\xFCll.001"
+    7400004: Smart-Armature|Smart-Idle
+    7400006: Smart-Armature|Smart_Movement
+    7400008: Smart-Armature|Smart_Movement.001
+    7400010: Smart-Armature|Smart_Movement.002
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Enemy-Smart
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -29,7 +76,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -78,13 +125,13 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: CTR_Root
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

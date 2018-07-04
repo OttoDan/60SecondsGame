@@ -4,11 +4,86 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CTR_CapeBackBase
+    100004: CTR_CapeBackTip
+    100006: CTR_CapeBackTip_end
+    100008: CTR_CapeBase
+    100010: CTR_CapeFrontBase
+    100012: CTR_CapeFrontTip
+    100014: CTR_CapeFrontTip_end
+    100016: CTR_CapeLeftBase
+    100018: CTR_CapeLeftTip
+    100020: CTR_CapeLeftTip_end
+    100022: CTR_CapeRightBase
+    100024: CTR_CapeRightTip
+    100026: CTR_CapeRightTip_end
+    100028: CTR_CapeTip
+    100030: CTR_HatBase
+    100032: CTR_HatTip
+    100034: CTR_HatTip_end
+    100036: CTR_Head
+    100038: CTR_Head_end
+    100040: CTR_Root
+    100042: DEF_CapeBack
+    100044: DEF_CapeBack_end
+    100046: DEF_CapeFront
+    100048: DEF_CapeFront_end
+    100050: DEF_CapeLeft
+    100052: DEF_CapeLeft_end
+    100054: DEF_CapeRight
+    100056: DEF_CapeRight_end
+    100058: DEF_Hat
+    100060: DEF_Hat_end
+    100062: Enemy_Ghostly
+    100064: Ghostly-Armature
     400000: //RootNode
+    400002: CTR_CapeBackBase
+    400004: CTR_CapeBackTip
+    400006: CTR_CapeBackTip_end
+    400008: CTR_CapeBase
+    400010: CTR_CapeFrontBase
+    400012: CTR_CapeFrontTip
+    400014: CTR_CapeFrontTip_end
+    400016: CTR_CapeLeftBase
+    400018: CTR_CapeLeftTip
+    400020: CTR_CapeLeftTip_end
+    400022: CTR_CapeRightBase
+    400024: CTR_CapeRightTip
+    400026: CTR_CapeRightTip_end
+    400028: CTR_CapeTip
+    400030: CTR_HatBase
+    400032: CTR_HatTip
+    400034: CTR_HatTip_end
+    400036: CTR_Head
+    400038: CTR_Head_end
+    400040: CTR_Root
+    400042: DEF_CapeBack
+    400044: DEF_CapeBack_end
+    400046: DEF_CapeFront
+    400048: DEF_CapeFront_end
+    400050: DEF_CapeLeft
+    400052: DEF_CapeLeft_end
+    400054: DEF_CapeRight
+    400056: DEF_CapeRight_end
+    400058: DEF_Hat
+    400060: DEF_Hat_end
+    400062: Enemy_Ghostly
+    400064: Ghostly-Armature
     2100000: Ghostly
     2300000: //RootNode
+    2300002: Enemy_Ghostly
     3300000: //RootNode
+    3300002: Enemy_Ghostly
     4300000: Enemy_Ghostly
+    7400000: Ghostly-Armature|Ghostly_Idle
+    7400002: Ghostly-Armature|Ghostly_Movement
+    7400004: Ghostly-Armature|Ghostly_Movement.001
+    7400006: "Ghostly-Armature|m\xFCll"
+    7400008: "Ghostly-Armature|m\xFCll.001"
+    7400010: "Ghostly-Armature|m\xFCll.002"
+    9500000: //RootNode
+    13700000: Enemy_Ghostly
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -29,7 +104,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -78,13 +153,13 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: Ghostly-Armature
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

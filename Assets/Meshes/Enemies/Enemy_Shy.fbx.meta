@@ -4,11 +4,47 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CTR_Body-Base
+    100004: CTR_Body-Tip
+    100006: CTR_Body-Tip_end
+    100008: DEF_body
+    100010: DEF_body_end
+    100012: DEF_Foot.L
+    100014: DEF_Foot.L_end
+    100016: DEF_Foot.R
+    100018: DEF_Foot.R_end
+    100020: DEF_Leg.L
+    100022: DEF_Leg.R
+    100024: Enemy_Shy
+    100026: Shy-Armature
     400000: //RootNode
+    400002: CTR_Body-Base
+    400004: CTR_Body-Tip
+    400006: CTR_Body-Tip_end
+    400008: DEF_body
+    400010: DEF_body_end
+    400012: DEF_Foot.L
+    400014: DEF_Foot.L_end
+    400016: DEF_Foot.R
+    400018: DEF_Foot.R_end
+    400020: DEF_Leg.L
+    400022: DEF_Leg.R
+    400024: Enemy_Shy
+    400026: Shy-Armature
     2100000: Material.004
     2300000: //RootNode
+    2300002: Enemy_Shy
     3300000: //RootNode
+    3300002: Enemy_Shy
     4300000: Enemy_Shy
+    7400000: Shy-Armature|ArmatureAction
+    7400002: Shy-Armature|Innocent_Movement
+    7400004: "Shy-Armature|m\xFCll"
+    7400006: "Shy-Armature|m\xFCll.001"
+    7400008: Shy-Armature|Shy-Idle
+    7400010: Shy-Armature|Shy_Movement
+    9500000: //RootNode
+    13700000: Enemy_Shy
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -29,7 +65,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -81,10 +117,10 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

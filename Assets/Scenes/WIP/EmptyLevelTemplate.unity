@@ -1542,6 +1542,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cce1b3002c9b14a9e775fbe76b922a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MouseSensitivity: 12
+  OrbitDamping: 0.92
 --- !u!81 &1920167922
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1647,8 +1649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9724212622e2404cace1bf1fb0de86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: Dude
   state: 2
-  seconds: 0
   scoreCanvas: {fileID: 0}
 --- !u!114 &2095974737
 MonoBehaviour:

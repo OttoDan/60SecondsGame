@@ -4,10 +4,30 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CTR_Base
+    100004: CTR_Root
+    100006: CTR_Root_end
+    100008: CTR_Tip
+    100010: CTR_Tip_end
+    100012: DEF_Body
+    100014: DEF_Body_end
+    100016: Obstacle-Static_LP
+    100018: Obstacle_Static_Armature
     400000: //RootNode
+    400002: CTR_Base
+    400004: CTR_Root
+    400006: CTR_Root_end
+    400008: CTR_Tip
+    400010: CTR_Tip_end
+    400012: DEF_Body
+    400014: DEF_Body_end
+    400016: Obstacle-Static_LP
+    400018: Obstacle_Static_Armature
     2100000: Obstacle_Static
     2300000: //RootNode
+    2300002: Obstacle-Static_LP
     3300000: //RootNode
+    3300002: Obstacle-Static_LP
     4300000: Obstacle-Static_LP
   externalObjects: {}
   materials:

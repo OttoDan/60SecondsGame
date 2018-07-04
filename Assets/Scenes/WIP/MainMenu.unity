@@ -137,8 +137,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 75729343}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.96, y: 0.030234374, z: -15.98}
-  m_LocalScale: {x: 0.23359849, y: 0.3304843, z: 0.4495546}
+  m_LocalPosition: {x: 0.98, y: -0.34, z: -15.98}
+  m_LocalScale: {x: 0.27188092, y: 0.38095927, z: 0.4495546}
   m_Children: []
   m_Father: {fileID: 1026432817}
   m_RootOrder: 1
@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 280023404}
   - component: {fileID: 280023403}
   - component: {fileID: 280023402}
+  - component: {fileID: 280023405}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Untagged
@@ -400,14 +401,14 @@ RectTransform:
   m_GameObject: {fileID: 280023400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 80500754}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 340.4, y: 270.5}
+  m_AnchoredPosition: {x: 482, y: 270.5}
   m_SizeDelta: {x: 115.7, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &280023402
@@ -427,7 +428,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -495,6 +496,24 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 280023400}
+--- !u!95 &280023405
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 280023400}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f339613bcbc31940a3d0ef4750412da, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &312614887
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,6 +2129,7 @@ GameObject:
   - component: {fileID: 1590389397}
   - component: {fileID: 1590389396}
   - component: {fileID: 1590389395}
+  - component: {fileID: 1590389398}
   m_Layer: 0
   m_Name: StartButton
   m_TagString: Untagged
@@ -2125,14 +2145,14 @@ RectTransform:
   m_GameObject: {fileID: 1590389393}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -16.16}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children: []
   m_Father: {fileID: 1026432817}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.125, y: 0.25}
   m_AnchorMax: {x: 0.875, y: 0.75}
-  m_AnchoredPosition: {x: 0, y: -0.010009766}
+  m_AnchoredPosition: {x: 0.04, y: -0.010009766}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1590389395
@@ -2152,7 +2172,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2220,6 +2240,24 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1590389393}
+--- !u!95 &1590389398
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1590389393}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 167a221b3086ebb4f98609c207c30ebe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1731492607
 GameObject:
   m_ObjectHideFlags: 0

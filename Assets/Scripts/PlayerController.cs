@@ -41,7 +41,7 @@ public class PlayerController : MovingObject {
     {
         DebugDrawDashPoints();
     }
-
+    IEnumerator dashStopMotionCoroutine;
     private void OnTriggerEnter(Collider collider)
     {
         Debug.Log("collider");
@@ -53,14 +53,18 @@ public class PlayerController : MovingObject {
             {
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
-               // TimeManager.Instance.ActivateStopMotion();
-               // Invoke("QuickAndDirtyStopMotionEnde", 0.025f);
+                if (dashStopMotionCoroutine == null)
+                {
+                    dashStopMotionCoroutine = DashStopMotionRoutine();
+                    StartCoroutine(dashStopMotionCoroutine);
+                }
+
             }
             else
                 Debug.LogError("Missing EnemyController on object on Enemy layer!");
         }
     }
-
+    
     #endregion
 
     #region Methods
@@ -187,12 +191,16 @@ public class PlayerController : MovingObject {
            
             Vector3 fromPos = transform.position;
             Vector3 fromUp = transform.up;
-            
+            Quaternion fromRotation = transform.rotation;
+
+            Quaternion toRotation;
+            toRotation = Quaternion.LookRotation((dashPoints[i].position-fromPos).normalized, dashPoints[i].normal);//Quaternion.AngleAxis(90, transform.forward) * Vector3.Cross((dashPoints[i].position - fromPos).normalized, transform.up);
 
             for (float t = 0; t < duration; t += Time.deltaTime)
             {
-                transform.position = Vector3.Lerp(fromPos, dashPoints[i].position, t / duration);
-                transform.LookAt(dashPoints[i].position);
+                transform.position = Vector3.Lerp(fromPos, dashPoints[i].position,  t / duration);
+                transform.rotation = Quaternion.Slerp(fromRotation, toRotation, t / duration);
+                //transform.LookAt(dashPoints[i].position);
 
                 yield return null;
             }
@@ -200,7 +208,7 @@ public class PlayerController : MovingObject {
 
         //set to absolute position
         transform.position = dashPoints[dashPoints.Count - 1].position;
-        transform.up = dashPoints[dashPoints.Count - 1].normal;
+        //transform.up = dashPoints[dashPoints.Count - 1].normal;
 
         dashPoints.Clear();
 
@@ -218,6 +226,14 @@ public class PlayerController : MovingObject {
 
     }
 
+    IEnumerator DashStopMotionRoutine()
+    {
+        TimeManager.Instance.ActivateStopMotion();
+        yield return new WaitForSecondsRealtime(0.25f);
+        TimeManager.Instance.DeactivateStopMotion();
+        dashStopMotionCoroutine = null;
+        yield return null;
+    }
     #endregion
 
     #region Debug

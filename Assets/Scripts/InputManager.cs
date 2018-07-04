@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour {
         }
         else
         {
-            Debug.LogError("Two InputManagers in scene!");
+            Debug.LogWarning("Two InputManagers in scene!");
             Destroy(gameObject);
         }
 
@@ -76,11 +76,17 @@ public class InputManager : MonoBehaviour {
             {
                 case TouchPhase.Began:
                     Ray ray = Camera.main.ScreenPointToRay(currentTouch.position);
-                    if (Physics.Raycast(ray,Camera.main.transform.position.magnitude, LayerMask.GetMask("Walkable")))//TODO: restrict to the walkable layer / ignore all other layers
+
+
+                    if (Physics.Raycast(ray, Camera.main.transform.position.magnitude, LayerMask.GetMask("Walkable")))
+                    //TODO: restrict to the walkable layer / ignore all other layers
                     {
-                        cubeFingerID = currentTouch.fingerId;
-                        //dashPaint = true;
-                        Debug.Log("cubeFingerID: " + currentTouch.fingerId);
+                        if (GameManager.Instance.state == GameManager.State.Level)
+                        {
+                            cubeFingerID = currentTouch.fingerId;
+                            //dashPaint = true;
+                            Debug.Log("cubeFingerID: " + currentTouch.fingerId);
+                        }
                     }
                     else
                     {
@@ -93,13 +99,16 @@ public class InputManager : MonoBehaviour {
                 case TouchPhase.Moved:
                     if (cubeFingerID == currentTouch.fingerId)
                     {
-                        //paintUpdateFrames++;
+                        if (GameManager.Instance.state == GameManager.State.Level)
+                        {
+                            //paintUpdateFrames++;
 
-                        //if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
-                        //{
+                            //if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
+                            //{
                             PlayerController.Instance.PlaceDashpoint(currentTouch.position);
-                        //    paintUpdateFrames = 0;
-                        //}
+                            //    paintUpdateFrames = 0;
+                            //}
+                        }
 
                     }
                     else if (cameraFingerID == currentTouch.fingerId)
@@ -110,11 +119,15 @@ public class InputManager : MonoBehaviour {
                     break;
 
                 case TouchPhase.Ended:
+                    
                     Debug.Log("Ended: " + i);
                     if (cubeFingerID == i)
                     {
                         cubeFingerID = -1;
-                        PlayerController.Instance.Dash();
+                        if (GameManager.Instance.state == GameManager.State.Level)
+                        {
+                            PlayerController.Instance.Dash();
+                        }
                     }
                     if (cameraFingerID == i)
                         cameraFingerID = -1;
@@ -129,7 +142,12 @@ public class InputManager : MonoBehaviour {
             }
 
         }
+
     }
 
+
+
     #endregion
+
+
 }

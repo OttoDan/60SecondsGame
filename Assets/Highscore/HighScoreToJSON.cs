@@ -9,9 +9,8 @@ public class HighScoreToJSON : MonoBehaviour
     string filename = "data.json";
     string path;
     string JsonString;
-    public float newhighscore;
     public float lastHighscore;
-    public static HighScoreToJSON instanceJson;
+    public static HighScoreToJSON Instance;
     public string highscorename;
     
 
@@ -24,17 +23,26 @@ public class HighScoreToJSON : MonoBehaviour
 
     private void Awake()
     {
-        if (instanceJson == null)
-            instanceJson = this;
+        if (Instance == null)
+            Instance = this;
         else
             Destroy(gameObject);
 
         path = Application.persistentDataPath + "/" + filename;
         Debug.Log(path);
-        JsonString = File.ReadAllText(path);
-        ScoreData data = JsonUtility.FromJson<ScoreData>(JsonString);
-        lastHighscore = data.highscore;
-        highscorename = data.name;
+        if(File.Exists(path))
+        {
+            JsonString = File.ReadAllText(path);
+            ScoreData data = JsonUtility.FromJson<ScoreData>(JsonString);
+            lastHighscore = data.highscore;
+            highscorename = data.name;
+        }
+        else
+        {
+
+            lastHighscore = -1;
+            highscorename = "never played the game";
+        }
     }
 
     private void Start()
@@ -48,29 +56,20 @@ public class HighScoreToJSON : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MainMenu.instanceMenu.OnMenu == false)
-        {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
 
-                SaveData();
-            }
-
-            Debug.Log("old" + lastHighscore);
-            newhighscore = Timer.instanceTimer.score;
-        }
 
         
     }
     #endregion
 
-    void SaveData()
+    public void SaveData()
     {
-        if (newhighscore > lastHighscore)
-        
+        Debug.Log("Trying to save: Current Score:" + GameManager.Instance.currentScore + " Last HighScore:" + lastHighscore);
+        if (GameManager.Instance.currentScore > lastHighscore)
         {
-            string contents = JsonUtility.ToJson(new ScoreData(SetName.instance.nameField.text, newhighscore), true);
+            string contents = JsonUtility.ToJson(new ScoreData(SetName.instance.nameField.text, GameManager.Instance.currentScore), true);
             System.IO.File.WriteAllText(path, contents);
+            Debug.Log("Score Saved at: " + path);
         }
         
     }

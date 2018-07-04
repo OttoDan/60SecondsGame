@@ -13,15 +13,17 @@ public class GameManager : MonoBehaviour {
         Intro,
         MainMenu,
         Level,
-        Transition
+        Transition,
+        GameWon,
+        GameLost
     }
 
-    public State state = State.Level;
+    public State state = State.MainMenu;
 
     public int currentScore { get; private set; }
 
-    public float seconds = 0;
-
+    public float seconds { get; private set; }
+    float timer;
     public Canvas scoreCanvas;
 
     public const float addScoreDurationMultiplier = 0.25f;
@@ -44,20 +46,42 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            Debug.LogError("Two GameManagers in scene!");
+            Debug.LogWarning("Two GameManagers in scene!");
             Destroy(gameObject);
         }
     }
-
+    private void Start()
+    {
+        state = State.MainMenu;
+        
+    }
     private void Update()
     {
-        seconds += Time.deltaTime;//Time.unscaledDeltaTime;//Time.unscaledTime;
-        UIManager.Instance.UpdateTime();
+        switch (state)
+        {
+            case State.Level:
+                //seconds += Time.deltaTime;//Time.unscaledDeltaTime;//Time.unscaledTime;
+                seconds -= Time.unscaledDeltaTime;
+                
+                UIManager.Instance.UpdateTime();
+
+                if(seconds < 0)
+                {
+                    GameEnded();
+                }
+                break;
+        }
     }
 
     #endregion
 
     #region Methods
+
+    public void SwitchToLevelState()
+    {
+        seconds = 10;
+        this.state = State.Level;
+    }
 
     public void AddScore(int score)
     {
@@ -67,6 +91,14 @@ public class GameManager : MonoBehaviour {
         UIManager.Instance.UpdateScore();
 
         Debug.Log("scored: " + score + "\ncurrentScore:" + currentScore);
+    }
+
+    void GameEnded()
+    {
+        HighScoreToJSON.Instance.SaveData();
+        //TODO: Add more than one entry to the JSON highscore list
+        state = State.GameWon;
+        Debug.Log("Game Ended");
     }
 
     #endregion

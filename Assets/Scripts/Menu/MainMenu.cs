@@ -30,8 +30,8 @@ public class MainMenu : MonoBehaviour {
 
     void Update()
     {
-        highscoretext = HighScoreToJSON.instanceJson.lastHighscore;
-        highscoreNameText = HighScoreToJSON.instanceJson.highscorename;
+        highscoretext = HighScoreToJSON.Instance.lastHighscore;
+        highscoreNameText = HighScoreToJSON.Instance.highscorename;
         HighscoreNameText.text = ("" + highscoreNameText +("  ") + highscoretext);
     }
 

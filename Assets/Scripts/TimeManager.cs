@@ -25,7 +25,7 @@ public class TimeManager : MonoBehaviour
             Instance = this;
         else
         {
-            Debug.LogError("There are two TimeManagers in this scene!");
+            Debug.LogWarning("There are two TimeManagers in this scene!");
             Destroy(gameObject);
         }
     }
@@ -36,8 +36,9 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.state == GameManager.State.Level)
         //Time.timeScale += (1f / slowdownLength) * Time.unscaledDeltaTime;
-        Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
+            Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f);
 
     }
 

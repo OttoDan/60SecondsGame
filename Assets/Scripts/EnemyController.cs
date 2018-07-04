@@ -6,7 +6,7 @@ public class EnemyController : MovingObject {
 
     public Enemy enemy;
 
-    int cubesPerRow = 2;
+    int cubesPerRow = 3;
 
     #region Unity Messages
 
@@ -20,11 +20,12 @@ public class EnemyController : MovingObject {
 
     private void Update()
     {
-        transform.Translate(velocity * 2 * Time.deltaTime);
         
         if(Physics.Raycast(transform.position, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude), LayerMask.GetMask("Walkable")))
         {
-            velocity = (transform.forward * 24 + (centerHit.point - transform.position).normalized * 3) * Time.deltaTime;
+            transform.up = Vector3.Lerp(transform.up, -transform.position.normalized, Time.deltaTime);
+            //velocity = (transform.forward + (centerHit.point - transform.position).normalized) * Time.deltaTime;
+            transform.Translate((transform.forward * 4f + (centerHit.point - transform.position).normalized) * Time.deltaTime);
         }
     }
 
@@ -62,6 +63,7 @@ public class EnemyController : MovingObject {
 
                     cube.AddComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 0.25f + direction * 0.5f, ForceMode.Impulse);
                     cube.AddComponent<DelayedDestroy>();
+                    cube.GetComponent<MeshRenderer>().material.color = transform.Find("Mesh").GetComponent<MeshRenderer>().material.color;
                 }
             }
         }

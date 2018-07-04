@@ -142,11 +142,11 @@ public class PlayerController : MovingObject {
     void AddDashPoint(Vector3 position, Vector3 normal)
     {
         //Prevent double points
-        //foreach(DashPoint point in dashPoints)
-        //{
-        //    if (Vector3.Distance(point.position, Grid.Snap(position)) < 1f)
-        //        return;
-        //}
+        foreach (DashPoint point in dashPoints)
+        {
+            if (Vector3.Distance(point.position, position) < 0.5f)
+                return;
+        }
         DashPoint dashPoint = new DashPoint(position, normal);
         FocusParticles.Instance.MoveToPoint(dashPoint);
         dashPoints.Add(dashPoint);
@@ -178,7 +178,7 @@ public class PlayerController : MovingObject {
 
         for (int i = 0; i < dashPoints.Count; i++)
         {
-            float duration=0.025f;
+            float duration=0.05f;
             //if (i == 0)
             //    duration = Vector3.Distance(dashPoints[0].position, transform.position) * 0.05f;
             //else

@@ -67,7 +67,7 @@ public class HighScoreToJSON : MonoBehaviour
         Debug.Log("Trying to save: Current Score:" + GameManager.Instance.currentScore + " Last HighScore:" + lastHighscore);
         if (GameManager.Instance.currentScore > lastHighscore)
         {
-            string contents = JsonUtility.ToJson(new ScoreData(SetName.instance.nameField.text, GameManager.Instance.currentScore), true);
+            string contents = JsonUtility.ToJson(new ScoreData(GameManager.Instance.playerName, GameManager.Instance.currentScore), true);
             System.IO.File.WriteAllText(path, contents);
             Debug.Log("Score Saved at: " + path);
         }

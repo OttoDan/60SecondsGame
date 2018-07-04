@@ -235,8 +235,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 280023401}
-  m_Father: {fileID: 1141475203}
-  m_RootOrder: 0
+  m_Father: {fileID: 173793111}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -421,6 +421,7 @@ Transform:
   - {fileID: 1808220583}
   - {fileID: 2136749077}
   - {fileID: 1535160253}
+  - {fileID: 80500754}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1794,8 +1795,8 @@ Camera:
   m_GameObject: {fileID: 1141475199}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.3504361, g: 0.5897516, b: 0.5943396, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1829,12 +1830,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1141475199}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.1, y: 1.6, z: -47.4}
+  m_LocalPosition: {x: 0, y: 0, z: -48}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 80500754}
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Children: []
+  m_Father: {fileID: 1486088536}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1141475204
 MonoBehaviour:
@@ -1847,6 +1847,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cce1b3002c9b14a9e775fbe76b922a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MouseSensitivity: 12
+  OrbitDamping: 0.92
 --- !u!1 &1144060054
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,6 +2216,35 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!1 &1486088535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1486088536}
+  m_Layer: 0
+  m_Name: CameraPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1486088536
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1486088535}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1141475203}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1506484579
 GameObject:
   m_ObjectHideFlags: 0
@@ -3269,8 +3300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9724212622e2404cace1bf1fb0de86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: Dude
   state: 2
-  seconds: 0
   scoreCanvas: {fileID: 0}
 --- !u!114 &1887230206
 MonoBehaviour:

@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     #region Public Fields
 
     public static GameManager Instance;
-
+    public string playerName = "Dude";
     public enum State
     {
         Intro,
@@ -52,7 +52,14 @@ public class GameManager : MonoBehaviour {
     }
     private void Start()
     {
-        state = State.MainMenu;
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            state = State.MainMenu;
+        }
+        else
+        {
+            SwitchToLevelState();
+        }
         
     }
     private void Update()
@@ -98,7 +105,9 @@ public class GameManager : MonoBehaviour {
         HighScoreToJSON.Instance.SaveData();
         //TODO: Add more than one entry to the JSON highscore list
         state = State.GameWon;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Debug.Log("Game Ended");
+        SwitchToLevelState();
     }
 
     #endregion

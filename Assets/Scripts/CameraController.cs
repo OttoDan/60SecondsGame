@@ -9,6 +9,18 @@ public class CameraController : MonoBehaviour {
 
     #endregion
 
+    #region CameraMovement.cs Adaption
+
+
+
+    private Vector3 localRotation;
+
+    public float MouseSensitivity = 12;
+
+    public float OrbitDamping = .92f;
+
+    #endregion
+
     #region Unity Messages
 
     private void Awake()
@@ -22,12 +34,19 @@ public class CameraController : MonoBehaviour {
             Debug.LogError("Two CameraControllers in scene!");
             Destroy(gameObject);
         }
+
     }
 
 
-    private void Update()
+    private void LateUpdate()
     {
-        
+
+
+        localRotation.x = localRotation.x * OrbitDamping;
+        localRotation.y = localRotation.y * OrbitDamping;
+
+        transform.parent.Rotate(Vector3.up, localRotation.x * 16 * Time.unscaledDeltaTime);
+        transform.parent.Rotate(Vector3.right, -localRotation.y * 16 * Time.unscaledDeltaTime);
     }
 
     #endregion
@@ -36,8 +55,11 @@ public class CameraController : MonoBehaviour {
 
     public void InputRotation(float inputX, float inputY)
     {
-        transform.RotateAround(Vector3.zero, Vector3.up, inputX * 5 * Time.unscaledDeltaTime);
-        transform.RotateAround(Vector3.zero, Vector3.Cross(transform.position.normalized, transform.up), -inputY * 5 * Time.unscaledDeltaTime);
+        //transform.RotateAround(Vector3.zero, Vector3.up, inputX * 5 * Time.unscaledDeltaTime);
+        //transform.RotateAround(Vector3.zero, Vector3.Cross(transform.position.normalized, transform.up), -inputY * 5 * Time.unscaledDeltaTime);
+
+        localRotation.x = inputX;
+        localRotation.y = inputY;
     }
 
 

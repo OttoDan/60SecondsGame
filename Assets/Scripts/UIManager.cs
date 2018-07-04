@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour {
 
     public void UpdateScore()
     {
-        scoreText.text = "Score: " + GameManager.Instance.currentScore;
+        scoreText.text = "Score: " + (int)GameManager.Instance.currentScore;
     }
 
     public void UpdateTime()

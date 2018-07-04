@@ -16,6 +16,7 @@ public class PlayerController : MovingObject {
     LineRenderer lineRenderer;
 
     IEnumerator DashCoroutine;
+    IEnumerator DashSlowMotionCoroutine;
 
     #endregion
 
@@ -35,13 +36,12 @@ public class PlayerController : MovingObject {
     }
     private void Start()
     {
-        TimeManager.Instance.ActivateStopMotion();
+        TimeManager.Instance.ActivateSlowMotion();
     }
     private void Update()
     {
         DebugDrawDashPoints();
     }
-    IEnumerator dashStopMotionCoroutine;
     private void OnTriggerEnter(Collider collider)
     {
         Debug.Log("collider");
@@ -54,6 +54,7 @@ public class PlayerController : MovingObject {
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
                 TimeManager.Instance.EnemyHitStopMoution();
+                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude*0.5f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
                 //if (dashStopMotionCoroutine == null)
                 //{
                 //    dashStopMotionCoroutine = DashStopMotionRoutine();
@@ -177,7 +178,7 @@ public class PlayerController : MovingObject {
 
     IEnumerator DashRoutine()
     {
-        TimeManager.Instance.DeactivateStopMotion();
+        TimeManager.Instance.DeactivateSlowMotion();
 
         lineRenderer.positionCount = 0;
 
@@ -220,19 +221,20 @@ public class PlayerController : MovingObject {
             EnemyManager.Instance.SpawnEnemy();
 
 
-        TimeManager.Instance.ActivateStopMotion();
+        TimeManager.Instance.ActivateSlowMotion();
         dashButtonCanvas.enabled = true;
         DashCoroutine = null;
 
 
     }
 
-    IEnumerator DashStopMotionRoutine()
+    IEnumerator DashSlowMotionRoutine()
     {
-        TimeManager.Instance.ActivateStopMotion();
-        yield return new WaitForSecondsRealtime(0.25f);
-        TimeManager.Instance.DeactivateStopMotion();
-        dashStopMotionCoroutine = null;
+        TimeManager.Instance.ActivateSlowMotion();
+
+        //yield return new WaitForSecondsRealtime(0.25f);
+        TimeManager.Instance.DeactivateSlowMotion();
+        DashSlowMotionCoroutine = null;
         yield return null;
     }
     #endregion

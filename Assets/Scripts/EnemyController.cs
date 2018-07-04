@@ -23,9 +23,9 @@ public class EnemyController : MovingObject {
         
         if(Physics.Raycast(transform.position, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude), LayerMask.GetMask("Walkable")))
         {
-            transform.up = Vector3.Lerp(transform.up, -transform.position.normalized, Time.deltaTime);
+            transform.up = Vector3.Lerp(transform.up, centerHit.normal, Time.unscaledDeltaTime);
             //velocity = (transform.forward + (centerHit.point - transform.position).normalized) * Time.deltaTime;
-            transform.Translate((transform.forward * 4f + (centerHit.point - transform.position).normalized) * Time.deltaTime);
+            transform.Translate((transform.forward * enemy.maxSpeed + (centerHit.point - transform.position).normalized) * Time.deltaTime);
         }
     }
 
@@ -43,7 +43,7 @@ public class EnemyController : MovingObject {
          */
 
         //Explosion with cubes (Works only if meshrenderer is under "Mesh" gameobject)
-        Bounds bounds = transform.Find("Mesh").GetComponent<MeshRenderer>().bounds;
+        Bounds bounds = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().bounds;
         float xStep = (bounds.max.x - bounds.min.x) / cubesPerRow;
         float yStep = (bounds.max.y - bounds.min.y) / cubesPerRow;
         float zStep = (bounds.max.z - bounds.min.z) / cubesPerRow;
@@ -63,7 +63,7 @@ public class EnemyController : MovingObject {
 
                     cube.AddComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 0.25f + direction * 0.5f, ForceMode.Impulse);
                     cube.AddComponent<DelayedDestroy>();
-                    cube.GetComponent<MeshRenderer>().material.color = transform.Find("Mesh").GetComponent<MeshRenderer>().material.color;
+                    cube.GetComponent<MeshRenderer>().material.color = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color;
                 }
             }
         }
@@ -76,7 +76,7 @@ public class EnemyController : MovingObject {
     void QuickAndDirtyStopMotionEnde()
     {
 
-        TimeManager.Instance.DeactivateStopMotion();
+        TimeManager.Instance.DeactivateSlowMotion();
     }
 
     #endregion

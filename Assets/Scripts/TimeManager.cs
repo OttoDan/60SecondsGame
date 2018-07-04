@@ -57,7 +57,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public void ActivateStopMotion()
+    public void ActivateSlowMotion()
     {
         if (slow == false)
         {
@@ -67,7 +67,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public void DeactivateStopMotion()
+    public void DeactivateSlowMotion()
     {
         if (slow == true)
         {

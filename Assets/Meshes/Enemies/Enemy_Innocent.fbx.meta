@@ -4,11 +4,60 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: CTR_BodyBase
+    100004: CTR_BodyTip
+    100006: CTR_BodyTip_end
+    100008: CTR_Root
+    100010: DEF_Body
+    100012: DEF_Body_end
+    100014: DEF_BodyTip
+    100016: DEF_BodyTip_end
+    100018: DEF_Foot.L
+    100020: DEF_Foot.L_end
+    100022: DEF_Foot.R
+    100024: DEF_Foot.R_end
+    100026: DEF_Leg.L
+    100028: DEF_Leg.R
+    100030: Enemy_Innocent
+    100032: Innocent-Armature
     400000: //RootNode
+    400002: CTR_BodyBase
+    400004: CTR_BodyTip
+    400006: CTR_BodyTip_end
+    400008: CTR_Root
+    400010: DEF_Body
+    400012: DEF_Body_end
+    400014: DEF_BodyTip
+    400016: DEF_BodyTip_end
+    400018: DEF_Foot.L
+    400020: DEF_Foot.L_end
+    400022: DEF_Foot.R
+    400024: DEF_Foot.R_end
+    400026: DEF_Leg.L
+    400028: DEF_Leg.R
+    400030: Enemy_Innocent
+    400032: Innocent-Armature
     2100000: Material.002
     2300000: //RootNode
+    2300002: Enemy_Innocent
     3300000: //RootNode
+    3300002: Enemy_Innocent
     4300000: Enemy_Innocent
+    7400000: Innocent_Movement
+    7400002: Innocent_Idle.001
+    7400004: Innocent_Idle
+    7400006: Innocent-Armature|Innocent_Idle
+    7400008: Innocent-Armature|Innocent_Idle.001
+    7400010: Innocent-Armature|Innocent_Movement
+    7400012: Innocent-Armature|Innocent_Movement.001
+    7400014: Innocent-Armature|Innocent_Movement.002
+    7400016: "Innocent-Armature|m\xFCll"
+    7400018: "Innocent-Armature|m\xFCll.001"
+    7400020: "Innocent-Armature|m\xFCll.003"
+    7400022: "Innocent-Armature|m\xFCll.004"
+    7400024: "Innocent-Armature|m\xFCll.005"
+    9500000: //RootNode
+    13700000: Enemy_Innocent
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -29,7 +78,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -78,13 +127,13 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    rootMotionBoneName: 
+    rootMotionBoneName: Innocent-Armature
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

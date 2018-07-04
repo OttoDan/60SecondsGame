@@ -5,7 +5,7 @@ using UnityEngine;
 public class FocusParticles : MonoBehaviour {
     public static FocusParticles Instance;
 
-    public float transitionDuration = 0.25f;
+    public float transitionDuration = 0.125f;
 
     IEnumerator coroutine;
 

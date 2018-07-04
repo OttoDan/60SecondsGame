@@ -81,6 +81,7 @@ public class InputManager : MonoBehaviour {
                     if (Physics.Raycast(ray, Camera.main.transform.position.magnitude, LayerMask.GetMask("Walkable")))
                     //TODO: restrict to the walkable layer / ignore all other layers
                     {
+                        CameraController.Instance.StopRotation();
                         if (GameManager.Instance.state == GameManager.State.Level)
                         {
                             cubeFingerID = currentTouch.fingerId;

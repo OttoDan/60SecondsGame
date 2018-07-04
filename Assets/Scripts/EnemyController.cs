@@ -6,7 +6,7 @@ public class EnemyController : MovingObject {
 
     public Enemy enemy;
 
-    int cubesPerRow = 3;
+    int cubesPerRow = 1;
 
     #region Unity Messages
 

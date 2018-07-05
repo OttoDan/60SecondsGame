@@ -18,6 +18,8 @@ public class PlayerController : MovingObject {
     IEnumerator DashCoroutine;
     IEnumerator DashSlowMotionCoroutine;
 
+    int enemyHitsDuringThisDash = 0;
+
     #endregion
 
     #region Unity Messages
@@ -51,15 +53,18 @@ public class PlayerController : MovingObject {
 
             if (enemyController != null)
             {
+                enemyHitsDuringThisDash++;
+                UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
                 TimeManager.Instance.EnemyHitStopMoution();
-                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.5f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
+                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.45f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
                 //if (dashStopMotionCoroutine == null)
                 //{
                 //    dashStopMotionCoroutine = DashStopMotionRoutine();
                 //    StartCoroutine(dashStopMotionCoroutine);
                 //}
+                ScreenShake.Instance.DoShake();
 
             }
             else
@@ -67,11 +72,15 @@ public class PlayerController : MovingObject {
         }
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
+            ScreenShake.Instance.DoShake();
             if (DashCoroutine != null)
             {
                 StopCoroutine(DashCoroutine);
                 ExitDashRoutine();
             }
+            //if (BounceOffObstacleCoroutine != null)
+            //    StopCoroutine(BounceOffObstacleCoroutine);
+
         }
     }
     #endregion
@@ -214,9 +223,15 @@ public class PlayerController : MovingObject {
                 yield return new WaitForFixedUpdate();
             }
         }
+
+        if (enemyHitsDuringThisDash == 0)
+        {
+            UIManager.Instance.DisplayComboUI(null);
+        }
+
         //set to absolute position
         transform.position = dashPoints[dashPoints.Count - 1].position;
-
+        enemyHitsDuringThisDash = 0;
         ExitDashRoutine();
 
 

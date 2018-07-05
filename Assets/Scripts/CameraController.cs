@@ -43,8 +43,11 @@ public class CameraController : MonoBehaviour {
 
     private void LateUpdate()
     {
+        localRotation.x = localRotation.x * OrbitDamping;
+        localRotation.y = localRotation.y * OrbitDamping;
 
-        transform.parent.Rotate(Vector3.up, localRotation.x * Time.unscaledDeltaTime);
+
+        transform.parent.Rotate(Vector3.forward, localRotation.x * Time.unscaledDeltaTime);
         transform.parent.Rotate(Vector3.right, -localRotation.y * Time.unscaledDeltaTime);
     }
 
@@ -84,7 +87,7 @@ public class CameraController : MonoBehaviour {
     public void AdjustCameraZoomByLevelBounds()
     {
         Debug.Log("MinDist"+LevelManager.Instance.MinCamDistance());
-        float camDifference = (LevelManager.Instance.MinCamDistance()*2f - transform.localPosition.y);
+        float camDifference = (LevelManager.Instance.MinCamDistance()*3f - transform.localPosition.y);
         Debug.Log("CamDiff"+camDifference);
         if (camDifference < 0)
             Zooming(-camDifference, Zoom.In); 

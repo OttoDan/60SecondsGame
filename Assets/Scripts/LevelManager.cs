@@ -31,14 +31,14 @@ public class LevelManager : MonoBehaviour {
     
     private void Update()
     {
-        DebugDrawLevelBounds();
-        seconds += Time.unscaledDeltaTime;
-        if ((int)seconds % scaleDownEachSeconds == 0)
-        {
-            ScaleLevel(scaleDownFactor, 0.5f);
-            ObstacleManager.Instance.GroundAllObstacles();
-            seconds = 1;
-        }
+        //DebugDrawLevelBounds();
+        //seconds += Time.unscaledDeltaTime;
+        //if ((int)seconds % scaleDownEachSeconds == 0)
+        //{
+        //    ScaleLevel(scaleDownFactor, 0.5f);
+        //    ObstacleManager.Instance.GroundAllObstacles();
+        //    seconds = 1;
+        //}
     }
 
     public void ScaleLevel(float factor, float duration)

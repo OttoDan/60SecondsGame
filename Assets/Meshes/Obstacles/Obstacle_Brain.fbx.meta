@@ -24,6 +24,7 @@ ModelImporter:
     400016: Obstacle-Static_LP
     400018: Obstacle_Static_Armature
     2100000: Obstacle_Static
+    2100002: Obstacles
     2300000: //RootNode
     2300002: Obstacle-Static_LP
     3300000: //RootNode

@@ -32,6 +32,7 @@ ModelImporter:
     400024: Enemy_Shy
     400026: Shy-Armature
     2100000: Material.004
+    2100002: Enemies
     2300000: //RootNode
     2300002: Enemy_Shy
     3300000: //RootNode
@@ -43,6 +44,7 @@ ModelImporter:
     7400006: "Shy-Armature|m\xFCll.001"
     7400008: Shy-Armature|Shy-Idle
     7400010: Shy-Armature|Shy_Movement
+    7400012: Innocent_Movement
     9500000: //RootNode
     13700000: Enemy_Shy
   externalObjects: {}

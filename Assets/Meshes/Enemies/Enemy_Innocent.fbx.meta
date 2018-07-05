@@ -38,6 +38,7 @@ ModelImporter:
     400030: Enemy_Innocent
     400032: Innocent-Armature
     2100000: Material.002
+    2100002: Enemies
     2300000: //RootNode
     2300002: Enemy_Innocent
     3300000: //RootNode

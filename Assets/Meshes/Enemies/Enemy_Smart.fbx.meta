@@ -42,6 +42,7 @@ ModelImporter:
     400034: Enemy-Smart
     400036: Smart-Armature
     2100000: Smart-Enemy
+    2100002: Enemies
     2300000: //RootNode
     2300002: Enemy-Smart
     3300000: //RootNode
@@ -53,6 +54,7 @@ ModelImporter:
     7400006: Smart-Armature|Smart_Movement
     7400008: Smart-Armature|Smart_Movement.001
     7400010: Smart-Armature|Smart_Movement.002
+    7400012: Smart_Movement
     9500000: //RootNode
     11100000: //RootNode
     13700000: Enemy-Smart

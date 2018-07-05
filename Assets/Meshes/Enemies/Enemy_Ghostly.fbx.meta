@@ -70,6 +70,7 @@ ModelImporter:
     400062: Enemy_Ghostly
     400064: Ghostly-Armature
     2100000: Ghostly
+    2100002: Enemies
     2300000: //RootNode
     2300002: Enemy_Ghostly
     3300000: //RootNode
@@ -81,6 +82,7 @@ ModelImporter:
     7400006: "Ghostly-Armature|m\xFCll"
     7400008: "Ghostly-Armature|m\xFCll.001"
     7400010: "Ghostly-Armature|m\xFCll.002"
+    7400012: Ghostly_Movement.001
     9500000: //RootNode
     13700000: Enemy_Ghostly
     2186277476908879412: ImportLogs

@@ -99,12 +99,12 @@ public class TimeManager : MonoBehaviour
         Time.timeScale = timeTo;
         for (float t = 0; t < duration * 0.75f; t += Time.unscaledDeltaTime)
         {
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
         for (float t = 0; t < duration * 0.25f; t += Time.unscaledDeltaTime)
         {
             Time.timeScale = Mathf.Lerp(timeTo, timeFrom, t / duration);
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
         Time.timeScale = timeFrom;
         enemyHitCoroutine = null;

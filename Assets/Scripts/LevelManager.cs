@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     IEnumerator ScaleLevelCoroutine;
     float scaleDownFactor = -0.125f;
     int scaleDownEachSeconds = 20;
+    float seconds = 0;
     #region Unity Messages
     private void Awake()
     {
@@ -27,12 +28,16 @@ public class LevelManager : MonoBehaviour {
     }
 
     
+    
     private void Update()
     {
         DebugDrawLevelBounds();
-        if((int)GameManager.Instance.seconds % scaleDownEachSeconds == 0)
+        seconds += Time.unscaledDeltaTime;
+        if ((int)seconds % scaleDownEachSeconds == 0)
         {
             ScaleLevel(scaleDownFactor, 0.5f);
+            ObstacleManager.Instance.GroundAllObstacles();
+            seconds = 1;
         }
     }
 
@@ -52,7 +57,7 @@ public class LevelManager : MonoBehaviour {
         for (float t = 0; t < duration; t += Time.unscaledDeltaTime)
         {
             transform.localScale = Vector3.Lerp(fromScale, toScale, t / duration);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         GetLevelBounds();
         //CenterLevelToZeroPosition();

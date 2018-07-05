@@ -15,4 +15,4 @@ MonoBehaviour:
   mesh: {fileID: 0}
   score: 10
   minSpeed: 1
-  maxSpeed: 50
+  maxSpeed: 2

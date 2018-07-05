@@ -45,7 +45,7 @@ public class PlayerController : MovingObject {
     private void OnTriggerEnter(Collider collider)
     {
         Debug.Log("collider");
-        if(collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy") && DashCoroutine != null)
         {
             EnemyController enemyController = collider.gameObject.GetComponent<EnemyController>();
 
@@ -54,7 +54,7 @@ public class PlayerController : MovingObject {
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
                 TimeManager.Instance.EnemyHitStopMoution();
-                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude*0.5f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
+                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.5f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
                 //if (dashStopMotionCoroutine == null)
                 //{
                 //    dashStopMotionCoroutine = DashStopMotionRoutine();
@@ -65,8 +65,15 @@ public class PlayerController : MovingObject {
             else
                 Debug.LogError("Missing EnemyController on object on Enemy layer!");
         }
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            if (DashCoroutine != null)
+            {
+                StopCoroutine(DashCoroutine);
+                ExitDashRoutine();
+            }
+        }
     }
-    
     #endregion
 
     #region Methods
@@ -204,12 +211,19 @@ public class PlayerController : MovingObject {
                 transform.rotation = Quaternion.Slerp(fromRotation, toRotation, t / duration);
                 //transform.LookAt(dashPoints[i].position);
 
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
         }
-
         //set to absolute position
         transform.position = dashPoints[dashPoints.Count - 1].position;
+
+        ExitDashRoutine();
+
+
+    }
+
+    void ExitDashRoutine()
+    {
         //transform.up = dashPoints[dashPoints.Count - 1].normal;
 
         dashPoints.Clear();
@@ -217,15 +231,13 @@ public class PlayerController : MovingObject {
 
         //wait for Respawn Routine / respawn enemies
         int enemyCount = Random.Range(1, 10);// * anzahlDerBeimLetztenDashZerstörtenEnemies
-        for(int i = 0; i < enemyCount; i++)
+        for (int i = 0; i < enemyCount; i++)
             EnemyManager.Instance.SpawnEnemy();
 
 
         TimeManager.Instance.ActivateSlowMotion();
-        dashButtonCanvas.enabled = true;
+        //dashButtonCanvas.enabled = true;
         DashCoroutine = null;
-
-
     }
 
     IEnumerator DashSlowMotionRoutine()

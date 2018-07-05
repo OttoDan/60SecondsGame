@@ -21,9 +21,9 @@ public class EnemyController : MovingObject {
     private void Update()
     {
         
-        if(Physics.Raycast(transform.position, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude), LayerMask.GetMask("Walkable")))
+        if(Physics.Raycast(transform.position, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude)*2, LayerMask.GetMask("Walkable")))
         {
-            transform.up = Vector3.Lerp(transform.up, centerHit.normal, Time.unscaledDeltaTime);
+            transform.up = Vector3.Lerp(transform.up, centerHit.normal, Time.deltaTime);
             //velocity = (transform.forward + (centerHit.point - transform.position).normalized) * Time.deltaTime;
             transform.Translate((transform.forward * enemy.maxSpeed + (centerHit.point - transform.position).normalized) * Time.deltaTime);
         }

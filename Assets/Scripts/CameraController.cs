@@ -104,7 +104,7 @@ public class CameraController : MonoBehaviour {
         {
             localRotation.x = Mathf.Lerp(fromRotationX, 0, t / duration);
             localRotation.y = Mathf.Lerp(fromRotationY, 0, t / duration);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         Debug.Log("StopRotation");
         StopRotationCoroutine = null;
@@ -158,7 +158,7 @@ public class CameraController : MonoBehaviour {
         {
             transform.localPosition = Vector3.Lerp(fromPos, toPos, t / lerpDuration);
             //transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(fromY, toY, t / lerpDuration),transform.localPosition.z);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         if (zoom == Zoom.InOut)
@@ -169,7 +169,7 @@ public class CameraController : MonoBehaviour {
             {
                 transform.position = Vector3.Slerp(toPos, fromPos, t / lerpDuration);
                 //transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(toY, fromY, t / lerpDuration), transform.localPosition.z);
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
         }
             
@@ -189,7 +189,7 @@ public class CameraController : MonoBehaviour {
         Quaternion fromRotation = transform.localRotation;
         Quaternion toRotation;
         Vector3 parentFromPos = transform.parent.position;
-        Vector3 parentToPos = transform.position + (pos - transform.position).normalized * (pos - transform.position).magnitude*1.25f;
+        Vector3 parentToPos = transform.position + (pos - transform.position).normalized * (pos - transform.position).magnitude*0.95f;
         //We are moving around the cube by transforming the parent, so we need to adjust our local y coordinate
         float fromY = transform.localPosition.y;
         float toY = 0;
@@ -215,14 +215,14 @@ public class CameraController : MonoBehaviour {
             transform.parent.position = Vector3.Lerp(parentFromPos, parentToPos, t / lerpDuration);
             //transform.localRotation = Quaternion.Lerp(fromRotation, toRotation, t / lerpDuration);
             //transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(fromY, toY, t / lerpDuration),transform.localPosition.z);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         if (zoom == Zoom.InOut)
         {
             for (float t = 0; t < stayDuration; t += Time.deltaTime)
             {
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
             for (float t = 0; t < lerpDuration; t += Time.unscaledDeltaTime)
             {
@@ -230,7 +230,7 @@ public class CameraController : MonoBehaviour {
                 transform.parent.position = Vector3.Lerp(parentToPos, parentPositionBeforeZoom, t / lerpDuration);
                 //transform.localPosition = new Vector3(transform.localPosition.x, Mathf.Lerp(toY, fromY, t / lerpDuration), transform.localPosition.z);
                 //transform.localRotation = Quaternion.Lerp(toRotation, localRotationBeforeZoom, t / lerpDuration);
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
             transform.localPosition = localPositionBeforeZoom;
             transform.parent.position = parentPositionBeforeZoom;

@@ -39,7 +39,7 @@ public class FocusParticles : MonoBehaviour {
         {
             transform.position = Vector3.Lerp(fromPosition, dashPoint.position + dashPoint.normal*0.5f, t / transitionDuration);
             //transform.up = Vector3.Lerp(fromNormal, dashPoint.normal, t / transitionDuration);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
 }

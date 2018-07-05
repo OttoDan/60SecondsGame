@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: Smart
   m_EditorClassIdentifier: 
   name: Smart
-  mesh: {fileID: 0}
+  FracturedMeshPrefab: {fileID: 1729316789562842, guid: 338f9c299d614e04d8af6d9d59275fb6,
+    type: 2}
   score: 35
   minSpeed: 1
   maxSpeed: 24

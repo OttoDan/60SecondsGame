@@ -42,32 +42,41 @@ public class EnemyController : MovingObject {
          * or leave the scene
          */
 
-        //Explosion with cubes (Works only if meshrenderer is under "Mesh" gameobject)
-        Bounds bounds = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().bounds;
-        float xStep = (bounds.max.x - bounds.min.x) / cubesPerRow;
-        float yStep = (bounds.max.y - bounds.min.y) / cubesPerRow;
-        float zStep = (bounds.max.z - bounds.min.z) / cubesPerRow;
-        Vector3 direction = (transform.position - PlayerController.Instance.transform.position).normalized;
-        
-
-        for (float x = bounds.min.x; x < bounds.max.x; x+= xStep)
+       
+        if(enemy.FracturedMeshPrefab != null)
         {
 
-            for (float y = bounds.min.y; y < bounds.max.y; y += yStep)
-            {
-                for (float z = bounds.min.z; z < bounds.max.z; z += zStep)
-                {
-                    GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    cube.transform.localScale = new Vector3(xStep, yStep, zStep);
-                    cube.transform.position = Vector3.right * x + Vector3.up * y + Vector3.forward * z;
+            Instantiate(enemy.FracturedMeshPrefab, transform.position, transform.rotation, null);
+        }
+        else
+        {
+            //Explosion with cubes (Works only if meshrenderer is under "Mesh" gameobject)
+            Bounds bounds = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().bounds;
+            float xStep = (bounds.max.x - bounds.min.x) / cubesPerRow;
+            float yStep = (bounds.max.y - bounds.min.y) / cubesPerRow;
+            float zStep = (bounds.max.z - bounds.min.z) / cubesPerRow;
+            Vector3 direction = (transform.position - PlayerController.Instance.transform.position).normalized;
 
-                    cube.AddComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 0.25f + direction * 0.5f, ForceMode.Impulse);
-                    cube.AddComponent<DelayedDestroy>();
-                    cube.GetComponent<MeshRenderer>().material.color = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color;
+
+            for (float x = bounds.min.x; x < bounds.max.x; x += xStep)
+            {
+
+                for (float y = bounds.min.y; y < bounds.max.y; y += yStep)
+                {
+                    for (float z = bounds.min.z; z < bounds.max.z; z += zStep)
+                    {
+                        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        cube.transform.localScale = new Vector3(xStep, yStep, zStep);
+                        cube.transform.position = Vector3.right * x + Vector3.up * y + Vector3.forward * z;
+
+                        cube.AddComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 0.25f + direction * 0.5f, ForceMode.Impulse);
+                        cube.AddComponent<DelayedDestroy>();
+                        cube.GetComponent<MeshRenderer>().material.color = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color;
+                    }
                 }
             }
         }
-        
+
         EnemyManager.Instance.SpawnEnemy();
         Destroy(gameObject);
     }

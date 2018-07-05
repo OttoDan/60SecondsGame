@@ -20,6 +20,8 @@ public class PlayerController : MovingObject {
 
     int enemyHitsDuringThisDash = 0;
 
+    GameObject IdleParticles;
+
     #endregion
 
     #region Unity Messages
@@ -39,6 +41,7 @@ public class PlayerController : MovingObject {
     private void Start()
     {
         TimeManager.Instance.ActivateSlowMotion();
+        //IdleParticles = transform.Find("Idle Particles").gameObject;
     }
     private void Update()
     {
@@ -194,6 +197,8 @@ public class PlayerController : MovingObject {
 
     IEnumerator DashRoutine()
     {
+
+        //IdleParticles.SetActive(false);
         TimeManager.Instance.DeactivateSlowMotion();
 
         lineRenderer.positionCount = 0;
@@ -242,7 +247,7 @@ public class PlayerController : MovingObject {
         //transform.up = dashPoints[dashPoints.Count - 1].normal;
 
         dashPoints.Clear();
-
+        //IdleParticles.SetActive(true);
 
         //wait for Respawn Routine / respawn enemies
         int enemyCount = Random.Range(1, 10);// * anzahlDerBeimLetztenDashZerstörtenEnemies

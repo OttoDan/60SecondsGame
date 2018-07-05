@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: Shy
   m_EditorClassIdentifier: 
   name: Shy
-  mesh: {fileID: 0}
+  FracturedMeshPrefab: {fileID: 1657609196944344, guid: ae1266e8e1969a54abbe6d8a2fd7c0c6,
+    type: 2}
   score: 10
   minSpeed: 1
   maxSpeed: 2

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: Ghostly
   m_EditorClassIdentifier: 
   name: Ghostly
-  mesh: {fileID: 0}
+  FracturedMeshPrefab: {fileID: 1213958007280632, guid: a8c5e884e228a7c4fb9dda4dacc036b5,
+    type: 2}
   score: 20
   minSpeed: 1
   maxSpeed: 2

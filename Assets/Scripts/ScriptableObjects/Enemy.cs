@@ -7,7 +7,7 @@ public class Enemy : ScriptableObject {
 
     public new string name;
 
-    public Mesh mesh;
+    public GameObject FracturedMeshPrefab;
 
     public int score;
 

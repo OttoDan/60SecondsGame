@@ -23,6 +23,8 @@ public class PlayerController : MovingObject {
 
     GameObject IdleParticles;
 
+    Animator animator;
+
     #endregion
 
     #region Unity Messages
@@ -38,6 +40,7 @@ public class PlayerController : MovingObject {
         }
 
         lineRenderer = GetComponent<LineRenderer>();
+        animator = transform.Find("Main-Character-Rig_v4-2").GetComponent<Animator>();//GetComponentInChildren<Animator>();
     }
     private void Start()
     {
@@ -54,9 +57,10 @@ public class PlayerController : MovingObject {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy") && DashCoroutine != null)
         {
             EnemyController enemyController = collider.gameObject.GetComponent<EnemyController>();
-
+            
             if (enemyController != null)
             {
+                animator.SetTrigger("DashHit");
                 enemyHitsDuringDash++;
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
@@ -76,7 +80,7 @@ public class PlayerController : MovingObject {
         }
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            ScreenShake.Instance.DoShake();
+            ScreenShake.Instance.DoShake(0.5f,1.2f);
             if (DashCoroutine != null)
             {
                 StopCoroutine(DashCoroutine);
@@ -204,6 +208,8 @@ public class PlayerController : MovingObject {
 
         lineRenderer.positionCount = 0;
 
+        animator.SetBool("Dash", true);
+
         for (int i = 0; i < dashPoints.Count; i++)
         {
             float duration=0.05f;
@@ -255,6 +261,7 @@ public class PlayerController : MovingObject {
         for (int i = 0; i < enemyCount; i++)
             EnemyManager.Instance.SpawnEnemy();
 
+        animator.SetBool("Dash", false);
 
         TimeManager.Instance.ActivateSlowMotion();
         //dashButtonCanvas.enabled = true;

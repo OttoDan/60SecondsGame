@@ -76,7 +76,7 @@ public class EnemyController : MovingObject {
                 }
             }
         }
-
+        //GetComponent<SpawnGeoForms>().CreateGeoForm();
         EnemyManager.Instance.SpawnEnemy();
         Destroy(gameObject);
     }

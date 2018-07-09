@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MovingObject {
 
     public Enemy enemy;
-
+    public bool isGrounded = true;
     int cubesPerRow = 3;
 
     #region Unity Messages
@@ -18,16 +18,22 @@ public class EnemyController : MovingObject {
     Vector3 velocity;
     //float speed = 0;
 
-    private void Update()
-    {
-        
-        if(Physics.Raycast(transform.position, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude)*2, LayerMask.GetMask("Walkable")))
-        {
-            transform.up = Vector3.Lerp(transform.up, centerHit.normal, Time.deltaTime);
-            //velocity = (transform.forward + (centerHit.point - transform.position).normalized) * Time.deltaTime;
-            transform.Translate((transform.forward * enemy.maxSpeed + (centerHit.point - transform.position).normalized) * Time.deltaTime);
-        }
-    }
+    //private void Update()
+    //{
+
+    //    if (Physics.Raycast(transform.position + transform.up * 0.5f, -transform.position.normalized, out centerHit, Mathf.Abs(transform.position.magnitude) * 2, LayerMask.GetMask("Walkable")))
+    //    {
+    //        //transform.up = Vector3.Lerp(transform.up, centerHit.normal, Time.deltaTime);
+    //        //velocity = (transform.forward + (centerHit.point - transform.position).normalized) * Time.deltaTime;
+    //        //transform.transform(transform.forward * )
+    //        //if (transform.up == centerHit.normal)
+    //            transform.Translate((transform.forward * enemy.maxSpeed + (centerHit.point - transform.position).normalized) * Time.deltaTime);
+    //        //else
+    //        //    transform.up = centerHit.normal;
+    //    }
+    //    else
+    //        transform.Translate(transform.up * enemy.maxSpeed * Time.deltaTime);
+    //}
 
 
     #endregion

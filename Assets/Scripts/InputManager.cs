@@ -78,7 +78,7 @@ public class InputManager : MonoBehaviour {
                     Ray ray = Camera.main.ScreenPointToRay(currentTouch.position);
 
 
-                    if (Physics.Raycast(ray, Camera.main.transform.position.magnitude, LayerMask.GetMask("Walkable")))
+                    if (Physics.Raycast(ray, Camera.main.transform.position.magnitude, LayerMask.GetMask("Player")))//new string[]{ "Walkable", "Player"})))
                     //TODO: restrict to the walkable layer / ignore all other layers
                     {
                         CameraController.Instance.StopRotation();

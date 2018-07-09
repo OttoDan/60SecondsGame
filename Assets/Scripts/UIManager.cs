@@ -30,7 +30,11 @@ public class UIManager : MonoBehaviour {
         ComboUICanvasGroup = ComboUICanvas.GetComponent<CanvasGroup>();
         comboUItext = ComboUICanvas.transform.Find("Text").GetComponent<Text>();
     }
-
+    float timeTextFromFontSize;
+    private void Start()
+    {
+        timeTextFromFontSize = timeText.fontSize;
+    }
     public void UpdateScore()
     {
         scoreText.text = "Score: " + (int)GameManager.Instance.currentScore;
@@ -38,7 +42,9 @@ public class UIManager : MonoBehaviour {
 
     public void UpdateTime()
     {
-        timeText.text = GameManager.Instance.seconds + " sec";
+        timeText.text = (int)GameManager.Instance.seconds+ "";
+        timeText.fontSize = (int)Mathf.Lerp(timeTextFromFontSize, 200, Mathf.Abs(GameManager.Instance.seconds - 60) / 60);
+        //timeText.rectTransform.localPosition = Vector3.Lerp(Vector3.zero, Vector3.up * timeText.rectTransform.rect.height + Vector3.right * timeText.rectTransform.rect.width, Mathf.Abs(GameManager.Instance.seconds - 60) / 60);
     }
 
     public void DisplayComboUI(Enemy enemy)
@@ -51,7 +57,7 @@ public class UIManager : MonoBehaviour {
         StartCoroutine(DisplayComboUICoroutine);
     }
 
-    float displayComboUIduration = 4.0f;
+    float displayComboUIduration = 0.75f;
 
     IEnumerator DisplayComboUICoroutine;
 
@@ -60,9 +66,9 @@ public class UIManager : MonoBehaviour {
 
         ComboUICanvas.gameObject.SetActive(true);
         if(enemy != null)
-            comboUItext.text = enemy.name + " " + enemy.score;
+            comboUItext.text = enemy.name + "\n" + enemy.score + "\n x " + PlayerController.Instance.enemyHitsDuringThisDash;
         else
-            comboUItext.text = "Messed up! NO0oB!";
+            comboUItext.text = "Messed up!\nNO0oB!";
 
 
         float fromAlpha = ComboUICanvasGroup.alpha;

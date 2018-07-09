@@ -18,7 +18,7 @@ public class PlayerController : MovingObject {
     IEnumerator DashCoroutine;
     IEnumerator DashSlowMotionCoroutine;
 
-    int enemyHitsDuringThisDash = 0;
+    public int enemyHitsDuringThisDash = 0;
 
     GameObject IdleParticles;
 
@@ -140,7 +140,7 @@ public class PlayerController : MovingObject {
                 else
                 {
                     RaycastHit cornerHit;
-                    if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal * 2, -orthogonalDirection, out cornerHit, 2, LayerMask.GetMask("Walkable")))
+                    if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal /** 2*/, -orthogonalDirection, out cornerHit, 2, LayerMask.GetMask("Walkable")))
                     {
                         Debug.Log("Corner");
                         AddDashPoint(cornerHit.point, orthogonalDirection);

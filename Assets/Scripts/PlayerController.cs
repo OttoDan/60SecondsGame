@@ -65,14 +65,10 @@ public class PlayerController : MovingObject {
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
-                TimeManager.Instance.EnemyHitStopMoution();
-                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.45f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
-                //if (dashStopMotionCoroutine == null)
-                //{
-                //    dashStopMotionCoroutine = DashStopMotionRoutine();
-                //    StartCoroutine(dashStopMotionCoroutine);
-                //}
+                TimeManager.Instance.EnemyHitSlowMotion();
                 ScreenShake.Instance.DoShake();
+                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.45f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
+                
 
             }
             else
@@ -212,7 +208,7 @@ public class PlayerController : MovingObject {
 
         for (int i = 0; i < dashPoints.Count; i++)
         {
-            float duration=0.05f;
+            float duration=0.025f;
             //if (i == 0)
             //    duration = Vector3.Distance(dashPoints[0].position, transform.position) * 0.05f;
             //else
@@ -268,15 +264,6 @@ public class PlayerController : MovingObject {
         DashCoroutine = null;
     }
 
-    IEnumerator DashSlowMotionRoutine()
-    {
-        TimeManager.Instance.ActivateSlowMotion();
-
-        //yield return new WaitForSecondsRealtime(0.25f);
-        TimeManager.Instance.DeactivateSlowMotion();
-        DashSlowMotionCoroutine = null;
-        yield return null;
-    }
     #endregion
 
     #region Debug

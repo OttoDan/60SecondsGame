@@ -8,7 +8,7 @@ using System.Collections;
 public class TimeManager : MonoBehaviour
 {
     public static TimeManager Instance;
-    public float slowdownFactor = 0.05f;
+    public float slowdownFactor = 0.05f/*0.05f*/;
     public float slowdownLength = 2f;
 
     public TimeManager timeManager;
@@ -77,36 +77,42 @@ public class TimeManager : MonoBehaviour
 
     }
 
-    public void EnemyHitStopMoution()
+    public void EnemyHitSlowMotion()
     {
-        if(enemyHitCoroutine == null)
+        if (enemyHitCoroutine == null)
         {
+            //StopCoroutine(enemyHitCoroutine);
             enemyHitCoroutine = EnemyHitRoutine();
             StartCoroutine(enemyHitCoroutine);
         }
+        
+
     }
 
     IEnumerator EnemyHitRoutine()
     {
-        float duration = 0.75f;
+        float duration = 1f/*0.25f*/;
         float timeFrom = Time.timeScale;
         float timeTo = slowdownFactor;
-        //for (float t = 0; t < duration*0.125f; t+= Time.unscaledDeltaTime)
-        //{
-        //    Time.timeScale = Mathf.Lerp(timeFrom, timeTo, t / duration);
-        //    yield return new WaitForEndOfFrame();
-        //}
+        for (float t = 0; t < duration * 0.25f; t += Time.unscaledDeltaTime)
+        {
+            Time.timeScale = Mathf.Lerp(timeFrom, timeTo, t / (duration * 0.25f));
+            Time.fixedDeltaTime = Time.timeScale * .02f;
+            yield return null;
+        }
         Time.timeScale = timeTo;
         for (float t = 0; t < duration * 0.75f; t += Time.unscaledDeltaTime)
         {
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
         for (float t = 0; t < duration * 0.25f; t += Time.unscaledDeltaTime)
         {
-            Time.timeScale = Mathf.Lerp(timeTo, timeFrom, t / duration);
-            yield return new WaitForFixedUpdate();
+            Time.timeScale = Mathf.Lerp(timeTo, timeTo, t / (duration * 0.25f));
+            Time.fixedDeltaTime = Time.timeScale * .02f;
+            yield return null;
         }
         Time.timeScale = timeFrom;
+        Time.fixedDeltaTime = Time.timeScale * .02f;
         enemyHitCoroutine = null;
     }
 

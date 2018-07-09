@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour {
             //enemy.transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
             
             enemy.transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color = Random.ColorHSV();
-            enemy.transform.localScale *= Random.Range(0.75f, 1.75f);
+            enemy.transform.localScale *= Random.Range(1f, 1.25f);
             enemy.transform.position = Random.insideUnitSphere * 32;
             enemy.transform.LookAt(Vector3.zero);
             StartCoroutine(FallOnCube(enemy.transform));

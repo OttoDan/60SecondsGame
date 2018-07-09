@@ -76,7 +76,7 @@ public class SpawnGeoForms : MonoBehaviour {
 	public void CreateGeoForm(float _radius = 5,int _points = 4)
 	{
         Debug.Log("radius: " + _radius + " points: " + _points);
-		radius = _radius;
+		radius = PlayerController.Instance.enemyHitsDuringDash + 2;
 		points = (int)Random.Range(3,6)/*_points*/;
 
 	}

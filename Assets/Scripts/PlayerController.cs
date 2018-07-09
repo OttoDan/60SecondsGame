@@ -9,6 +9,8 @@ public class PlayerController : MovingObject {
 
     public Canvas dashButtonCanvas;
 
+    public int enemyHitsDuringDash = 0;
+
     #region Private Fields
 
     List<DashPoint> dashPoints = new List<DashPoint>();
@@ -18,7 +20,6 @@ public class PlayerController : MovingObject {
     IEnumerator DashCoroutine;
     IEnumerator DashSlowMotionCoroutine;
 
-    int enemyHitsDuringThisDash = 0;
 
     GameObject IdleParticles;
 
@@ -56,7 +57,7 @@ public class PlayerController : MovingObject {
 
             if (enemyController != null)
             {
-                enemyHitsDuringThisDash++;
+                enemyHitsDuringDash++;
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 enemyController.HitEvent();
@@ -229,14 +230,14 @@ public class PlayerController : MovingObject {
             }
         }
 
-        if (enemyHitsDuringThisDash == 0)
+        if (enemyHitsDuringDash == 0)
         {
             UIManager.Instance.DisplayComboUI(null);
         }
 
         //set to absolute position
         transform.position = dashPoints[dashPoints.Count - 1].position;
-        enemyHitsDuringThisDash = 0;
+        enemyHitsDuringDash = 0;
         ExitDashRoutine();
 
 

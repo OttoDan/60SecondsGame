@@ -1595,6 +1595,56 @@ Transform:
   m_PrefabParentObject: {fileID: 4746412017543790, guid: f063a58cb3af8264abd895840fb41b9e,
     type: 2}
   m_PrefabInternal: {fileID: 1110536443}
+--- !u!1 &1209221834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1209221836}
+  - component: {fileID: 1209221835}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1209221835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1209221834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b89ef1ea8f995a4cacea050e3735142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: 1
+  CubeRotation: {fileID: 8300000, guid: 8ebc64559abbea046b02a3e6ff8459db, type: 3}
+  EnemyHit: {fileID: 8300000, guid: 7932f0aa4ee0c3247a2035e7f317549a, type: 3}
+  MainCharacterDash: {fileID: 8300000, guid: 86f47dcf3a4e3c14bb342ec2a95b7005, type: 3}
+  MenuHover: {fileID: 8300000, guid: c23e29d4e9aa5fe408f7f6e67f314dd1, type: 3}
+  MenuSelection: {fileID: 8300000, guid: 7253558c9769db1438618fb52bce2381, type: 3}
+  Timer_Ticking1: {fileID: 8300000, guid: 2c8386d485bd0e247827cb5b8466985e, type: 3}
+  Timer_Ticking2: {fileID: 8300000, guid: a49438c7e59bb724ca1bf199e16aded3, type: 3}
+  Timer_Ticking3: {fileID: 8300000, guid: cf6da0f2f23c85542bb7aa64c8f582e3, type: 3}
+  Timer_Ticking4: {fileID: 8300000, guid: c3892b3ddf4725c4b85577ceeeb33da2, type: 3}
+--- !u!4 &1209221836
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1209221834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1315434567
 Prefab:
   m_ObjectHideFlags: 0

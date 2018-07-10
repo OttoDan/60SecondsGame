@@ -64,6 +64,7 @@ public class PlayerController : MovingObject {
                 enemyHitsDuringDash++;
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
+                AudioManager.Instance.EnemyHitAudio();
                 enemyController.HitEvent();
                 TimeManager.Instance.EnemyHitSlowMotion();
                 ScreenShake.Instance.DoShake();

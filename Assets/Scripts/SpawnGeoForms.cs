@@ -2,84 +2,105 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class SpawnGeoForms : MonoBehaviour {
 
+public class SpawnGeoForms : MonoBehaviour
+{
 
-	//attach to enemy
-	// if collision   radius=5
-	//                point = 5 or whatever
+    LineRenderer lineRenderer;
+    [Range(3, 30)]
+    int points;
+    public float radius = 1;
 
-	private LineRenderer lineRenderer;
+    public Vector3[] positions;
 
-	[Range(3,30)]
-	int points;
-	float radius = 1;
+    IEnumerator coroutine;
 
-	Vector3[] positions;
-	// Use this for initialization
+    Color fromColor;
 
-	private void Awake()
-	{
-        //radius = 5;
-        //points = Random.Range(3, 10);
-        //CreateGeoForm();
-
-
-        //lr = gameObject.AddComponent<LineRenderer>() as LineRenderer;
-        lineRenderer = GetComponent<LineRenderer>();
-
-	}
+    private void Awake()
+    {
+        lineRenderer = GetComponent<LineRenderer>() as LineRenderer;
+    }
 
     private void Start()
     {
-        CreateGeoForm();
+        points = PlayerController.Instance.enemyHitsDuringDash + 2;
+        coroutine = (MoveGeoForms(2f, 1));
+        StartCoroutine(coroutine);
+
     }
 
     private void Update()
-	{
-		if (radius >= 0)
-		{
-            //transform.LookAt(Camera.main.transform);
+    {
+        if (radius >= 0)
+        {
 
-		    positions = new Vector3[points + 2];
+            positions = new Vector3[points + 2];
 
-		    for (int i = 0; i < positions.Length; i++)
-		    {
-			    float x = Mathf.Cos((i / (float) points) * 2 * Mathf.PI);
-			    float y = Mathf.Sin((i / (float) points) * 2 * Mathf.PI);
-			    positions[i] = new Vector3(x, y, 0) * radius;
-		    }
-		    positions[positions.Length - 2] = positions[0];
-		    positions[positions.Length - 1] = positions[1];
+            for (int i = 0; i < positions.Length; i++)
+            {
+                float x = Mathf.Cos((i / (float)points) * 2 * Mathf.PI);
+                float y = Mathf.Sin((i / (float)points) * 2 * Mathf.PI);
+                positions[i] = new Vector3(x, y, 0) * radius;
+            }
+            positions[positions.Length - 2] = positions[0];
+            positions[positions.Length - 1] = positions[1];
 
-		    lineRenderer.positionCount = positions.Length;
-		    lineRenderer.SetPositions(positions);
+            lineRenderer.positionCount = positions.Length;
+            lineRenderer.SetPositions(positions);
 
-            lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.1f, .5f), new Keyframe(.9f, .5f), new Keyframe(1, 0));
+           // lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.1f, .5f), new Keyframe(.9f, .5f), new Keyframe(1, 0));
 
         }
 
+        if (radius < 0)
+            radius = 0;
+    }
+
+    IEnumerator MoveGeoForms(float duration = 1, float _radius = 5)
+    {
+        float movedTime = 0f;
+        radius = _radius;
+
+        while (movedTime < (duration / 2))
+        {
+            transform.Rotate(0, 0, 25);
+            // Debug.Log("smaller");
+            radius -= .1f;
+            movedTime += Time.unscaledDeltaTime;
 
 
-		if (radius > 0)
-		{
-			radius -= Random.Range(8,16) * Time.unscaledDeltaTime;
+
+            yield return null;
+        }
+
+        Color toColor = lineRenderer.material.color;
+        fromColor = lineRenderer.material.color;
+        toColor.a = 0f;
+
+        while (movedTime > (duration / 2) && movedTime < duration)
+        {
+            // Debug.Log("bigger");
+            radius += .17f;
+            transform.Rotate(0, 0, -25);
+            lineRenderer.material.color = Color.Lerp(fromColor, toColor, (movedTime - duration / 2) / (duration / 2));
+
+            movedTime += Time.unscaledDeltaTime;
+
+            //  Debug.Log(movedTime);
+
+            yield return null;
+        }
+        lineRenderer.material.color = fromColor;
+        radius = 0;
+        Debug.Log("end");
+        coroutine = null;
+    }
 
 
-		}
-
-		 if(radius < 0)
-			radius = 0;
-	}
-
-	public void CreateGeoForm(float _radius = 5,int _points = 4)
-	{
-        Debug.Log("radius: " + _radius + " points: " + _points);
-		radius = PlayerController.Instance.enemyHitsDuringDash + 2;
-		points = (int)Random.Range(3,6)/*_points*/;
-
-	}
-
-
+    //public void CreateGeoForm(float _radius = 5, int _points = 4)
+    //{
+    //    radius = PlayerController.Instance.enemyHitsDuringDash + 2;
+    //    points = (int)Random.Range(3, 6)/*_points*/;
+    //}
 }

@@ -958,6 +958,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced3e7cc96551054b98168bf44975e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  radius: 1
+  positions: []
 --- !u!114 &114626961496996962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1013,7 +1015,7 @@ LineRenderer:
   - {x: -0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.75
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:

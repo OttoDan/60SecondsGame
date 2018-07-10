@@ -7,6 +7,12 @@ public class CameraController : MonoBehaviour {
 
     public static CameraController Instance;
 
+    public Transform ShakeSpring;
+    public Transform ZoomSpring;
+    public Transform RotationSpring;
+
+
+
     #endregion
 
     #region CameraMovement.cs Adaption
@@ -34,6 +40,9 @@ public class CameraController : MonoBehaviour {
             Debug.LogError("Two CameraControllers in scene!");
             Destroy(gameObject);
         }
+        ShakeSpring = new GameObject("ShakeSpring").transform;
+        ZoomSpring = new GameObject("ZoomSpring").transform;
+        RotationSpring = new GameObject("RotationSpring").transform;
 
     }
     private void Start()

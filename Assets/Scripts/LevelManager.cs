@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
+
+    //public Level Level { get; private set; }
+    public new string name;
+    public AudioClip song;
+
     public static LevelManager Instance;
     Vector3 levelBoundsMin = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
     Vector3 levelBoundsMax = new Vector3(Mathf.NegativeInfinity, Mathf.NegativeInfinity, Mathf.NegativeInfinity);

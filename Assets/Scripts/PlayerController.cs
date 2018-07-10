@@ -77,7 +77,7 @@ public class PlayerController : MovingObject {
         }
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            ScreenShake.Instance.DoShake(0.5f,1.2f);
+            ScreenShake.Instance.DoShake(0.5f,16);
             if (DashCoroutine != null)
             {
                 StopCoroutine(DashCoroutine);

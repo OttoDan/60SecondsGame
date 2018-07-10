@@ -7,8 +7,9 @@ public class ScreenShake : MonoBehaviour {
 	private float newMagnitude;
 	//public IEnumerator currShake=null;  // makes sure that there is always just 1 coroutine running at once
 
-    public float duration = .5f;
-    public float magnitude = .8f;
+    float duration = .5f;
+    float magnitude = .8f;
+    private IEnumerator ShakeCoroutine;
 
 
     private void Awake()
@@ -57,7 +58,13 @@ public class ScreenShake : MonoBehaviour {
     }
     public void DoShake(float _duration= 0.5f, float _magnitude = 0.8f)
     {
-        StartCoroutine(Shake(_duration, _magnitude));
+        //if (ShakeCoroutine != null)
+        //    StopCoroutine(ShakeCoroutine);
+        //if(ShakeCoroutine == null)
+        //{
+            ShakeCoroutine = Shake(_duration, _magnitude);
+            StartCoroutine(ShakeCoroutine);
+        //}
     }
     //private void Update()
     //{

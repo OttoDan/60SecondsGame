@@ -66,9 +66,9 @@ public class PlayerController : MovingObject {
             if (enemyController != null)
             {
                 animator.SetTrigger("DashHit");
-                ScreenShake.Instance.DoShake();
 
                 enemyHitsDuringDash++;
+                ScreenShake.Instance.DoShake(0.5f, enemyHitsDuringDash);
                
 
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);

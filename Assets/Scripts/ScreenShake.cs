@@ -55,7 +55,7 @@ public class ScreenShake : MonoBehaviour {
         //transform.localPosition = fromLocalPosition;//new Vector3(0,0,transform.localPosition.z);
         //currShake = null;
     }
-    public void DoShake(float _duration= 0.75f, float _magnitude = 4.8f)
+    public void DoShake(float _duration= 0.5f, float _magnitude = 4.8f)
     {
         //if (ShakeCoroutine != null)
         //    StopCoroutine(ShakeCoroutine);

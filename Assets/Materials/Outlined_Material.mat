@@ -7,12 +7,12 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Outlined_Material
-  m_Shader: {fileID: 4800000, guid: a8c45cc486bd3f94f9733c5af4658cd3, type: 3}
+  m_Shader: {fileID: 4800000, guid: 3143396fa0fb7e5488255351d8554093, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -99,7 +99,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Outline: 0.299
+    - _Outline: 0.0164
     - _OutlineFactor: 0.5
     - _OutlineWidth: 0.002
     - _Parallax: 0.02
@@ -124,7 +124,7 @@ Material:
     - _BumpDirection: {r: 1, g: 1, b: -1, a: 1}
     - _BumpTiling: {r: 1, g: 1, b: -2, a: 3}
     - _ChannelFactor: {r: 1, g: 0, b: 0, a: 1}
-    - _Color: {r: 0.23795871, g: 0.15205587, b: 0.6320754, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _DistortParams: {r: 1, g: 1, b: 2, a: 1.15}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GAmplitude: {r: 0.3, g: 0.35, b: 0.25, a: 0.25}

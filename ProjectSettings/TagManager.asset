@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Fire
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -19,11 +18,7 @@ TagManager:
   - Enemy
   - Obstacle
   - PlayerTouchZone
-<<<<<<< HEAD
-  - Behind Wall
-=======
-  - 
->>>>>>> 6914481ff51209619e16870066cfb3f9fe1f5b7d
+  - BehindWall
   - 
   - 
   - 

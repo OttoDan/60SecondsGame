@@ -3632,7 +3632,7 @@ GameObject:
   - component: {fileID: 919469893}
   - component: {fileID: 919469892}
   - component: {fileID: 919469896}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4599,6 +4599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68692d1b26929bc4c9a1d18081bee3fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: 
+  song: {fileID: 0}
 --- !u!4 &1148795544
 Transform:
   m_ObjectHideFlags: 0
@@ -7588,6 +7590,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cce1b3002c9b14a9e775fbe76b922a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ZoomSpring: {fileID: 0}
+  ShakeSpring: {fileID: 0}
+  RotationSpring: {fileID: 0}
   MouseSensitivity: 12
   OrbitDamping: 0.92
 --- !u!81 &1920167922
@@ -7663,8 +7668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a16a4a53ccfcc4bb09ee94e7e96c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.5
-  magnitude: 0.8
 --- !u!1 &1926686809
 GameObject:
   m_ObjectHideFlags: 0

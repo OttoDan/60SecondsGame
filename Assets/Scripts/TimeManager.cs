@@ -113,6 +113,9 @@ public class TimeManager : MonoBehaviour
         }
         Time.timeScale = timeFrom;
         Time.fixedDeltaTime = Time.timeScale * .02f;
+
+        
+
         enemyHitCoroutine = null;
     }
 

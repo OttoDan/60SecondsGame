@@ -74,6 +74,7 @@ public class DrawGeoFormTouch : MonoBehaviour
 
     IEnumerator MoveGeoForms(float duration = 0.75f, float _radius = 4)
     {
+        lineRenderer.enabled = true;
         radius = 0;
 
         for(float t = 0; t < duration*0.75f; t+= Time.unscaledDeltaTime)
@@ -106,6 +107,7 @@ public class DrawGeoFormTouch : MonoBehaviour
         radius = 0;
         points = 0;
         UpdateLineRenderer();
+        lineRenderer.enabled = false;
         coroutine = null;
     }
 
@@ -124,6 +126,7 @@ public class DrawGeoFormTouch : MonoBehaviour
         radius = 0;
         points = 0;
         UpdateLineRenderer();
+        lineRenderer.enabled = false;
         coroutine = null;
     }
 

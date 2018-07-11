@@ -25,7 +25,7 @@ public class SpawnGeoForms : MonoBehaviour
     private void Start()
     {
         points = PlayerController.Instance.enemyHitsDuringDash + 2;
-        coroutine = (MoveGeoForms(2f, 12/ Mathf.Abs(PlayerController.Instance.enemyHitsDuringDash)-12));
+        coroutine = (MoveGeoForms(1f, PlayerController.Instance.enemyHitsDuringDash));
         StartCoroutine(coroutine);
 
     }
@@ -34,7 +34,7 @@ public class SpawnGeoForms : MonoBehaviour
     {
         if (radius >= 0)
         {
-            transform.LookAt(Camera.main.transform);
+            //transform.LookAt(Camera.main.transform);
 
             positions = new Vector3[points + 2];
 

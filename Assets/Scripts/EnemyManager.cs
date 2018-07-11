@@ -35,8 +35,8 @@ public class EnemyManager : MonoBehaviour {
             GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Count)], transform);
             //enemy.transform.Find("Mesh").GetComponent<MeshRenderer>().material.color = Random.ColorHSV();
             
-            enemy.transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color = Random.ColorHSV();
-            enemy.transform.localScale *= Random.Range(1f, 1.25f);
+            //enemy.transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color = Random.ColorHSV();
+            enemy.transform.localScale *= Random.Range(2f, 2.125f);
             enemy.transform.position = Random.insideUnitSphere * 32;
             enemy.transform.LookAt(Vector3.zero);
             StartCoroutine(FallOnCube(enemy.transform));

@@ -108,7 +108,7 @@ public class InputManager : MonoBehaviour {
                             //if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
                             //{
                             PlayerController.Instance.PlaceDashpoint(currentTouch.position);
-                            PlayerController.Instance.StopDashStartTouch();
+                            //PlayerController.Instance.StopDashStartTouch();
                             //    paintUpdateFrames = 0;
                             //}
                         }

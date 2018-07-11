@@ -78,7 +78,7 @@ public class PlayerController : MovingObject {
                 TimeManager.Instance.EnemyHitSlowMotion();
 
                 if(Vector3.Distance(Camera.main.transform.position,Vector3.zero) > LevelManager.Instance.MinCamDistance()*1.75f)
-                    CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.5f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
+                    CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.25f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
                 else
                     CameraController.Instance.Zooming(16, CameraController.Zoom.Out);//AdjustCameraZoomByLevelBounds();
 
@@ -92,11 +92,8 @@ public class PlayerController : MovingObject {
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             ScreenShake.Instance.DoShake(1.0f,16f);
-            if (DashCoroutine != null)
-            {
-                StopCoroutine(DashCoroutine);
-                ExitDashRoutine();
-            }
+            
+            ObstaclePushBack();
             //if (BounceOffObstacleCoroutine != null)
             //    StopCoroutine(BounceOffObstacleCoroutine);
 
@@ -108,6 +105,7 @@ public class PlayerController : MovingObject {
     public void DrawDashStartTouch()
     {
         drawGeoFormTouch.Draw();
+        AudioManager.Instance.DrawDashAudio();
     }
     public void StopDashStartTouch()
     {
@@ -219,6 +217,7 @@ public class PlayerController : MovingObject {
         if (DashCoroutine == null && dashPoints.Count > 0)
         {
             dashButtonCanvas.enabled = false;
+            AudioManager.Instance.DashAudio();
             DashCoroutine = DashRoutine();
             StartCoroutine(DashCoroutine);
         }
@@ -267,7 +266,6 @@ public class PlayerController : MovingObject {
 
         //set to absolute position
         transform.position = dashPoints[dashPoints.Count - 1].position;
-        enemyHitsDuringDash = 0;
         ExitDashRoutine();
 
 
@@ -277,7 +275,9 @@ public class PlayerController : MovingObject {
     {
         //transform.up = dashPoints[dashPoints.Count - 1].normal;
 
+        enemyHitsDuringDash = 0;
         dashPoints.Clear();
+        AudioManager.Instance.EnemyHitResetAudio();
         //IdleParticles.SetActive(true);
 
         //wait for Respawn Routine / respawn enemies
@@ -293,6 +293,38 @@ public class PlayerController : MovingObject {
 
         //dashButtonCanvas.enabled = true;
         DashCoroutine = null;
+    }
+
+    void ObstaclePushBack()
+    {
+        if(ObstaclePushBackCoroutine == null)
+        {
+            ObstaclePushBackCoroutine = ObstaclePushBackRoutine();
+            StartCoroutine(ObstaclePushBackCoroutine);
+        }
+    }
+
+    IEnumerator ObstaclePushBackCoroutine;
+    IEnumerator ObstaclePushBackRoutine(float duration = 0.25f)
+    {
+        Vector3 fromPos = transform.position;
+        Vector3 toPos = transform.position - transform.forward * 0.5f;
+        for(float t = 0; t<duration; t += Time.deltaTime)
+        {
+            transform.position = Vector3.Lerp(fromPos, toPos, t / duration);
+
+            yield return null;
+        }
+
+        transform.position = toPos;
+
+        if (DashCoroutine != null)
+        {
+            StopCoroutine(DashCoroutine);
+            ExitDashRoutine();
+        }
+
+        ObstaclePushBackCoroutine = null;
     }
 
     #endregion

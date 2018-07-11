@@ -91,7 +91,7 @@ public class TimeManager : MonoBehaviour
 
     IEnumerator EnemyHitRoutine()
     {
-        float duration = 1f/*0.25f*/;
+        float duration = 0.5f/*0.25f*/;
         float timeFrom = Time.timeScale;
         float timeTo = slowdownFactor;
         for (float t = 0; t < duration * 0.25f; t += Time.unscaledDeltaTime)

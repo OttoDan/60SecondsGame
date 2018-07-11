@@ -18,8 +18,9 @@ public class AudioManager : MonoBehaviour {
     public AudioClip CubeRotation;
 
     public AudioClip EnemyHit;
+    public AudioClip ObstacleHit;
     public AudioClip MainCharacterDash;
-    public AudioClip DashDrawingStart; 
+    public AudioClip DrawDashStart; 
 
     public AudioClip NumbersRise; //Score +1 
 
@@ -44,11 +45,19 @@ public class AudioManager : MonoBehaviour {
 
     private AudioSource TimerAudio;
     private AudioSource SongAudio;
+
+    private AudioSource DrawDashStartAudio;
+    private AudioSource MainCharacterDashAudio;
+
     private int enemyHitAudioSourceCount = 8;
     private Queue<AudioSource> EnemyHitAudios;
     private int NumbersRiseAudiosCount = 2;
     private Queue<AudioSource> NumbersRiseAudios;
 
+    private AudioSource obstacleHitAudio;
+
+
+    private float enemyHitPitch = 1;
 
     private IEnumerator TimerCoroutine;
 
@@ -71,6 +80,14 @@ public class AudioManager : MonoBehaviour {
         //Song
         SongAudio = gameObject.AddComponent<AudioSource>();
 
+        //DrawDashStartAudio
+        DrawDashStartAudio = gameObject.AddComponent<AudioSource>();
+        DrawDashStartAudio.clip = DrawDashStart;
+
+        //MainCharacterDash
+        MainCharacterDashAudio = gameObject.AddComponent<AudioSource>();
+        MainCharacterDashAudio.clip = MainCharacterDash;
+
         //Enemy Hit
         EnemyHitAudios = new Queue<AudioSource>();
 
@@ -82,6 +99,11 @@ public class AudioManager : MonoBehaviour {
 
             EnemyHitAudios.Enqueue(audioSource);
         }
+
+        //Obstacle Hit
+        obstacleHitAudio = gameObject.AddComponent<AudioSource>();
+        obstacleHitAudio.clip = ObstacleHit;
+
 
         //Numbers Rise
         NumbersRiseAudios = new Queue<AudioSource>();
@@ -123,14 +145,40 @@ public class AudioManager : MonoBehaviour {
             SongAudio.Play();
     }
 
+    public void DrawDashAudio()
+    {
+        if (DrawDashStartAudio != null)
+            DrawDashStartAudio.Play();
+    }
+
+    public void DashAudio()
+    {
+        if (MainCharacterDashAudio != null)
+            MainCharacterDashAudio.Play();
+    }
+    public void EnemyHitResetAudio()
+    {
+        enemyHitPitch = 1;
+    }
     public void EnemyHitAudio()
     {
         AudioSource audioSource = EnemyHitAudios.Dequeue();
+        enemyHitPitch += 0.125f;
+        if (enemyHitPitch >= 2)
+            EnemyHitResetAudio();
+
         if (audioSource != null)
         {
+            audioSource.pitch = enemyHitPitch;// Mathf.Lerp(-1,3,PlayerController.Instance.enemyHitsDuringDash / 10) ;
             audioSource.Play();
             EnemyHitAudios.Enqueue(audioSource);
         }
+    }
+
+    public void ObstacleHitAudio()
+    {
+        if (obstacleHitAudio != null)
+            obstacleHitAudio.Play();
     }
 
     public void NumbersRiseAudio()

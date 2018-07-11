@@ -44,7 +44,7 @@ public class DrawGeoFormTouch : MonoBehaviour
 
         private void UpdateLineRenderer()
     {
-        if (radius >= 0)
+        if (radius >= 0.1f)
         {
             transform.LookAt(Camera.main.transform);
             positions = new Vector3[points + 2];
@@ -66,7 +66,10 @@ public class DrawGeoFormTouch : MonoBehaviour
         }
 
         if (radius < 0)
+        {
+            lineRenderer.positionCount = 0;
             radius = 0;
+        }
     }
 
     IEnumerator MoveGeoForms(float duration = 0.75f, float _radius = 4)

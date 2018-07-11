@@ -48,6 +48,7 @@ public class EnemyController : MovingObject {
         {
 
             Transform fracturedParent = Instantiate(enemy.FracturedMeshPrefab, transform.position, transform.rotation, null).transform;
+            fracturedParent.localScale = transform.localScale;
             Color color = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color;
             MeshRenderer meshRenderer;
             //Rigidbody rigidbody;

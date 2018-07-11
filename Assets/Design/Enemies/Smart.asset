@@ -14,6 +14,6 @@ MonoBehaviour:
   name: Smart
   FracturedMeshPrefab: {fileID: 1729316789562842, guid: 338f9c299d614e04d8af6d9d59275fb6,
     type: 2}
-  score: 35
+  score: 350
   minSpeed: 1
   maxSpeed: 24

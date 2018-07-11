@@ -69,8 +69,7 @@ public class PlayerController : MovingObject {
                 ScreenShake.Instance.DoShake();
 
                 enemyHitsDuringDash++;
-                for (int i = 0; i < enemyHitsDuringDash; i++)
-                    EnemyManager.Instance.SpawnEnemy();
+               
 
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
@@ -273,6 +272,30 @@ public class PlayerController : MovingObject {
 
     void ExitDashRoutine()
     {
+
+        for (int i = 0; i < enemyHitsDuringDash; i++)
+            EnemyManager.Instance.SpawnEnemy();
+
+
+
+        if (enemyHitsDuringDash > 2)
+            EnemyManager.Instance.SpawnEnemy();
+
+        if (enemyHitsDuringDash > 4)
+        {
+            EnemyManager.Instance.SpawnEnemy();
+        }
+
+        if (enemyHitsDuringDash > 6)
+        {
+            EnemyManager.Instance.SpawnEnemy();
+        }
+
+        if (enemyHitsDuringDash > 8)
+        {
+            EnemyManager.Instance.SpawnEnemy();
+        }
+
         //transform.up = dashPoints[dashPoints.Count - 1].normal;
 
         enemyHitsDuringDash = 0;

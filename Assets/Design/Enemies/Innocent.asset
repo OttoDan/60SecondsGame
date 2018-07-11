@@ -14,6 +14,6 @@ MonoBehaviour:
   name: Innocent
   FracturedMeshPrefab: {fileID: 1889468312784244, guid: 9c23caf3134f0ff4f8a5552d2536cad1,
     type: 2}
-  score: 5
+  score: 150
   minSpeed: 1
   maxSpeed: 1

@@ -14,6 +14,6 @@ MonoBehaviour:
   name: Shy
   FracturedMeshPrefab: {fileID: 1657609196944344, guid: ae1266e8e1969a54abbe6d8a2fd7c0c6,
     type: 2}
-  score: 10
+  score: 100
   minSpeed: 1
   maxSpeed: 2

@@ -13990,7 +13990,7 @@ MonoBehaviour:
   - {fileID: 1910389128087170, guid: 2a48635b42547bb42a4c03d622acd5c7, type: 2}
   - {fileID: 1652535078561988, guid: 423aa8740c874834cb7dc056baecedde, type: 2}
   - {fileID: 1815547915312678, guid: 2bd6812509b82d1498798249bbd8d498, type: 2}
-  startEnemyAmount: 60
+  startEnemyAmount: 20
 --- !u!4 &1412125577 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400018, guid: c882b295b7ed8df4fb7052683bb4d697, type: 3}

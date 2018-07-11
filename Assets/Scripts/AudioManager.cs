@@ -42,11 +42,13 @@ public class AudioManager : MonoBehaviour {
 
     //private AudioSource TimerAS;
 
-    private Queue<AudioSource> EnemyHitAudios;
     private AudioSource TimerAudio;
     private AudioSource SongAudio;
-
     private int enemyHitAudioSourceCount = 8;
+    private Queue<AudioSource> EnemyHitAudios;
+    private int NumbersRiseAudiosCount = 2;
+    private Queue<AudioSource> NumbersRiseAudios;
+
 
     private IEnumerator TimerCoroutine;
 
@@ -81,6 +83,16 @@ public class AudioManager : MonoBehaviour {
             EnemyHitAudios.Enqueue(audioSource);
         }
 
+        //Numbers Rise
+        NumbersRiseAudios = new Queue<AudioSource>();
+        for (int i = 0; i < NumbersRiseAudiosCount; i++)
+
+        {
+            AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.clip = NumbersRise;
+
+            NumbersRiseAudios.Enqueue(audioSource);
+        }
 
     }
 
@@ -88,15 +100,7 @@ public class AudioManager : MonoBehaviour {
 
     #region Methods
 
-    public void EnemyHitAudio()
-    {
-        AudioSource audioSource = EnemyHitAudios.Dequeue();
-        if (audioSource != null)
-        {
-            audioSource.Play();
-            EnemyHitAudios.Enqueue(audioSource);
-        }
-    }
+    
 
     public void TimerStartAudio()
     {
@@ -118,10 +122,30 @@ public class AudioManager : MonoBehaviour {
         if (SongAudio != null)
             SongAudio.Play();
     }
+
+    public void EnemyHitAudio()
+    {
+        AudioSource audioSource = EnemyHitAudios.Dequeue();
+        if (audioSource != null)
+        {
+            audioSource.Play();
+            EnemyHitAudios.Enqueue(audioSource);
+        }
+    }
+
+    public void NumbersRiseAudio()
+    {
+        AudioSource audioSource = NumbersRiseAudios.Dequeue();
+        if (audioSource != null)
+        {
+            audioSource.Play();
+            NumbersRiseAudios.Enqueue(audioSource);
+        }
+    }
     #endregion
 
     #region Coroutines
-    
+
     IEnumerator TimerRoutine()
     {
         TimerAudio.loop = true;

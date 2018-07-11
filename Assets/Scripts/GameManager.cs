@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour {
     {
         //IEnumerator coroutine = AddScoreRoutine(score);
         //StartCoroutine(coroutine);
+        AudioManager.Instance.NumbersRiseAudio();
         currentScore += score;
         UIManager.Instance.UpdateScore();
 

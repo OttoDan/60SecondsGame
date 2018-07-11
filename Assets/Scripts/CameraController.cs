@@ -61,8 +61,11 @@ public class CameraController : MonoBehaviour {
 
     private void LateUpdate()
     {
-        inputRotation.x = inputRotation.x * OrbitDamping;
-        inputRotation.y = inputRotation.y * OrbitDamping;
+        if(StopRotationCoroutine == null)
+        {
+            inputRotation.x = inputRotation.x * OrbitDamping;
+            inputRotation.y = inputRotation.y * OrbitDamping;
+        }
 
 
        
@@ -195,17 +198,16 @@ public class CameraController : MonoBehaviour {
 
     IEnumerator StopRotationRoutine(float duration)
     {
-        //float fromRotationX = localRotation.x;
-        //float fromRotationY = localRotation.y;
-        //for (float t = 0; t < duration; t += Time.unscaledDeltaTime)
-        //{
-        //    localRotation.x = Mathf.Lerp(fromRotationX, 0, t / duration);
-        //    localRotation.y = Mathf.Lerp(fromRotationY, 0, t / duration);
-        //    yield return new WaitForFixedUpdate();
-        //}
-        //Debug.Log("StopRotation");
-        //StopRotationCoroutine = null;
-        yield return null;
+        float fromRotationX = inputRotation.x;
+        float fromRotationY = inputRotation.y;
+        for (float t = 0; t < duration; t += Time.unscaledDeltaTime)
+        {
+            inputRotation.x = Mathf.Lerp(fromRotationX, 0, t / duration);
+            inputRotation.y = Mathf.Lerp(fromRotationY, 0, t / duration);
+            yield return new WaitForFixedUpdate();
+        }
+        Debug.Log("StopRotation");
+        StopRotationCoroutine = null;
     }
     public void Zooming(float factor, Zoom zoom, float lerpDuration = 0.5f, float stayDuration = 0.25f)
     {

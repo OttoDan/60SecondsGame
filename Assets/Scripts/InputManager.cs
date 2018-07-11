@@ -78,13 +78,14 @@ public class InputManager : MonoBehaviour {
                     Ray ray = Camera.main.ScreenPointToRay(currentTouch.position);
 
 
-                    if (Physics.Raycast(ray, Camera.main.transform.position.magnitude, LayerMask.GetMask("Walkable")))
+                    if (Physics.Raycast(ray, Camera.main.transform.position.magnitude, LayerMask.GetMask("PlayerTouchZone")))
                     //TODO: restrict to the walkable layer / ignore all other layers
                     {
                         CameraController.Instance.StopRotation();
                         if (GameManager.Instance.state == GameManager.State.Level)
                         {
                             cubeFingerID = currentTouch.fingerId;
+                            PlayerController.Instance.DrawDashStartTouch();
                             //dashPaint = true;
                             //Debug.Log("cubeFingerID: " + currentTouch.fingerId);
                         }
@@ -107,6 +108,7 @@ public class InputManager : MonoBehaviour {
                             //if (paintUpdateFrames % paintUpdateFrameFrequence == 0)
                             //{
                             PlayerController.Instance.PlaceDashpoint(currentTouch.position);
+                            PlayerController.Instance.StopDashStartTouch();
                             //    paintUpdateFrames = 0;
                             //}
                         }
@@ -131,6 +133,7 @@ public class InputManager : MonoBehaviour {
                         cubeFingerID = -1;
                         if (GameManager.Instance.state == GameManager.State.Level)
                         {
+                            PlayerController.Instance.StopDashStartTouch();
                             PlayerController.Instance.Dash();
                         }
                     }

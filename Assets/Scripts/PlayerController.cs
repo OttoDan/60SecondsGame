@@ -13,7 +13,7 @@ public class PlayerController : MovingObject {
 
     #region Private Fields
 
-    List<DashPoint> dashPoints = new List<DashPoint>();
+    public List<DashPoint> dashPoints;
 
     LineRenderer lineRenderer;
 
@@ -24,7 +24,8 @@ public class PlayerController : MovingObject {
     GameObject IdleParticles;
 
     Animator animator;
-
+    Transform PlayerTouchZone;
+    DrawGeoFormTouch drawGeoFormTouch;
     #endregion
 
     #region Unity Messages
@@ -38,9 +39,11 @@ public class PlayerController : MovingObject {
             Debug.LogError("Two PlayerControllers in the scene!");
             Destroy(gameObject);
         }
-
+        dashPoints = new List<DashPoint>(); 
         lineRenderer = GetComponent<LineRenderer>();
         animator = transform.Find("Main-Character-Rig_v4-2").GetComponent<Animator>();//GetComponentInChildren<Animator>();
+        PlayerTouchZone = GameObject.Find("PlayerTouchZone").transform;
+        drawGeoFormTouch = PlayerTouchZone.GetComponentInChildren<DrawGeoFormTouch>();
     }
     private void Start()
     {
@@ -50,6 +53,8 @@ public class PlayerController : MovingObject {
     private void Update()
     {
         DebugDrawDashPoints();
+        PlayerTouchZone.transform.position = transform.position;
+        PlayerTouchZone.transform.rotation = transform.rotation;
     }
     private void OnTriggerEnter(Collider collider)
     {
@@ -100,7 +105,14 @@ public class PlayerController : MovingObject {
     #endregion
 
     #region Methods
-
+    public void DrawDashStartTouch()
+    {
+        drawGeoFormTouch.Draw();
+    }
+    public void StopDashStartTouch()
+    {
+        drawGeoFormTouch.Stop();
+    }
     public void PlaceDashpoint(Vector2 screenPos)
     {
         if (DashCoroutine != null)
@@ -193,6 +205,12 @@ public class PlayerController : MovingObject {
             lineRenderer.SetPosition(i, dashPoints[i - 1].position + dashPoints[i - 1].normal * 0.125f);
         }
         lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.1f, .5f), new Keyframe(.9f, .5f), new Keyframe(1, 0));
+        //lineRenderer.colorGradient  = Color.Lerp(Color.white, Color.black, dashPoints.Count / 24);
+        //float alpha = 1.0f;
+        //lineRenderer.colorGradient.SetKeys(//TODO: figure out amount of dashpoints
+        //    new GradientColorKey[] { new GradientColorKey(Color.green, 0.0f), new GradientColorKey(Color.Lerp(Color.green, Color.red, dashPoints.Count / 8), 1.0f) },
+        //    new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
+        //    );
 
     }
 

@@ -18,8 +18,8 @@ TagManager:
   - Walkable
   - Enemy
   - Obstacle
+  - PlayerTouchZone
   - Behind Wall
-  - 
   - 
   - 
   - 

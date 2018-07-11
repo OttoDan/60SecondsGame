@@ -93,7 +93,6 @@ public class SpawnGeoForms : MonoBehaviour
         }
         lineRenderer.material.color = fromColor;
         radius = 0;
-        Debug.Log("end");
         coroutine = null;
     }
 

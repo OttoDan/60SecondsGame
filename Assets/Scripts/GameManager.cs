@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour {
         currentScore += score;
         UIManager.Instance.UpdateScore();
 
-        Debug.Log("scored: " + score + "\ncurrentScore:" + currentScore);
+        //Debug.Log("scored: " + score + "\ncurrentScore:" + currentScore);
     }
 
     void GameEnded()

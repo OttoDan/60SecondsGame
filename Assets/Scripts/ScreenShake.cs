@@ -28,8 +28,8 @@ public class ScreenShake : MonoBehaviour {
     /// <returns></returns>
     public IEnumerator Shake(float duration, float magnitude)
 	{
-        Vector3 fromLocalPosition = transform.localPosition;
-        Quaternion fromLocalRotation = transform.localRotation;
+        CameraController.Instance.ShakeSpring.localPosition = Vector3.zero;
+        Quaternion fromLocalRotation = CameraController.Instance.ZoomSpring.localRotation;
 		//currShake = (Shake(duration, magnitude));
 
 		newMagnitude = Mathf.Pow(magnitude, 2); // so the screenshake is really intens at the start but gets weaker quickly
@@ -42,8 +42,8 @@ public class ScreenShake : MonoBehaviour {
 			float x = Random.Range(-1f, 1f);
 			float y = Random.Range(-1f, 1f);
 
-			transform.localPosition += new Vector3 (x*.1f,y*.1f,0)*(newMagnitude/2);
-			transform.localRotation = Quaternion.Euler(fromLocalRotation.eulerAngles.x, y*newMagnitude, fromLocalRotation.eulerAngles.z );
+            CameraController.Instance.ShakeSpring.localPosition += new Vector3 (x*.1f,y*.1f,0)*(newMagnitude/2);
+            CameraController.Instance.ShakeSpring.localRotation = Quaternion.Euler(fromLocalRotation.eulerAngles.x, y*newMagnitude, fromLocalRotation.eulerAngles.z );
 
 			timeShaked +=  Time.unscaledDeltaTime;
 			newMagnitude = Mathf.Sqrt(newMagnitude); // so the screenshake is really intens at the start but gets weaker quickly
@@ -51,12 +51,11 @@ public class ScreenShake : MonoBehaviour {
 												
 			yield return new WaitForFixedUpdate();
 		}
-        Debug.Log("nonsence");
         //transform.localRotation = fromLocalRotation;//Quaternion.Euler(0, 0, 0);
         //transform.localPosition = fromLocalPosition;//new Vector3(0,0,transform.localPosition.z);
         //currShake = null;
     }
-    public void DoShake(float _duration= 0.5f, float _magnitude = 0.8f)
+    public void DoShake(float _duration= 0.75f, float _magnitude = 4.8f)
     {
         //if (ShakeCoroutine != null)
         //    StopCoroutine(ShakeCoroutine);

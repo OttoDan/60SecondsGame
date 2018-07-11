@@ -42,11 +42,26 @@ public class EnemyController : MovingObject {
          * or leave the scene
          */
 
-       
-        if(enemy.FracturedMeshPrefab != null)
+        Vector3 direction = (transform.position - PlayerController.Instance.transform.position).normalized;
+
+        if (enemy.FracturedMeshPrefab != null)
         {
 
-            Instantiate(enemy.FracturedMeshPrefab, transform.position, transform.rotation, null);
+            Transform fracturedParent = Instantiate(enemy.FracturedMeshPrefab, transform.position, transform.rotation, null).transform;
+            Color color = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color;
+            MeshRenderer meshRenderer;
+            //Rigidbody rigidbody;
+            foreach (Transform segment in fracturedParent)
+            {
+                meshRenderer = segment.GetComponent<MeshRenderer>();
+                if(meshRenderer!=null)
+                    meshRenderer.material.color = color;
+
+                //rigidbody = segment.GetComponent<Rigidbody>();
+                //if (rigidbody != null)
+                //    rigidbody.AddForce(Random.insideUnitSphere * 0.25f + direction * 0.5f, ForceMode.Impulse);
+            }
+
         }
         else
         {
@@ -55,7 +70,6 @@ public class EnemyController : MovingObject {
             float xStep = (bounds.max.x - bounds.min.x) / cubesPerRow;
             float yStep = (bounds.max.y - bounds.min.y) / cubesPerRow;
             float zStep = (bounds.max.z - bounds.min.z) / cubesPerRow;
-            Vector3 direction = (transform.position - PlayerController.Instance.transform.position).normalized;
 
 
             for (float x = bounds.min.x; x < bounds.max.x; x += xStep)
@@ -77,7 +91,6 @@ public class EnemyController : MovingObject {
             }
         }
         //GetComponent<SpawnGeoForms>().CreateGeoForm();
-        EnemyManager.Instance.SpawnEnemy();
         Destroy(gameObject);
     }
 

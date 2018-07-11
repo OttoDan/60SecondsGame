@@ -53,7 +53,7 @@ public class PlayerController : MovingObject {
     }
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("collider");
+        //Debug.Log("collider");
         if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy") && DashCoroutine != null)
         {
             EnemyController enemyController = collider.gameObject.GetComponent<EnemyController>();
@@ -61,23 +61,32 @@ public class PlayerController : MovingObject {
             if (enemyController != null)
             {
                 animator.SetTrigger("DashHit");
+                ScreenShake.Instance.DoShake();
+
                 enemyHitsDuringDash++;
+                for (int i = 0; i < enemyHitsDuringDash; i++)
+                    EnemyManager.Instance.SpawnEnemy();
+
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 AudioManager.Instance.EnemyHitAudio();
-                enemyController.HitEvent();
                 TimeManager.Instance.EnemyHitSlowMotion();
-                ScreenShake.Instance.DoShake();
-                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.45f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
-                
 
+                if(Vector3.Distance(Camera.main.transform.position,Vector3.zero) > LevelManager.Instance.MinCamDistance()*1.75f)
+                    CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.5f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
+                else
+                    CameraController.Instance.Zooming(16, CameraController.Zoom.Out);//AdjustCameraZoomByLevelBounds();
+
+                enemyController.HitEvent();
+
+                
             }
             else
                 Debug.LogError("Missing EnemyController on object on Enemy layer!");
         }
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            ScreenShake.Instance.DoShake(0.5f,16);
+            ScreenShake.Instance.DoShake(1.0f,16f);
             if (DashCoroutine != null)
             {
                 StopCoroutine(DashCoroutine);
@@ -261,6 +270,9 @@ public class PlayerController : MovingObject {
         animator.SetBool("Dash", false);
 
         TimeManager.Instance.ActivateSlowMotion();
+
+        CameraController.Instance.FlyBack();
+
         //dashButtonCanvas.enabled = true;
         DashCoroutine = null;
     }

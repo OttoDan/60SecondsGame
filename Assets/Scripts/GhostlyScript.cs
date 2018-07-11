@@ -43,7 +43,7 @@ public class GhostlyScript : MonoBehaviour {
 IEnumerator FadeInOut(float duration = 1f)
     {
         //fadein
-        for(float t=0; t<duration; t+= Time.unscaledDeltaTime)
+        for(float t=0; t < duration; t+= Time.fixedDeltaTime)
         {
             tempCol = tempMesh.material.color;
             tempCol.a =  Mathf.Lerp(1, 0, t / (duration));
@@ -57,11 +57,12 @@ IEnumerator FadeInOut(float duration = 1f)
             yield return null;
         }
             //fadeout
-            for (float t = 0; t < duration; t += Time.unscaledDeltaTime)
+            for (float t = 0; t < duration; t += Time.fixedDeltaTime)
         {
             tempCol = tempMesh.material.color;
             tempCol.a = Mathf.Lerp(0, 1, t / (duration));
             tempMesh.material.color = tempCol;
+            yield return null;
         }
 
         yield return new WaitForSeconds(timeVisible);

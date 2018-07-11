@@ -104,7 +104,7 @@ public class PlayerController : MovingObject {
     public void DrawDashStartTouch()
     {
         drawGeoFormTouch.Draw();
-        AudioManager.Instance.DrawDashAudio();
+        AudioManager.Instance.DrawDashStartAudio();
     }
     public void StopDashStartTouch()
     {
@@ -213,12 +213,19 @@ public class PlayerController : MovingObject {
 
     public void Dash()
     {
-        if (DashCoroutine == null && dashPoints.Count > 0)
+        if (DashCoroutine == null)
         {
-            dashButtonCanvas.enabled = false;
-            AudioManager.Instance.DashAudio();
-            DashCoroutine = DashRoutine();
-            StartCoroutine(DashCoroutine);
+            if (dashPoints.Count > 0)
+            {
+                dashButtonCanvas.enabled = false;
+                AudioManager.Instance.DashAudio();
+                DashCoroutine = DashRoutine();
+                StartCoroutine(DashCoroutine);
+            }
+            else
+            {
+                AudioManager.Instance.DrawDashEndAudio();
+            }
         }
     }
 

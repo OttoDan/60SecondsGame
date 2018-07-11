@@ -46,7 +46,7 @@ public class DrawGeoFormTouch : MonoBehaviour
     {
         if (radius >= 0)
         {
-
+            transform.LookAt(Camera.main.transform);
             positions = new Vector3[points + 2];
 
             for (int i = 0; i < positions.Length; i++)

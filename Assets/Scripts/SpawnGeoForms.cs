@@ -34,6 +34,7 @@ public class SpawnGeoForms : MonoBehaviour
     {
         if (radius >= 0)
         {
+            transform.LookAt(Camera.main.transform);
 
             positions = new Vector3[points + 2];
 

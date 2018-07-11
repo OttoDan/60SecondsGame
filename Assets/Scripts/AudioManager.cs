@@ -20,7 +20,8 @@ public class AudioManager : MonoBehaviour {
     public AudioClip EnemyHit;
     public AudioClip ObstacleHit;
     public AudioClip MainCharacterDash;
-    public AudioClip DrawDashStart; 
+    public AudioClip DrawDashStart;
+    public AudioClip DrawDashEnd;
 
     public AudioClip NumbersRise; //Score +1 
 
@@ -46,7 +47,7 @@ public class AudioManager : MonoBehaviour {
     private AudioSource TimerAudio;
     private AudioSource SongAudio;
 
-    private AudioSource DrawDashStartAudio;
+    private AudioSource DrawDashAudio;
     private AudioSource MainCharacterDashAudio;
 
     private int enemyHitAudioSourceCount = 8;
@@ -81,8 +82,8 @@ public class AudioManager : MonoBehaviour {
         SongAudio = gameObject.AddComponent<AudioSource>();
 
         //DrawDashStartAudio
-        DrawDashStartAudio = gameObject.AddComponent<AudioSource>();
-        DrawDashStartAudio.clip = DrawDashStart;
+        DrawDashAudio = gameObject.AddComponent<AudioSource>();
+        DrawDashAudio.clip = DrawDashStart;
 
         //MainCharacterDash
         MainCharacterDashAudio = gameObject.AddComponent<AudioSource>();
@@ -145,10 +146,22 @@ public class AudioManager : MonoBehaviour {
             SongAudio.Play();
     }
 
-    public void DrawDashAudio()
+    public void DrawDashStartAudio()
     {
-        if (DrawDashStartAudio != null)
-            DrawDashStartAudio.Play();
+        if (DrawDashAudio != null)
+        {
+            DrawDashAudio.clip = DrawDashStart;
+            DrawDashAudio.Play();
+        }
+    }
+
+    public void DrawDashEndAudio()
+    {
+        if (DrawDashAudio != null)
+        {
+            DrawDashAudio.clip = DrawDashEnd;
+            DrawDashAudio.Play();
+        }
     }
 
     public void DashAudio()

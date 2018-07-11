@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 4699910247693096}
   - component: {fileID: 114294681046058656}
   - component: {fileID: 120918538870463752}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: SpawnGeoObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}

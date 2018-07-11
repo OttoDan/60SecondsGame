@@ -233,7 +233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &50744145
 Transform:
   m_ObjectHideFlags: 0
@@ -242,7 +242,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 50744144}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 3}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2010902102}
@@ -872,7 +872,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 256
     size3D: 0
     rotation3D: 1
     gravityModifier:
@@ -6409,6 +6409,26 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198838886404237830, guid: efc34b0f93aa2a7448c782ab35d39575,
+        type: 2}
+      propertyPath: InitialModule.maxNumParticles
+      value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 198838886404237830, guid: efc34b0f93aa2a7448c782ab35d39575,
+        type: 2}
+      propertyPath: useRigidbodyForVelocity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198838886404237830, guid: efc34b0f93aa2a7448c782ab35d39575,
+        type: 2}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198117927687819586, guid: efc34b0f93aa2a7448c782ab35d39575,
+        type: 2}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efc34b0f93aa2a7448c782ab35d39575, type: 2}
   m_IsPrefabParent: 0
@@ -7166,7 +7186,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 256
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -14180,7 +14200,7 @@ ParticleSystem:
   looping: 1
   prewarm: 0
   playOnAwake: 1
-  useUnscaledTime: 0
+  useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
   startDelay:
@@ -14731,7 +14751,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 1
-    maxNumParticles: 1000
+    maxNumParticles: 256
     size3D: 1
     rotation3D: 0
     gravityModifier:
@@ -19346,7 +19366,7 @@ GameObject:
   - component: {fileID: 1519942095}
   - component: {fileID: 1519942097}
   - component: {fileID: 1519942096}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: TouchLineRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25835,7 +25855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 2cd901a720a2cdc4f9993af9de1257d6, type: 2}
+  profile: {fileID: 0}
 --- !u!114 &1920167926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26156,7 +26176,7 @@ ParticleSystem:
   m_GameObject: {fileID: 2010902101}
   serializedVersion: 5
   lengthInSec: 10
-  simulationSpeed: 2
+  simulationSpeed: 32
   stopAction: 0
   looping: 1
   prewarm: 0
@@ -26712,7 +26732,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 256
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -27358,8 +27378,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.227451, g: 0.16862746, b: 0.40784317, a: 0}
-        key1: {r: 0.25512138, g: 0.17860116, b: 0.43230993, a: 0.96025664}
-        key2: {r: 0.74777496, g: 0.35617658, b: 0.8679245, a: 1}
+        key1: {r: 0.25512138, g: 0.17860116, b: 0.43230993, a: 0.14509805}
+        key2: {r: 0.74777496, g: 0.35617658, b: 0.8679245, a: 0.5803922}
         key3: {r: 0.24368659, g: 0.20914644, b: 0.47341517, a: 0}
         key4: {r: 0.19215688, g: 0.40000004, b: 0.7372549, a: 0}
         key5: {r: 0.24293818, g: 0.21191835, b: 0.47724712, a: 0}
@@ -27374,8 +27394,8 @@ ParticleSystem:
         ctime6: 62644
         ctime7: 0
         atime0: 0
-        atime1: 2891
-        atime2: 61295
+        atime1: 4433
+        atime2: 60909
         atime3: 65535
         atime4: 0
         atime5: 0

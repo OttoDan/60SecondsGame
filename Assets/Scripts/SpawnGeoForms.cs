@@ -25,7 +25,7 @@ public class SpawnGeoForms : MonoBehaviour
     private void Start()
     {
         points = PlayerController.Instance.enemyHitsDuringDash + 2;
-        coroutine = (MoveGeoForms(2f, 1));
+        coroutine = (MoveGeoForms(2f, 12/ Mathf.Abs(PlayerController.Instance.enemyHitsDuringDash)-12));
         StartCoroutine(coroutine);
 
     }

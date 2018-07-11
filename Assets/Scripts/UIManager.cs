@@ -58,6 +58,19 @@ public class UIManager : MonoBehaviour
         StartCoroutine(DisplayComboUICoroutine);
     }
 
+    public void DisplayLevelStartUI()
+    {
+        //TODO: Add Display Start Text and show level name for a few seconds
+    }
+
+    public void TimeUIStart()
+    {
+        if (TimeCoroutine != null)
+            StopCoroutine(TimeCoroutine);
+        TimeCoroutine = TimeRoutine();
+        StartCoroutine(TimeCoroutine);
+    }
+
     float displayComboUIduration = 0.75f;
 
     IEnumerator DisplayComboUICoroutine;
@@ -93,4 +106,53 @@ public class UIManager : MonoBehaviour
         DisplayComboUICoroutine = null;
     }
 
+    IEnumerator TimeCoroutine;
+    IEnumerator TimeRoutine()
+    {
+        Vector3 fromLocalPosition;
+        Quaternion fromLocalRotation;
+        float shakeDuration = 1f;
+        float shakeMagnitude = 2.8f;
+        float shakeNewMagnitude;
+
+        while (GameManager.Instance.seconds > 1)
+        {
+            //while ((int)GameManager.Instance.seconds % 2 != 0)
+            //    yield return null;
+            fromLocalPosition = timeText.transform.localPosition;
+            fromLocalRotation = timeText.transform.localRotation;
+            //currShake = (Shake(duration, magnitude));
+
+            shakeNewMagnitude = Mathf.Pow(shakeMagnitude, 2); // so the screenshake is really intens at the start but gets weaker quickly
+
+
+            float timeShaked = 0f;
+
+            while (timeShaked < shakeDuration)
+            {
+                float x = Random.Range(-1f, 1f); //* (60 / GameManager.Instance.seconds) * 0.5f;/* * (((int)GameManager.Instance.seconds % 5) + 1);*/
+                float y = Random.Range(-1f, 1f); //* (60 / GameManager.Instance.seconds) * 0.5f;/* * (((int)GameManager.Instance.seconds % 5) + 1);*/
+
+                //if ((int)GameManager.Instance.seconds % 5 == 0)
+                //{
+                //    x *= 5;
+                //    y *= 5;
+                //}
+
+                timeText.transform.localPosition += new Vector3(x * .1f, y * .1f, 0) * (shakeNewMagnitude / 2);
+                timeText.transform.localRotation = Quaternion.Euler(fromLocalRotation.eulerAngles.x, y * shakeNewMagnitude, fromLocalRotation.eulerAngles.z);
+
+                timeShaked += Time.unscaledDeltaTime;
+                shakeNewMagnitude = Mathf.Sqrt(shakeNewMagnitude); // so the screenshake is really intens at the start but gets weaker quickly
+                                                         //Debug.Log(_magnitude);
+
+                yield return null;
+            }
+            //timeText.transform.localPosition = fromLocalPosition;
+            //timeText.transform.localRotation = fromLocalRotation;
+        }
+
+
+        TimeCoroutine = null;
+    }
 }

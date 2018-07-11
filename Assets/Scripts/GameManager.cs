@@ -87,17 +87,31 @@ public class GameManager : MonoBehaviour {
     public void SwitchToLevelState()
     {
         seconds = 60;
+        StartLevel();
         this.state = State.Level;
+    }
+
+    public void StartLevel()
+    { 
+        //UI
+        UIManager.Instance.DisplayLevelStartUI();
+        UIManager.Instance.TimeUIStart();
+
+        //Audio
+        AudioManager.Instance.SetSongAudio(LevelManager.Instance.song);
+        AudioManager.Instance.TimerStartAudio();
+        AudioManager.Instance.SongStartAudio();
     }
 
     public void AddScore(int score)
     {
         //IEnumerator coroutine = AddScoreRoutine(score);
         //StartCoroutine(coroutine);
+        AudioManager.Instance.NumbersRiseAudio();
         currentScore += score;
         UIManager.Instance.UpdateScore();
 
-        Debug.Log("scored: " + score + "\ncurrentScore:" + currentScore);
+        //Debug.Log("scored: " + score + "\ncurrentScore:" + currentScore);
     }
 
     void GameEnded()

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
+
+    //public Level Level { get; private set; }
+    public new string name;
+    public AudioClip song;
+
     public static LevelManager Instance;
     Vector3 levelBoundsMin = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
     Vector3 levelBoundsMax = new Vector3(Mathf.NegativeInfinity, Mathf.NegativeInfinity, Mathf.NegativeInfinity);
@@ -97,7 +102,18 @@ public class LevelManager : MonoBehaviour {
 
     public float MinCamDistance()
     {
-        return Mathf.Max(new float[]{ levelBoundsMax.x, levelBoundsMax.y, levelBoundsMax.z });
+        //Debug.Log("MincamDistance: " + Mathf.Max(new float[] { levelBoundsMax.x, levelBoundsMax.y, levelBoundsMax.z }));
+        //Debug.Log("screen:" + Screen.orientation);
+
+        //TODO: find a solution for unity remote
+        //if(Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
+            return Mathf.Max(new float[]{ levelBoundsMax.x, levelBoundsMax.y, levelBoundsMax.z });
+
+        //else if (Screen.orientation == ScreenOrientation.Portrait || Screen.orientation == ScreenOrientation.PortraitUpsideDown)
+        //{
+        //    return Mathf.Max(new float[] { levelBoundsMax.x, levelBoundsMax.y, levelBoundsMax.z }) * 1.375f;
+        //}
+        //return 0;
     }
     void CenterLevelToZeroPosition()
     {

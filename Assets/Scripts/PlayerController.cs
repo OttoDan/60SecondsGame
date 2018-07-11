@@ -13,7 +13,7 @@ public class PlayerController : MovingObject {
 
     #region Private Fields
 
-    List<DashPoint> dashPoints = new List<DashPoint>();
+    public List<DashPoint> dashPoints;
 
     LineRenderer lineRenderer;
 
@@ -24,7 +24,8 @@ public class PlayerController : MovingObject {
     GameObject IdleParticles;
 
     Animator animator;
-
+    Transform PlayerTouchZone;
+    DrawGeoFormTouch drawGeoFormTouch;
     #endregion
 
     #region Unity Messages
@@ -38,9 +39,11 @@ public class PlayerController : MovingObject {
             Debug.LogError("Two PlayerControllers in the scene!");
             Destroy(gameObject);
         }
-
+        dashPoints = new List<DashPoint>(); 
         lineRenderer = GetComponent<LineRenderer>();
         animator = transform.Find("Main-Character-Rig_v4-2").GetComponent<Animator>();//GetComponentInChildren<Animator>();
+        PlayerTouchZone = GameObject.Find("PlayerTouchZone").transform;
+        drawGeoFormTouch = PlayerTouchZone.GetComponentInChildren<DrawGeoFormTouch>();
     }
     private void Start()
     {
@@ -50,10 +53,12 @@ public class PlayerController : MovingObject {
     private void Update()
     {
         DebugDrawDashPoints();
+        PlayerTouchZone.transform.position = transform.position;
+        PlayerTouchZone.transform.rotation = transform.rotation;
     }
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("collider");
+        //Debug.Log("collider");
         if (collider.gameObject.layer == LayerMask.NameToLayer("Enemy") && DashCoroutine != null)
         {
             EnemyController enemyController = collider.gameObject.GetComponent<EnemyController>();
@@ -61,23 +66,32 @@ public class PlayerController : MovingObject {
             if (enemyController != null)
             {
                 animator.SetTrigger("DashHit");
+                ScreenShake.Instance.DoShake();
+
                 enemyHitsDuringDash++;
+                for (int i = 0; i < enemyHitsDuringDash; i++)
+                    EnemyManager.Instance.SpawnEnemy();
+
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 AudioManager.Instance.EnemyHitAudio();
-                enemyController.HitEvent();
                 TimeManager.Instance.EnemyHitSlowMotion();
-                ScreenShake.Instance.DoShake();
-                CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.45f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
-                
 
+                if(Vector3.Distance(Camera.main.transform.position,Vector3.zero) > LevelManager.Instance.MinCamDistance()*1.75f)
+                    CameraController.Instance.ZoomAtPos((Camera.main.transform.position - transform.position).magnitude * 0.5f, CameraController.Zoom.InOut, transform.position, 0.5f, 0.125f);
+                else
+                    CameraController.Instance.Zooming(16, CameraController.Zoom.Out);//AdjustCameraZoomByLevelBounds();
+
+                enemyController.HitEvent();
+
+                
             }
             else
                 Debug.LogError("Missing EnemyController on object on Enemy layer!");
         }
         if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            ScreenShake.Instance.DoShake(0.5f,1.2f);
+            ScreenShake.Instance.DoShake(1.0f,16f);
             if (DashCoroutine != null)
             {
                 StopCoroutine(DashCoroutine);
@@ -91,7 +105,14 @@ public class PlayerController : MovingObject {
     #endregion
 
     #region Methods
-
+    public void DrawDashStartTouch()
+    {
+        drawGeoFormTouch.Draw();
+    }
+    public void StopDashStartTouch()
+    {
+        drawGeoFormTouch.Stop();
+    }
     public void PlaceDashpoint(Vector2 screenPos)
     {
         if (DashCoroutine != null)
@@ -184,6 +205,12 @@ public class PlayerController : MovingObject {
             lineRenderer.SetPosition(i, dashPoints[i - 1].position + dashPoints[i - 1].normal * 0.125f);
         }
         lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.1f, .5f), new Keyframe(.9f, .5f), new Keyframe(1, 0));
+        //lineRenderer.colorGradient  = Color.Lerp(Color.white, Color.black, dashPoints.Count / 24);
+        //float alpha = 1.0f;
+        //lineRenderer.colorGradient.SetKeys(//TODO: figure out amount of dashpoints
+        //    new GradientColorKey[] { new GradientColorKey(Color.green, 0.0f), new GradientColorKey(Color.Lerp(Color.green, Color.red, dashPoints.Count / 8), 1.0f) },
+        //    new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
+        //    );
 
     }
 
@@ -261,6 +288,9 @@ public class PlayerController : MovingObject {
         animator.SetBool("Dash", false);
 
         TimeManager.Instance.ActivateSlowMotion();
+
+        CameraController.Instance.FlyBack();
+
         //dashButtonCanvas.enabled = true;
         DashCoroutine = null;
     }

@@ -54,11 +54,11 @@ public class GameManager : MonoBehaviour {
     {
         if(SceneManager.GetActiveScene().buildIndex == 0)
         {
-            state = State.MainMenu;
+            //state = State.MainMenu;
+            SwitchToLevelState();
         }
         else
         {
-            SwitchToLevelState();
         }
         
     }
@@ -70,9 +70,8 @@ public class GameManager : MonoBehaviour {
                 //seconds += Time.deltaTime;//Time.unscaledDeltaTime;//Time.unscaledTime;
                 seconds -= Time.unscaledDeltaTime;
                 
-                UIManager.Instance.UpdateTime();
 
-                if(seconds < 0)
+                if (seconds < 0)
                 {
                     GameEnded();
                 }

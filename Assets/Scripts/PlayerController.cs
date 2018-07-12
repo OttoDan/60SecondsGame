@@ -10,6 +10,7 @@ public class PlayerController : MovingObject {
     public Canvas dashButtonCanvas;
 
     public int enemyHitsDuringDash = 0;
+    public int comboMultiplier = 0;
 
     #region Private Fields
 
@@ -49,6 +50,8 @@ public class PlayerController : MovingObject {
     {
         TimeManager.Instance.ActivateSlowMotion();
         //IdleParticles = transform.Find("Idle Particles").gameObject;
+        enemyHitsDuringDash = 0;
+        comboMultiplier = 0;
     }
     private void Update()
     {
@@ -72,6 +75,13 @@ public class PlayerController : MovingObject {
                
 
                 UIManager.Instance.DisplayComboUI(enemyController.enemy);
+                if(enemyHitsDuringDash > comboMultiplier)
+                {
+                    comboMultiplier = enemyHitsDuringDash;
+                    UIManager.Instance.UpdateComboMultiplierText();
+
+                }
+
                 GameManager.Instance.AddScore(enemyController.enemy.score);
                 AudioManager.Instance.EnemyHitAudio();
                 TimeManager.Instance.EnemyHitSlowMotion();
@@ -306,6 +316,7 @@ public class PlayerController : MovingObject {
         //transform.up = dashPoints[dashPoints.Count - 1].normal;
 
         enemyHitsDuringDash = 0;
+
         dashPoints.Clear();
         AudioManager.Instance.EnemyHitResetAudio();
         //IdleParticles.SetActive(true);

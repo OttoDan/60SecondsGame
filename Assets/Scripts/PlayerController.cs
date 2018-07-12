@@ -199,10 +199,7 @@ public class PlayerController : MovingObject {
         //Prevent double points
         foreach (DashPoint point in dashPoints)
         {
-
-            //if (Vector3.Distance(point.position, position) < 0.5f)
-
-            if (Vector3.Distance(point.position, position) < 0.4f && point.normal == normal)
+            if (Vector3.Distance(point.position, position) < 0.5f)
                 return;
         }
         DashPoint dashPoint = new DashPoint(position, normal);

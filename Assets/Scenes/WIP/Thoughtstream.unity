@@ -14243,7 +14243,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 8
 --- !u!222 &1386636749
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26036,11 +26036,6 @@ Prefab:
         type: 2}
       propertyPath: m_FontData.m_VerticalOverflow
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114443581814322222, guid: f8b4f13ebf8668a448ec21db70b2a928,
-        type: 2}
-      propertyPath: m_Text
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f8b4f13ebf8668a448ec21db70b2a928, type: 2}

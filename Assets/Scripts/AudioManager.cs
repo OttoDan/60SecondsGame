@@ -80,6 +80,7 @@ public class AudioManager : MonoBehaviour {
 
         //Song
         SongAudio = gameObject.AddComponent<AudioSource>();
+        SongAudio.clip = SongMainTheme;
 
         //DrawDashStartAudio
         DrawDashAudio = gameObject.AddComponent<AudioSource>();

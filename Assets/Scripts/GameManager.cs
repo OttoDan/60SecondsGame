@@ -118,9 +118,9 @@ public class GameManager : MonoBehaviour {
         HighScoreToJSON.Instance.SaveData();
         //TODO: Add more than one entry to the JSON highscore list
         state = State.GameWon;
+        SwitchToLevelState();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Debug.Log("Game Ended");
-        SwitchToLevelState();
     }
 
     #endregion

@@ -139,7 +139,7 @@ public class UIManager : MonoBehaviour
         if (enemy != null)
             comboUItext.text = enemy.name + "\n" + enemy.score + "\n x " + PlayerController.Instance.enemyHitsDuringDash;
         else
-            comboUItext.text = "Messed up!\nNO0oB!";
+            comboUItext.text = "";
 
 
         float fromAlpha = ComboUICanvasGroup.alpha;

@@ -20,6 +20,7 @@ public class MainMenu : MonoBehaviour {
             instanceMenu = this;
         else
             Destroy(gameObject);
+<<<<<<< HEAD
         highscoretext = HighScoreToJSON.Instance.lastHighscore;
         highscoreNameText = HighScoreToJSON.Instance.highscorename;
         HighscoreNameText.text = ("" + highscoreNameText + ("  ") + highscoretext);
@@ -32,6 +33,21 @@ public class MainMenu : MonoBehaviour {
     void Update()
     {
         
+=======
+    }
+
+    /*void Start()
+    {
+        highscoretext = HighScoreToJSON.instanceJson.lastHighscore;
+        highscoreNameText = HighScoreToJSON.instanceJson.highscorename;
+    }*/
+
+    void Update()
+    {
+        highscoretext = HighScoreToJSON.instanceJson.lastHighscore;
+        highscoreNameText = HighScoreToJSON.instanceJson.highscorename;
+        HighscoreNameText.text = ("" + highscoreNameText +("  ") + highscoretext);
+>>>>>>> MainMenu
     }
 
     public void PlayGame()

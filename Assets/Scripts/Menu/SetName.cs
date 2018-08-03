@@ -5,23 +5,14 @@ using UnityEngine.UI;
 
 public class SetName : MonoBehaviour {
 
-<<<<<<< HEAD
     public static SetName Instance;
-=======
-    public static SetName instance;
->>>>>>> MainMenu
     public string playername;
     public Text nameField;
 
     private void Awake()
     {
-<<<<<<< HEAD
         if (Instance == null)
             Instance = this;
-=======
-        if (instance == null)
-            instance = this;
->>>>>>> MainMenu
         else
             Destroy(gameObject);
     }

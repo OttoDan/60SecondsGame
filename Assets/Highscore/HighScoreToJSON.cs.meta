@@ -1,19 +1,10 @@
 fileFormatVersion: 2
 guid: d6675423f5e32484baf1d9b6c0dcbbfd
-<<<<<<< HEAD
-=======
-timeCreated: 1529573156
-licenseType: Free
->>>>>>> MainMenu
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences: []
-<<<<<<< HEAD
   executionOrder: 100
-=======
-  executionOrder: 0
->>>>>>> MainMenu
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

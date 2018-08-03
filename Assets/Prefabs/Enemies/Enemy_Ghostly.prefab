@@ -215,7 +215,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4901650375922888}
   - component: {fileID: 137065154595285434}
-  - component: {fileID: 114487288286517098}
   m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
@@ -369,7 +368,6 @@ GameObject:
   - component: {fileID: 95048432307100456}
   - component: {fileID: 114731952151879696}
   - component: {fileID: 65204391442980050}
-  - component: {fileID: 114037335401276848}
   m_Layer: 10
   m_Name: Enemy_Ghostly
   m_TagString: Untagged
@@ -1069,28 +1067,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114037335401276848
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1815547915312678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc0b0784b8b68f49a02d99a64b727d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114487288286517098
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1456464731317516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc0b0784b8b68f49a02d99a64b727d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114731952151879696
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,8 +9,9 @@ public class GhostlyScript : MonoBehaviour {
     private SkinnedMeshRenderer tempMesh;
     private Color tempCol;
     private float timeVisible = 10f;
+    private BoxCollider BoxColl;
 
-    IEnumerator FadeInOutCoroutine;
+    IEnumerator FadeOutInRoutine;
 
     #endregion
 
@@ -21,7 +22,11 @@ public class GhostlyScript : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
-        tempMesh = GetComponent<SkinnedMeshRenderer>();
+        tempMesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        if (GetComponent<BoxCollider>() != null)
+            BoxColl = GetComponent<BoxCollider>();
+        else
+            Debug.LogFormat("shit");
         StartFade();
     }
 
@@ -33,16 +38,16 @@ public class GhostlyScript : MonoBehaviour {
 
     void StartFade()
     {
-        if (FadeInOutCoroutine == null)
-            FadeInOutCoroutine = FadeInOut();
+        if (FadeOutInRoutine == null)
+            FadeOutInRoutine = FadeOutIn();
         else
-            StopCoroutine(FadeInOutCoroutine);
-            StartCoroutine(FadeInOutCoroutine);
+            StopCoroutine(FadeOutInRoutine);
+            StartCoroutine(FadeOutInRoutine);
     }
     
-IEnumerator FadeInOut(float duration = 1f)
+    IEnumerator FadeOutIn(float duration = 1f)
     {
-        //fadein
+        //fadeOut
         for(float t=0; t < duration; t+= Time.fixedDeltaTime)
         {
             tempCol = tempMesh.material.color;
@@ -51,13 +56,18 @@ IEnumerator FadeInOut(float duration = 1f)
             yield return null;
         }
 
+        BoxColl.enabled = false;
+
         //wait
         for (float t = 0; t < duration; t += Time.deltaTime)
         {
             yield return null;
         }
-            //fadeout
-            for (float t = 0; t < duration; t += Time.fixedDeltaTime)
+
+        BoxColl.enabled = false;
+
+        //fadeIn
+        for (float t = 0; t < duration; t += Time.fixedDeltaTime)
         {
             tempCol = tempMesh.material.color;
             tempCol.a = Mathf.Lerp(0, 1, t / (duration));
@@ -66,6 +76,6 @@ IEnumerator FadeInOut(float duration = 1f)
         }
 
         yield return new WaitForSeconds(timeVisible);
-        FadeInOutCoroutine = null;
+        FadeOutInRoutine = null;
     }
 }

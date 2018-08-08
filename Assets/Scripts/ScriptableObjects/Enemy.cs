@@ -8,7 +8,7 @@ public class Enemy : ScriptableObject {
     public new string name;
 
     public GameObject FracturedMeshPrefab;
-
+    public GameObject hitParticlesPrefab;
     public int score;
 
     public float minSpeed, maxSpeed;

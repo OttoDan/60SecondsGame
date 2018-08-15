@@ -6,20 +6,26 @@ using UnityEngine.Networking;
 
 public class NetworkScript : MonoBehaviour {
 
+    //Das Event wo sich die anderen Klassen dranhaengen mussen um immer den aktuellsten Datensatz zu bekommen
+    public static System.Action<HighscoreData> OnHighscoreDataReceived;
+
+
+
     Texture myTexture;
     MeshRenderer meshRenderer;
 
     [ContextMenu("Start")]
-    private void Start()
+    public void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        //meshRenderer = GetComponent<MeshRenderer>();
         StartCoroutine(GetText());
-        StartCoroutine(GetTextures());
+        //StartCoroutine(GetTextures());
     }
 
     IEnumerator GetText()
     {
-        UnityWebRequest www = UnityWebRequest.Get("https://ottodan.github.io/highscoretest/test.txt");
+        //UnityWebRequest www = UnityWebRequest.Get("https://ottodan.github.io/highscoretest/test.txt");
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost/test/scores.php");
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
@@ -28,54 +34,17 @@ public class NetworkScript : MonoBehaviour {
         {
             Debug.Log(www.downloadHandler.text);
 
-            List<string> names = new List<string>();
-            List<int> scores = new List<int>();
-
-            string str = www.downloadHandler.text;// "\"Name1\" \"Name2\" \"Name3\"";
-
-            for (int i = 0; i<str.Length; i++)
+            //PARSE JSON
+            HighscoreData data = JsonUtility.FromJson<HighscoreData>(www.downloadHandler.text);
+            Debug.Log(data.entries);
+            for (int i = 0; i < data.entries.Count; i++)
             {
-                for(int j = i; i<str.Length; j++)
-                {
-                    if(str[j] == ',')
-                    {
-                        string newName = "";
-                            
-                        for(int k = i; k<j; k++)
-                        {
-                            newName += str[k];
-
-                        }
-                        names.Add(newName);
-                        i = j + 1;
-
-                        break;
-                    }
-                }
-
-                for (int j = i; i < str.Length; j++)
-                {
-                    if (str[j] == ',')
-                    {
-                        string newNumber = "";
-
-                        for (int k = i + 1; k < j; k++)
-                        {
-                            if(char.IsDigit(str[k]))
-                                newNumber += str[k];
-
-                        }
-
-                        scores.Add(int.Parse(newNumber));
-                        i = j + 1;
-
-                        break;
-                    }
-                }
+                Debug.Log(data.entries[i].user + " : " + data.entries[i].score);
             }
-            for(int i = 0; i < names.Count; i++)
+
+            if (OnHighscoreDataReceived != null)
             {
-                Debug.Log(i+1 +" - " + names[i] + ": " + scores[i]);
+                OnHighscoreDataReceived(data);
             }
         }
     }

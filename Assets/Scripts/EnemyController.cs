@@ -41,6 +41,7 @@ public class EnemyController : MovingObject {
          * or fall from the cube
          * or leave the scene
          */
+
         Vector3 direction = (transform.position - PlayerController.Instance.transform.position).normalized;
 
         if (enemy.FracturedMeshPrefab != null)
@@ -48,7 +49,6 @@ public class EnemyController : MovingObject {
 
             Transform fracturedParent = Instantiate(enemy.FracturedMeshPrefab, transform.position, transform.rotation, null).transform;
             fracturedParent.localScale = transform.localScale;
-            Instantiate(enemy.hitParticlesPrefab, fracturedParent);
             Color color = transform.Find("Mesh").GetComponent<SkinnedMeshRenderer>().material.color;
             MeshRenderer meshRenderer;
             //Rigidbody rigidbody;

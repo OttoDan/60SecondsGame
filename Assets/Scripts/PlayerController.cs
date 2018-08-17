@@ -170,7 +170,7 @@ public class PlayerController : MovingObject {
                 else
                 {
                     RaycastHit cornerHit;
-                    if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal * 2, -orthogonalDirection, out cornerHit, 2, LayerMask.GetMask("Walkable")))
+                    if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal * 0.5f, -orthogonalDirection, out cornerHit, 2, LayerMask.GetMask("Walkable")))
                     {
                         Debug.Log("Corner");
                         AddDashPoint(cornerHit.point, orthogonalDirection);
@@ -197,11 +197,11 @@ public class PlayerController : MovingObject {
     void AddDashPoint(Vector3 position, Vector3 normal)
     {
         //Prevent double points
-        foreach (DashPoint point in dashPoints)
-        {
-            if (Vector3.Distance(point.position, position) < 0.5f)
-                return;
-        }
+        //foreach (DashPoint point in dashPoints)
+        //{
+        //    if (Vector3.Distance(point.position, position) < 0.5f && normal == point.normal)
+        //        return;
+        //}
         DashPoint dashPoint = new DashPoint(position, normal);
         FocusParticles.Instance.MoveToPoint(dashPoint);
         dashPoints.Add(dashPoint);
@@ -242,6 +242,25 @@ public class PlayerController : MovingObject {
     IEnumerator DashRoutine()
     {
 
+        CameraController.Instance.FlyBack();
+        List<DashPoint> removePoints = new List<DashPoint>();
+        //Remove double points
+
+        for(int i= 0; i < dashPoints.Count-1; i++)
+        {
+            if (Vector3.Distance(dashPoints[i].position, dashPoints[i+1].position) < 0.5f
+                && dashPoints[i].normal == dashPoints[i+1].normal)
+            {
+                removePoints.Add(dashPoints[+1]);
+                i += 1;
+            }
+        }
+
+        foreach(DashPoint point in removePoints)
+        {
+            dashPoints.Remove(point);
+        }
+        
         //IdleParticles.SetActive(false);
         TimeManager.Instance.DeactivateSlowMotion();
 
@@ -386,6 +405,8 @@ public class PlayerController : MovingObject {
                 Debug.DrawRay(dashPoints[i + 1].position, dashPoints[i + 1].normal, Color.cyan);
             }
         }
+
+        
 
     }
 

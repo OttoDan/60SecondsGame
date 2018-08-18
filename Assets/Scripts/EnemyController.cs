@@ -27,6 +27,9 @@ public class EnemyController : MovingObject {
             //velocity = (transform.forward + (centerHit.point - transform.position).normalized) * Time.deltaTime;
             transform.Translate((transform.forward * enemy.maxSpeed + (centerHit.point - transform.position).normalized) * Time.deltaTime);
         }
+
+        if (Mathf.Abs(transform.position.magnitude) > 64)
+            Destroy(gameObject);
     }
 
 

@@ -32,7 +32,8 @@ public class UIManager : MonoBehaviour
         scoreText = transform.Find("StatsCanvas").transform.Find("ScoreText").GetComponent<Text>();
         timeText = transform.Find("StatsCanvas").transform.Find("TimeText").GetComponent<Text>();
         ComboMultiplierText = transform.Find("StatsCanvas").transform.Find("ComboMultiplierText").GetComponent<Text>();
-
+        ComboMultiplierText.text = "0";
+        scoreText.text = "0";
         ComboUICanvas = transform.Find("ComboUICanvas").GetComponent<Canvas>();
         ComboUICanvasGroup = ComboUICanvas.GetComponent<CanvasGroup>();
         comboUItext = ComboUICanvas.transform.Find("Text").GetComponent<Text>();

@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -15,5 +15,5 @@ MonoBehaviour:
   FracturedMeshPrefab: {fileID: 1889468312784244, guid: 9c23caf3134f0ff4f8a5552d2536cad1,
     type: 2}
   score: 150
-  minSpeed: 1
-  maxSpeed: 1
+  minSpeed: 32
+  maxSpeed: 32

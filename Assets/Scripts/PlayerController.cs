@@ -68,6 +68,12 @@ public class PlayerController : MovingObject {
             
             if (enemyController != null)
             {
+                //RaycastHit camHit;
+                //if(Physics.Raycast(Camera.main.transform.position, transform.position-Camera.main.transform.position, out camHit))
+                //{
+                //    if(camHit.collider.transform != transform)
+                //        CameraController.Instance.FlyBack();
+                //}
                 animator.SetTrigger("DashHit");
 
                 enemyHitsDuringDash++;
@@ -141,17 +147,16 @@ public class PlayerController : MovingObject {
             else
             {
                 fromNormal = transform.up;
-                fromPosition = Grid.Snap(transform.position) + fromNormal * 0.5f;
+                fromPosition = transform.position + fromNormal * 0.5f;//Grid.Snap(transform.position) + fromNormal * 0.5f;
             }
             float distance = Vector3.Distance(fromPosition,hit.point);
 
             
             //if (distance <= 2)//1.45 eigentlich
             //{
-                Vector3 direction = hit.point - fromPosition;
-                Vector3 orthogonalDirection = Quaternion.AngleAxis(90, fromNormal) * Vector3.Cross(direction.normalized,fromNormal);
-
-                RaycastHit dirHit;
+            Vector3 direction = hit.point - fromPosition;
+            Vector3 orthogonalDirection = Quaternion.AngleAxis(90, fromNormal) * Vector3.Cross(direction.normalized,fromNormal);
+            RaycastHit dirHit;
 
             if (Physics.Raycast(fromPosition, orthogonalDirection, out dirHit, 2 /*direction.magnitude*/, LayerMask.GetMask("Walkable")))
             {
@@ -160,29 +165,39 @@ public class PlayerController : MovingObject {
             }
             else
             {
-                RaycastHit groundHit;
+                if(orthogonalDirection.magnitude > 0.5f)
+                {
+                    RaycastHit groundHit;
 
-                if (Physics.Raycast(fromPosition + orthogonalDirection, -fromNormal, out groundHit, 2, LayerMask.GetMask("Walkable")))
-                {
-                    AddDashPoint(groundHit.point, groundHit.normal);
-                    return;
-                }
-                else
-                {
-                    RaycastHit cornerHit;
-                    if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal * 0.5f, -orthogonalDirection, out cornerHit, 2, LayerMask.GetMask("Walkable")))
+                    if (Physics.Raycast(fromPosition + orthogonalDirection, -fromNormal, out groundHit, 2, LayerMask.GetMask("Walkable")))
                     {
-                        Debug.Log("Corner");
-                        AddDashPoint(cornerHit.point, orthogonalDirection);
+                        AddDashPoint(groundHit.point, groundHit.normal);
                         return;
                     }
                     else
                     {
-                        Debug.Log("No ray");
-                        AddDashPoint(hit.point, hit.normal);
-                        return;
+                        RaycastHit cornerHit;
+                        if (Physics.Raycast(fromPosition + orthogonalDirection - fromNormal * 0.5f, -orthogonalDirection, out cornerHit, 4, LayerMask.GetMask("Walkable")))
+                        {
+                            Debug.Log("Corner");
+                            AddDashPoint(cornerHit.point, orthogonalDirection);
+                            return;
+                        }
+                        else //if(Vector3.Distance(fromPosition,hit.point)<2.0f)
+                        {
+                            Debug.Log("No ray");
+                            AddDashPoint(hit.point, hit.normal);
+                            return;
+                        }
                     }
                 }
+                else if(Vector3.Distance(fromPosition,hit.point)<4.0f)
+                {
+                    Debug.Log("around corner, low ortho");
+                    AddDashPoint(hit.point, hit.normal);
+                    return;
+                }
+
             }
 
             //}
@@ -209,7 +224,7 @@ public class PlayerController : MovingObject {
         lineRenderer.SetPosition(0, transform.position);
         for (int i = 1; i < lineRenderer.positionCount; i++)
         {
-            lineRenderer.SetPosition(i, dashPoints[i - 1].position + dashPoints[i - 1].normal * 0.125f);
+            lineRenderer.SetPosition(i, dashPoints[i - 1].position);
         }
         lineRenderer.widthCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.1f, .5f), new Keyframe(.9f, .5f), new Keyframe(1, 0));
         //lineRenderer.colorGradient  = Color.Lerp(Color.white, Color.black, dashPoints.Count / 24);
@@ -227,7 +242,6 @@ public class PlayerController : MovingObject {
         {
             if (dashPoints.Count > 0)
             {
-                dashButtonCanvas.enabled = false;
                 AudioManager.Instance.DashAudio();
                 DashCoroutine = DashRoutine();
                 StartCoroutine(DashCoroutine);
@@ -243,7 +257,7 @@ public class PlayerController : MovingObject {
     {
 
         CameraController.Instance.FlyBack();
-        List<DashPoint> removePoints = new List<DashPoint>();
+        List<int> removePoints = new List<int>();
         //Remove double points
 
         for(int i= 0; i < dashPoints.Count-1; i++)
@@ -251,16 +265,19 @@ public class PlayerController : MovingObject {
             if (Vector3.Distance(dashPoints[i].position, dashPoints[i+1].position) < 0.5f
                 && dashPoints[i].normal == dashPoints[i+1].normal)
             {
-                removePoints.Add(dashPoints[+1]);
-                i += 1;
+                removePoints.Add(i+1);
+                //i += 1;
             }
         }
 
-        foreach(DashPoint point in removePoints)
+        int removed = 0;
+        foreach(int point in removePoints)
         {
-            dashPoints.Remove(point);
+            dashPoints.RemoveAt(point-removed);
+            removed++;
         }
         
+             
         //IdleParticles.SetActive(false);
         TimeManager.Instance.DeactivateSlowMotion();
 

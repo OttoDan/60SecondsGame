@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour {
     public void SwitchToLevelState()
     {
         seconds = 60;
+        currentScore = 0;
+        
         StartLevel();
         this.state = State.Level;
     }
@@ -98,6 +100,7 @@ public class GameManager : MonoBehaviour {
 
         //Audio
         AudioManager.Instance.SetSongAudio(LevelManager.Instance.song);
+        AudioManager.Instance.SongStartAudio();
         AudioManager.Instance.TimerStartAudio();
         AudioManager.Instance.SongStartAudio();
     }

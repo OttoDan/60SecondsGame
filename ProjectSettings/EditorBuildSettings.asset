@@ -5,9 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: 48307c180d4e0a3408bf450d572f84a7
   - enabled: 1
     path: Assets/Scenes/WIP/Thoughtstream.unity
     guid: 5b097e5d637629847b038bf003c71628

@@ -18,4 +18,12 @@ public class WIPSwitchScene : MonoBehaviour {
     {
         audioSource.Play();
     }
+
+    void ActivateCharPoseClip()
+    {
+        Animator animator = transform.Find("Char").GetComponentInChildren<Animator>();
+        animator.SetBool("LogoPose",true);
+        //animator.Play(
+        //    "Intro_CharLogoPose");
+    }
 }

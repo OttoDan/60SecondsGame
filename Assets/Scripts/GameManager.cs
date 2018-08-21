@@ -35,8 +35,33 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Unity Messages
 
+
+    #region Unity Messages
+    // called first
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // called second
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex > 1)
+        {
+            Invoke("SwitchToLevelState", 0.125f);
+        }
+        else if(scene.buildIndex == 1)
+        {
+            Invoke("switchToMenuState", 0.125f);
+        }
+    }
+
+    // called when the game is terminated
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     private void Awake()
     {
         if (Instance == null)
@@ -102,9 +127,12 @@ public class GameManager : MonoBehaviour {
         AudioManager.Instance.SetSongAudio(LevelManager.Instance.song);
         AudioManager.Instance.SongStartAudio();
         AudioManager.Instance.TimerStartAudio();
+    }
+    void switchToMenuState()
+    {
+        AudioManager.Instance.SetSongAudio(LevelManager.Instance.song);
         AudioManager.Instance.SongStartAudio();
     }
-
     public void AddScore(int score)
     {
         //IEnumerator coroutine = AddScoreRoutine(score);
@@ -118,11 +146,11 @@ public class GameManager : MonoBehaviour {
 
     void GameEnded()
     {
-        HighScoreToJSON.Instance.SaveData();
+        //HighScoreToJSON.Instance.SaveData();
+        NetworkScript.Instance.SendScore("Nameless", currentScore);
         //TODO: Add more than one entry to the JSON highscore list
-        state = State.GameWon;
-        SwitchToLevelState();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        state = State.MainMenu;
+        SceneManager.LoadScene(1);
         Debug.Log("Game Ended");
     }
 

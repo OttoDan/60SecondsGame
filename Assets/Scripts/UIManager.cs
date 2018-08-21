@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateComboMultiplierTextOrigPos = ComboMultiplierText.rectTransform.position;
         timeTextFromFontSize = timeText.fontSize;
+
     }
     public void UpdateScore()
     {

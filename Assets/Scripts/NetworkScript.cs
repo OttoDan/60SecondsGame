@@ -2,45 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using UnityEngine.UI;
 
 public class NetworkScript : MonoBehaviour {
-
-    //Das Event wo sich die anderen Klassen dranhaengen mussen um immer den aktuellsten Datensatz zu bekommen
+    public static NetworkScript Instance;
+    private string access_token = "a86ugar386a3ghaf38jqh8o3fq8";
     public static System.Action<HighscoreData> OnHighscoreDataReceived;
+    public string user = "Hans";
+    public int score = 1000;
+    public string uri = "http://www.laienoper.de/scores.php";
+    public Text Scoretext;
 
-
-
-    Texture myTexture;
-    MeshRenderer meshRenderer;
-
-    [ContextMenu("Start")]
-    public void Start()
-    {
-        //meshRenderer = GetComponent<MeshRenderer>();
+    [ContextMenu("Test")]
+    void Start() {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+        //string uriSend = uri + "?user=" + user + "&score=" + score + "&token=" + access_token;
+        //Debug.Log(uriSend);
         StartCoroutine(GetText());
-        //StartCoroutine(GetTextures());
+        DontDestroyOnLoad(gameObject);
     }
-
-    IEnumerator GetText()
+    public void SendScore(string name, int scoreValue)
     {
-        //UnityWebRequest www = UnityWebRequest.Get("https://ottodan.github.io/highscoretest/test.txt");
-        UnityWebRequest www = UnityWebRequest.Get("http://localhost/test/scores.php");
+        StartCoroutine(uri + "?user=" + name + "&score=" + scoreValue + "&token=" + access_token);
+    }
+    IEnumerator SetText (string uriSend)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(uriSend);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
-            Debug.Log(www.error);
+        {
+            Debug.LogFormat("isNet: {0} ; isHttp: {1}; uri: {2}", www.isNetworkError, www.isHttpError, uri);
+            Debug.LogError(www.error);
+        }
         else
         {
+            // successful
             Debug.Log(www.downloadHandler.text);
 
-            //PARSE JSON
+            // parse json text
             HighscoreData data = JsonUtility.FromJson<HighscoreData>(www.downloadHandler.text);
-            Debug.Log(data.entries);
-            for (int i = 0; i < data.entries.Count; i++)
-            {
-                Debug.Log(data.entries[i].user + " : " + data.entries[i].score);
-            }
+            Debug.Log(data + ": Data!");
+            //Debug.Log(data.entries);
+            //for (int i = 0; i < data.entries.Count; i++)
+            //{
+            //    Debug.Log(data.entries[i].user + ": " + data.entries[i].score);
+            //}
 
             if (OnHighscoreDataReceived != null)
             {
@@ -49,45 +59,46 @@ public class NetworkScript : MonoBehaviour {
         }
     }
 
-    IEnumerator GetTexture()
+
+IEnumerator GetText()
     {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://picsum.photos/200/300/?random");
-//"http://www.casadelkerls.de/Images/test02.png");
+        UnityWebRequest www = UnityWebRequest.Get(uri);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
-            Debug.Log(www.error);
-
-        else
         {
-            myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-            Debug.Log(myTexture.name);
-        }
-
-        meshRenderer.material.SetTexture("_MainTex", myTexture);
-    }
-
-    IEnumerator GetTextures()
-    {
-        for(int i = 0; i < 100; i++)
+            Debug.LogFormat("isNet: {0} ; isHttp: {1}; uri: {2}", www.isNetworkError , www.isHttpError, uri);
+            Debug.LogError(www.error);
+        } else
         {
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture("https://picsum.photos/200/300/?random");
-            //"http://www.casadelkerls.de/Images/test02.png");
-            yield return www.SendWebRequest();
+            // successful
+            Debug.Log(www.downloadHandler.text);
 
-            if (www.isNetworkError || www.isHttpError)
-                Debug.Log(www.error);
-
-            else
+            // parse json text
+            HighscoreData data = JsonUtility.FromJson<HighscoreData>(www.downloadHandler.text);
+            Debug.Log(data + ": Data!");
+            //Debug.Log(data.entries);
+            //for (int i = 0; i < data.entries.Count; i++)
+            //{
+            //    Debug.Log(data.entries[i].user + ": " + data.entries[i].score);
+            //}
+            if(Scoretext!= null)
             {
-                myTexture = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                Debug.Log(myTexture.name);
+                Scoretext.text = "";
+                for (int i = 0; i < data.entries.Count && i < 11; i++)
+                {
+                    Scoretext.text += i + 1 + ". " + data.entries[i].user + ": " + data.entries[i].score + "\n";
+                }
             }
-            GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            cube.AddComponent<Rigidbody>();
-            cube.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", myTexture);
-            cube.transform.position = Random.insideUnitSphere * 16;
+            
+            //if (OnHighscoreDataReceived != null)
+            //{
+            //    OnHighscoreDataReceived(data);
+
+            //}
         }
-        
     }
 }
+
+
+//sendScores for loop webrequest "laienoper.de/scores.php?name="+name+"&score="+score"

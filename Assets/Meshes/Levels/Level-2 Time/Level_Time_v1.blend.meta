@@ -1,14 +1,61 @@
 fileFormatVersion: 2
-guid: 5d1f3d9fef28aa149b35f5aa9988b2a1
+guid: b7f87e19da8e82340a4a2961dd1bd152
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: Background-Sphere
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cube
+    100000: Enemy-Smart
+    100002: Enemy_Ghostly
+    100004: Enemy_Innocent
+    100006: Enemy_Shy
+    100008: Gear
+    100010: Hourglass
+    100012: Level-Time
+    100014: //RootNode
+    100016: Main-Character
+    400000: Enemy-Smart
+    400002: Enemy_Ghostly
+    400004: Enemy_Innocent
+    400006: Enemy_Shy
+    400008: Gear
+    400010: Hourglass
+    400012: Level-Time
+    400014: //RootNode
+    400016: Main-Character
+    2100000: glass
+    2100002: wood
+    2100004: gear
+    2100006: ground
+    2100008: MainCharacter
+    2100010: Smart-Enemy
+    2100012: Enemy-Shy
+    2100014: Material_002
+    2100016: Ghostly
+    2300000: Enemy-Smart
+    2300002: Enemy_Ghostly
+    2300004: Enemy_Innocent
+    2300006: Enemy_Shy
+    2300008: Gear
+    2300010: Hourglass
+    2300012: Level-Time
+    2300014: Main-Character
+    3300000: Enemy-Smart
+    3300002: Enemy_Ghostly
+    3300004: Enemy_Innocent
+    3300006: Enemy_Shy
+    3300008: Gear
+    3300010: Hourglass
+    3300012: Level-Time
+    3300014: Main-Character
+    4300000: Hourglass
+    4300002: Gear
+    4300004: Level-Time
+    4300006: Main-Character
+    4300008: Enemy-Smart
+    4300010: Enemy_Shy
+    4300012: Enemy_Innocent
+    4300014: Enemy_Ghostly
+    7400000: Default Take
+    9500000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -60,6 +107,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -84,7 +133,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

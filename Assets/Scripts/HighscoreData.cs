@@ -4,11 +4,13 @@ using UnityEngine;
 
 [System.Serializable]
 public class HighscoreData {
+
     [System.Serializable]
     public class HighscoreDataEntry
     {
         public string user;
         public int score;
+
         public HighscoreDataEntry()
         {
             this.user = "";

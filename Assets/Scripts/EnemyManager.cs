@@ -24,8 +24,9 @@ public class EnemyManager : MonoBehaviour {
 
     private void Start()
     {
-        for (int i = 0; i < startEnemyAmount; i++)
-            SpawnEnemy();
+        if(GameManager.Instance.state == GameManager.State.Level)
+            for (int i = 0; i < startEnemyAmount; i++)
+                SpawnEnemy();
     }
 
     public void SpawnEnemy()

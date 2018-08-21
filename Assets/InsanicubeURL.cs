@@ -13,16 +13,20 @@ public class InsanicubeURL : MonoBehaviour {
         text = GetComponent<Text>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
+    int i = 0;
     void FixedUpdate () {
         if(AudioManager.Instance.GetSongSpectrumZero()>0.25f)
             if(palette.Count>0)
             {
 
                 if(text!=null)
-                    text.color = palette[Random.Range(0, palette.Count)];
+                    text.color = palette[i/*Random.Range(0, palette.Count)*/];
                 if (spriteRenderer != null)
-                    spriteRenderer.material.color = palette[Random.Range(0, palette.Count)];
+                    spriteRenderer.material.color = palette[i/*Random.Range(0, palette.Count)*/];
+
+                i++;
+                if (i >= palette.Count)
+                    i = 0;
             }
 	}
 }

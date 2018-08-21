@@ -153,7 +153,28 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene(1);
         Debug.Log("Game Ended");
     }
-
+    public bool GetObstacles()
+    {
+        int obst = PlayerPrefs.GetInt("obstacles");
+        if (obst == 1)
+            return true;
+        else
+            return false;
+    }
+    public bool SwitchObstacles()
+    {
+        int obst = PlayerPrefs.GetInt("obstacles");
+        if (obst == 1)
+        {
+            PlayerPrefs.SetInt("obstacles", 0);
+            return false;
+        }
+        else
+        {
+            PlayerPrefs.SetInt("obstacles", 1);
+            return true;
+        }
+    }
     #endregion
 
     IEnumerator AddScoreRoutine(int score)

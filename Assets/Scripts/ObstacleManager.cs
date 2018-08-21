@@ -19,6 +19,16 @@ public class ObstacleManager : MonoBehaviour {
         else
             Destroy(gameObject);
     }
+    private void OnEnable()
+    {
+        if (PlayerPrefs.GetInt("obstacles") == 0)
+        {
+            gameObject.SetActive(false);
+            //foreach (Transform child in transform)
+            //    Destroy(child.gameObject);
+            enabled = false;
+        }
+    }
     private void Start()
     {
         //TODO: dont forget to adapt this when there are obstacles created on the fly

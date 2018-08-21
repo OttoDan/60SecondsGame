@@ -26,7 +26,8 @@ public class NetworkScript : MonoBehaviour {
     }
     public void SendScore(string name, int scoreValue)
     {
-        StartCoroutine(uri + "?user=" + name + "&score=" + scoreValue + "&token=" + access_token);
+        Debug.Log(uri + "?user=" + name + "&score=" + scoreValue + "&token=" + access_token);
+        StartCoroutine(SetText(uri + "?user=" + name + "&score=" + scoreValue + "&token=" + access_token));
     }
     IEnumerator SetText (string uriSend)
     {

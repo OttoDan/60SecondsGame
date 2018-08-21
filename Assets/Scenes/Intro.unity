@@ -2124,6 +2124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53fd0c680bcb8da4689b0b15688b2a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleScreen: {fileID: 8300000, guid: 0816dac5538050740b6553c8d1649245, type: 3}
+  skyBox: {fileID: 0}
 --- !u!82 &668010409
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5002,6 +5004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53fd0c680bcb8da4689b0b15688b2a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleScreen: {fileID: 0}
+  skyBox: {fileID: 0}
 --- !u!95 &1714862969
 Animator:
   serializedVersion: 3

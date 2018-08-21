@@ -46,11 +46,12 @@ public class StartGameButton : MonoBehaviour {
                 yield return null;
             }
         }
+        PlayerController.Instance.transform.parent = null;
         Camera.main.transform.LookAt(LevelPreview.GetChild(levelID).position);
         fromPos = Camera.main.transform.position;
         for(float t = 0; t < duration * 0.95f; t+= Time.unscaledDeltaTime)
         {
-            Camera.main.transform.position = Vector3.Lerp(fromPos, LevelPreview.GetChild(levelID).position+Vector3.back * 2.5f , t / duration);
+            Camera.main.transform.position = Vector3.Lerp(fromPos, LevelPreview.GetChild(levelID).position-Camera.main.transform.forward * 3.25f , t / duration);
             yield return null;
         }
         yield return new WaitForSecondsRealtime(0.5f);

@@ -12583,7 +12583,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1311062764420316, guid: 7a39585eb5dbdc94b8d5e21ce947381a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a39585eb5dbdc94b8d5e21ce947381a, type: 2}
@@ -25689,11 +25689,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4534585818169730, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 7.71
       objectReference: {fileID: 0}
     - target: {fileID: 4534585818169730, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 8
+      value: 4.01
       objectReference: {fileID: 0}
     - target: {fileID: 4534585818169730, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
       propertyPath: m_LocalPosition.z
@@ -25709,11 +25709,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4534585818169730, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4534585818169730, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071069
       objectReference: {fileID: 0}
     - target: {fileID: 4534585818169730, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
       propertyPath: m_RootOrder
@@ -25721,7 +25721,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1895989603372580, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534585818169730, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90.00001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1589ef55fa2010f4b911808f53e92b68, type: 2}
@@ -31312,9 +31316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6675423f5e32484baf1d9b6c0dcbbfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lastHighscore: 0
-  highscorename: 
-  gameFinished: 1
 --- !u!1 &2100660942
 GameObject:
   m_ObjectHideFlags: 0

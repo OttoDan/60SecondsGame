@@ -123,7 +123,14 @@ public class AudioManager : MonoBehaviour {
     #endregion
 
     #region Methods
+    float[] spectrum = new float[64];
+    public float GetSongSpectrumZero()
+    {
+        SongAudio.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
 
+        return spectrum[0];// + spectrum[16] + spectrum[32]+ spectrum[48];
+
+    }
     
 
     public void TimerStartAudio()

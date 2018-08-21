@@ -105,9 +105,11 @@ public class PlayerController : MovingObject {
             else
                 Debug.LogError("Missing EnemyController on object on Enemy layer!");
         }
-        if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Obstacle")&& DashCoroutine != null)
         {
+            Debug.Log("OBSTACLE");
             ScreenShake.Instance.DoShake(1.0f,16f);
+            AudioManager.Instance.ObstacleHitAudio();
             
             ObstaclePushBack();
             //if (BounceOffObstacleCoroutine != null)

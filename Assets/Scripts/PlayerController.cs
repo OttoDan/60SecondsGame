@@ -55,6 +55,7 @@ public class PlayerController : MovingObject {
     }
     private void Update()
     {
+
         DebugDrawDashPoints();
         PlayerTouchZone.transform.position = transform.position;
         PlayerTouchZone.transform.rotation = transform.rotation;

@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Intro.unity
     guid: 48307c180d4e0a3408bf450d572f84a7
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: dd567f994ae8ad643b3ea8d033a12b44
+  - enabled: 1
     path: Assets/Scenes/WIP/Thoughtstream.unity
     guid: 5b097e5d637629847b038bf003c71628
   m_configObjects: {}
